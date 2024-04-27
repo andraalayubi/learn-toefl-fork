@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/screens/grammar.dart';
 import 'package:learn_toefl/screens/lesson.dart';
+import 'package:learn_toefl/screens/translete.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -193,32 +194,40 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Expanded(
-                child: Container(
-                  height: 130,
-                  margin: EdgeInsets.only(left: 12),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color.fromARGB(255, 186, 239, 255),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/translation.png', // Ganti dengan path gambar Anda
-                        width: 70,
-                        height: 70,
-                        fit: BoxFit.cover,
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        'Translete',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TranslatePage()));
+                  },
+                  child: Container(
+                    height: 130,
+                    margin: EdgeInsets.only(left: 12),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color.fromARGB(255, 186, 239, 255),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/translation.png', // Ganti dengan path gambar Anda
+                          width: 70,
+                          height: 70,
+                          fit: BoxFit.cover,
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 8),
+                        Text(
+                          'Translete',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

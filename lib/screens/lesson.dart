@@ -167,31 +167,27 @@ class _LessonPageState extends State<LessonPage> {
                       title: Row(
                         children: [
                           Image.asset('assets/images/music.png',
-                              width: 30,
-                              height: 30), // Gambar di samping kiri teks "data"
-                          SizedBox(width: 8), // Jarak antara gambar dan teks
+                              width: 30, height: 30),
+                          SizedBox(width: 8),
                           Column(
-                            // Menggunakan Column untuk mengelompokkan teks "data" dan "udin"
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Listening",
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
-                              ), // Teks "data"
+                              ),
                               Text(
                                 "3 Material",
                                 style: TextStyle(
                                     fontSize: 9, fontWeight: FontWeight.normal),
-                              ), // Teks "udin"
+                              ),
                             ],
                           ),
                         ],
                       ),
                       children: [
                         Divider(),
-                        // Menambahkan empat judul buku di dalam ExpansionTile
-
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -295,8 +291,7 @@ class _LessonPageState extends State<LessonPage> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                      height: 16), // Jarak antara container pertama dan kedua
+                  SizedBox(height: 16),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 26),
                     decoration: BoxDecoration(
@@ -308,31 +303,28 @@ class _LessonPageState extends State<LessonPage> {
                       title: Row(
                         children: [
                           Image.asset('assets/images/speaking.png',
-                              width: 30,
-                              height: 30), // Gambar di samping kiri teks "data"
-                          SizedBox(width: 8), // Jarak antara gambar dan teks
+                              width: 30, height: 30),
+                          SizedBox(width: 8),
                           Column(
-                            // Menggunakan Column untuk mengelompokkan teks "data" dan "udin"
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Speaking",
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
-                              ), // Teks "data"
+                              ),
                               Text(
                                 "3 Material",
                                 style: TextStyle(
                                     fontSize: 9, fontWeight: FontWeight.normal),
-                              ), // Teks "udin"
+                              ),
                             ],
                           ),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(
-                      height: 16), // Jarak antara container kedua dan ketiga
+                  SizedBox(height: 16),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 26),
                     decoration: BoxDecoration(
@@ -344,31 +336,28 @@ class _LessonPageState extends State<LessonPage> {
                       title: Row(
                         children: [
                           Image.asset('assets/images/open-book.png',
-                              width: 30,
-                              height: 30), // Gambar di samping kiri teks "data"
-                          SizedBox(width: 8), // Jarak antara gambar dan teks
+                              width: 30, height: 30),
+                          SizedBox(width: 8),
                           Column(
-                            // Menggunakan Column untuk mengelompokkan teks "data" dan "udin"
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Reading",
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
-                              ), // Teks "data"
+                              ),
                               Text(
                                 "3 Material",
                                 style: TextStyle(
                                     fontSize: 9, fontWeight: FontWeight.normal),
-                              ), // Teks "udin"
+                              ),
                             ],
                           ),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(
-                      height: 16), // Jarak antara container ketiga dan keempat
+                  SizedBox(height: 16),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 26),
                     decoration: BoxDecoration(
@@ -380,23 +369,21 @@ class _LessonPageState extends State<LessonPage> {
                       title: Row(
                         children: [
                           Image.asset('assets/images/copy-writing.png',
-                              width: 30,
-                              height: 30), // Gambar di samping kiri teks "data"
-                          SizedBox(width: 8), // Jarak antara gambar dan teks
+                              width: 30, height: 30),
+                          SizedBox(width: 8),
                           Column(
-                            // Menggunakan Column untuk mengelompokkan teks "data" dan "udin"
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Writing",
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
-                              ), // Teks "data"
+                              ),
                               Text(
                                 "3 Material",
                                 style: TextStyle(
                                     fontSize: 9, fontWeight: FontWeight.normal),
-                              ), // Teks "udin"
+                              ),
                             ],
                           ),
                         ],

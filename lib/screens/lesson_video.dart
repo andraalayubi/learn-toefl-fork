@@ -164,7 +164,7 @@ class _LessonVideoPageState extends State<LessonVideoPage> {
                     ),
                   ),
                   SizedBox(
-                      height: 16), // Jarak antara container pertama dan kedua
+                      height: 16),
                   Container(
                     height: 60,
                     margin: EdgeInsets.symmetric(horizontal: 26),
