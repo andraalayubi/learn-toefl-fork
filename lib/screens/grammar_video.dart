@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:learn_toefl/controller/video_controller.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class GrammarVideoPage extends StatefulWidget {
   const GrammarVideoPage({super.key});
@@ -10,6 +12,14 @@ class GrammarVideoPage extends StatefulWidget {
 }
 
 class _GrammarVideoPageState extends State<GrammarVideoPage> {
+  late Future<Map<String, dynamic>> _videoData;
+
+  @override
+  void initState() {
+    super.initState();
+    _videoData = fetchVideoData(1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,22 +63,27 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
                 decoration: BoxDecoration(
                   color: Color(0xFF0D0443),
                 ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 26,
-                      right: 26,
-                      top: 26,
-                      child: Container(
-                        height: 210,
-                        width: 370,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.black,
+                child: FutureBuilder<Map<String, dynamic>>(
+                  future: _videoData,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return YoutubePlayer(
+                        controller: YoutubePlayerController(
+                          initialVideoId: snapshot.data!['url'],
+                          flags: YoutubePlayerFlags(
+                            autoPlay: false,
+                            mute: false,
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
+                        showVideoProgressIndicator: true,
+                        aspectRatio: 16 / 9, // Rasio aspek 16:9 (lebar/tinggi)
+                      );
+                    }
+                  },
                 ),
               ),
             ),
