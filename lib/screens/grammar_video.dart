@@ -164,8 +164,7 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                      height: 16), // Jarak antara container pertama dan kedua
+                  SizedBox(height: 16),
                   Container(
                     height: 60,
                     margin: EdgeInsets.symmetric(horizontal: 26),
