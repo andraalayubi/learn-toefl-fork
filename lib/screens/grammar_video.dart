@@ -19,7 +19,7 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
           child: Column(
             children: [
               Text(
-                'Grammar',
+                'GRAMMAR',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 12,
