@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:learn_toefl/screens/exercise.dart';
 import 'package:learn_toefl/screens/homepage.dart';
-import 'package:learn_toefl/screens/test.dart';
 import 'package:learn_toefl/screens/profile.dart';
 
 void main() {
@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
         index: _currentIndex,
         children: [
           HomePage(),
-          TestPage(),
+          ExercisePage(),
           ProfilPage(),
         ],
       ),

@@ -92,23 +92,3 @@ void insertVideos() async {
       "INSERT INTO Video (name, url, category_id) VALUES ('Present Perfect', 'olwUz4qkA2c', 5)");
 }
 
-void insertPractices() async {
-  try {
-    final db = await ToeflDatabase.instance.database;
-    await db.execute("INSERT INTO User (username) VALUES ('JohnDoe')");
-    // await db.execute("INSERT INTO QuestionCategory (name, reading_text, user_id, nilai) VALUES ('Charles Darwin's Theory of Evolution is known as one of the most important and controversial scientific theories ever published. Darwin was an English scientist in the 19th century best known for his book “On the Origin of Species.” In his book, Darwin postulated different species shared characteristics of common ancestors, that they branched off from common ancestors as they evolved, and that new traits and characteristics were a result of natural selection. The theory is based on the assumptions that life developed from non-life and progressed and evolved in an indirect manner. Therefore, the Theory of Evolution, while controversial, has shaped and influenced the modern scientific world's thinking on the development of life itself. Darwin was born February 12, 1809 in England. Although initially entering into medicine, Darwin chose to pursue his interest in natural science and embarked on a five-year journey aboard the H.M.S. Beagle, a British sloop belonging to the Royal Navy. Because of his experience aboard the Beagle, he laid the foundation for his Theory of Evolution while also establishing himself within the scientific community. Specifically, Darwin's keen observation of the fossils and wildlife he saw during his time on the Beagle served as the basis for the cornerstone of his theory: natural selection.', 1, 0)");
-    await db.execute("INSERT INTO Question_Category (name, reading_text, user_id, nilai) VALUES ('Charles Darwin's Theory.', 1, 0)");
-    await db.execute(
-        "INSERT INTO Question (question_text, correct_answer_id, question_category_id) VALUES ('What was the primary discovery made by Wilhelm Röntgen?', 4, 1)");
-    await db.execute(
-        "INSERT INTO Answer (answer_text, question_id) VALUES ('The existence of cathode ray tubes', 1), ('The fluorescence of certain materials', 1), ('The ability of electromagnetic radiation to penetrate solid objects', 1), ('The phenomenon of X-rays', 1)");
-    await db.execute(
-        "INSERT INTO Question (question_text, correct_answer_id, question_category_id) VALUES ('Which of the following statements accurately describes the initial impact of Röntgen''s discovery?', 2, 1)");
-    await db.execute(
-        "INSERT INTO Answer (answer_text, question_id) VALUES ('It led to the immediate development of radiation safety protocols.', 2), ('It enabled the first X-ray image of a human body part to be produced.', 2), ('It sparked concerns about the potential health risks of X-ray exposure.', 2), ('It was widely accepted without any controversy or concern.', 2)");
-    print("berhasil insert");
-  } catch (e) {
-    print(e);
-    rethrow;
-  }
-}

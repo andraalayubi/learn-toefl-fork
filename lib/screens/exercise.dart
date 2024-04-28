@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'exercise_question_answer.dart';
+// import 'exercise_question_answer.dart';
 
 class ExercisePage extends StatefulWidget {
   const ExercisePage({Key? key}) : super(key: key);
@@ -279,13 +279,13 @@ class _ExercisePageState extends State<ExercisePage> {
               ),
             ),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      ExerciseQuestionAnswer(), // Navigasi ke ExerciseQuestionAnswer
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) =>
+              //         ExerciseQuestionAnswer(), // Navigasi ke ExerciseQuestionAnswer
+              //   ),
+              // );
             },
           );
         }).toList(),
