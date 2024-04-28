@@ -292,4 +292,6 @@ class _ExercisePageState extends State<ExercisePage> {
       ),
     );
   }
+
+  ExerciseQuestionAnswer() {}
 }
