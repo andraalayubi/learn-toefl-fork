@@ -1,6 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:learn_toefl/database/insert_videos.dart';
+import 'package:learn_toefl/database/insert_data.dart';
 
 class ToeflDatabase {
   static final ToeflDatabase instance = ToeflDatabase._init();
@@ -14,6 +14,7 @@ class ToeflDatabase {
     
     // Memanggil fungsi insertVideos setelah database dibuat
     insertVideos();
+    insertPractices();
     return _database!;
   }
 
@@ -33,7 +34,7 @@ class ToeflDatabase {
         ''');
 
     await db.execute('''
-        CREATE TABLE Category (
+        CREATE TABLE VideoCategory (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name VARCHAR(255),
           subCategory_id INT,
@@ -65,8 +66,19 @@ class ToeflDatabase {
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name VARCHAR(255),
           url VARCHAR(255),
-          category_id INT,
-          FOREIGN KEY (category_id) REFERENCES Category(id)
+          video_category_id INT,
+          FOREIGN KEY (video_category_id) REFERENCES VideoCategory(id)
+        )
+        ''');
+
+    await db.execute('''
+        CREATE TABLE Question_Category (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT,
+          reading_text TEXT,
+          user_id INT,
+          nilai INT,
+          FOREIGN KEY (user_id) REFERENCES User(id)
         )
         ''');
 
@@ -75,12 +87,9 @@ class ToeflDatabase {
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           question_text TEXT,
           correct_answer_id INT,
-          category_id INT,
-          user_id INT,
-          nilai INT,
+          question_category_id INT,
           FOREIGN KEY (correct_answer_id) REFERENCES Answer(id),
-          FOREIGN KEY (category_id) REFERENCES Category(id),
-          FOREIGN KEY (user_id) REFERENCES User(id)
+          FOREIGN KEY (question_category_id) REFERENCES Question_Category(id)
         )
         ''');
 
