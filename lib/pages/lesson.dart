@@ -143,8 +143,8 @@ class _LessonPageState extends State<LessonPage> {
                       padding: EdgeInsets.only(top: 10),
                       child: Image.asset(
                         'assets/images/writing.png',
-                        width: 85,
-                        height: 80,
+                        width: 105,
+                        height: 100,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -168,7 +168,7 @@ class _LessonPageState extends State<LessonPage> {
                       title: Row(
                         children: [
                           Image.asset('assets/images/music.png',
-                              width: 30, height: 30),
+                              width: 35, height: 35),
                           SizedBox(width: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,12 +176,13 @@ class _LessonPageState extends State<LessonPage> {
                               Text(
                                 "Listening",
                                 style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 "3 Material",
                                 style: TextStyle(
-                                    fontSize: 9, fontWeight: FontWeight.normal),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal),
                               ),
                             ],
                           ),
@@ -199,7 +200,7 @@ class _LessonPageState extends State<LessonPage> {
                           child: ListTile(
                             title: Text(
                               '100 Idioms in Listening skills ',
-                              style: TextStyle(fontSize: 9),
+                              style: TextStyle(fontSize: 12),
                             ),
                             trailing: Container(
                               width: 58,
@@ -223,7 +224,7 @@ class _LessonPageState extends State<LessonPage> {
                         ListTile(
                           title: Text(
                             '200 Idioms in Listening skills ',
-                            style: TextStyle(fontSize: 9),
+                            style: TextStyle(fontSize: 12),
                           ),
                           trailing: Container(
                             width: 58,
@@ -246,7 +247,7 @@ class _LessonPageState extends State<LessonPage> {
                         ListTile(
                           title: Text(
                             '300 Idioms in Listening skills ',
-                            style: TextStyle(fontSize: 9),
+                            style: TextStyle(fontSize: 12),
                           ),
                           trailing: Container(
                             width: 58,
@@ -269,7 +270,7 @@ class _LessonPageState extends State<LessonPage> {
                         ListTile(
                           title: Text(
                             '400 Idioms in Listening skills ',
-                            style: TextStyle(fontSize: 9),
+                            style: TextStyle(fontSize: 12),
                           ),
                           trailing: Container(
                             width: 58,
@@ -304,7 +305,7 @@ class _LessonPageState extends State<LessonPage> {
                       title: Row(
                         children: [
                           Image.asset('assets/images/speaking.png',
-                              width: 30, height: 30),
+                              width: 35, height: 35),
                           SizedBox(width: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -312,12 +313,13 @@ class _LessonPageState extends State<LessonPage> {
                               Text(
                                 "Speaking",
                                 style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 "3 Material",
                                 style: TextStyle(
-                                    fontSize: 9, fontWeight: FontWeight.normal),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal),
                               ),
                             ],
                           ),
@@ -337,7 +339,7 @@ class _LessonPageState extends State<LessonPage> {
                       title: Row(
                         children: [
                           Image.asset('assets/images/open-book.png',
-                              width: 30, height: 30),
+                              width: 35, height: 35),
                           SizedBox(width: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -345,12 +347,13 @@ class _LessonPageState extends State<LessonPage> {
                               Text(
                                 "Reading",
                                 style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 "3 Material",
                                 style: TextStyle(
-                                    fontSize: 9, fontWeight: FontWeight.normal),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal),
                               ),
                             ],
                           ),
@@ -370,7 +373,7 @@ class _LessonPageState extends State<LessonPage> {
                       title: Row(
                         children: [
                           Image.asset('assets/images/copy-writing.png',
-                              width: 30, height: 30),
+                              width: 35, height: 35),
                           SizedBox(width: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -378,12 +381,13 @@ class _LessonPageState extends State<LessonPage> {
                               Text(
                                 "Writing",
                                 style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 "3 Material",
                                 style: TextStyle(
-                                    fontSize: 9, fontWeight: FontWeight.normal),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal),
                               ),
                             ],
                           ),

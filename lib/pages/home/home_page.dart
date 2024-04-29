@@ -198,7 +198,7 @@ class _HomePageState extends State<HomePage> {
                                       child: Text(
                                         'Lesson',
                                         style: tFOnt(
-                                          fontSize: 17,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black,
                                         ),
@@ -261,7 +261,7 @@ class _HomePageState extends State<HomePage> {
                                       child: Text(
                                         'Grammar',
                                         style: tFOnt(
-                                          fontSize: 17,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black,
                                         ),
@@ -324,7 +324,7 @@ class _HomePageState extends State<HomePage> {
                                       child: Text(
                                         'Translate',
                                         style: tFOnt(
-                                          fontSize: 17,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black,
                                         ),
