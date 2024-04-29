@@ -71,6 +71,7 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     } else {
+                      print(snapshot.data!['url']);
                       return YoutubePlayer(
                         controller: YoutubePlayerController(
                           initialVideoId: snapshot.data!['url'],

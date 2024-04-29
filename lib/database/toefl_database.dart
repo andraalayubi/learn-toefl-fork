@@ -14,7 +14,7 @@ class ToeflDatabase {
     
     // Memanggil fungsi insertVideos setelah database dibuat
     insertVideos();
-    insertPractices();
+    // insertPractices();
     return _database!;
   }
 
@@ -68,37 +68,6 @@ class ToeflDatabase {
           url VARCHAR(255),
           video_category_id INT,
           FOREIGN KEY (video_category_id) REFERENCES VideoCategory(id)
-        )
-        ''');
-
-    await db.execute('''
-        CREATE TABLE Question_Category (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          name TEXT,
-          reading_text TEXT,
-          user_id INT,
-          nilai INT,
-          FOREIGN KEY (user_id) REFERENCES User(id)
-        )
-        ''');
-
-    await db.execute('''
-        CREATE TABLE Question (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          question_text TEXT,
-          correct_answer_id INT,
-          question_category_id INT,
-          FOREIGN KEY (correct_answer_id) REFERENCES Answer(id),
-          FOREIGN KEY (question_category_id) REFERENCES Question_Category(id)
-        )
-        ''');
-
-    await db.execute('''
-        CREATE TABLE Answer (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          answer_text TEXT,
-          question_id INT,
-          FOREIGN KEY (question_id) REFERENCES Question(id)
         )
         ''');
   }
