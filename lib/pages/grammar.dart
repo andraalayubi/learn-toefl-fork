@@ -112,7 +112,7 @@ class _GrammarPageState extends State<GrammarPage> {
                             'Grammar serves as the backbone of language, ensuring clarity and precision in communication',
                             style: TextStyle(
                               fontSize: 12,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
                           ),
@@ -124,8 +124,8 @@ class _GrammarPageState extends State<GrammarPage> {
                       padding: EdgeInsets.only(top: 10),
                       child: Image.asset(
                         'assets/images/reading-book.png',
-                        width: 85,
-                        height: 80,
+                        width: 105,
+                        height: 100,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -145,10 +145,11 @@ class _GrammarPageState extends State<GrammarPage> {
                       border: Border.all(width: 1.0, color: Colors.black),
                     ),
                     child: ExpansionTile(
+                      shape: Border(),
                       title: Row(
                         children: [
                           Image.asset('assets/images/music.png',
-                              width: 30, height: 30),
+                              width: 35, height: 35),
                           SizedBox(width: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,12 +157,13 @@ class _GrammarPageState extends State<GrammarPage> {
                               Text(
                                 "Nouns",
                                 style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 "3 Material",
                                 style: TextStyle(
-                                    fontSize: 9, fontWeight: FontWeight.normal),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal),
                               ),
                             ],
                           ),
@@ -281,10 +283,11 @@ class _GrammarPageState extends State<GrammarPage> {
                       border: Border.all(width: 1.0, color: Colors.black),
                     ),
                     child: ExpansionTile(
+                      shape: Border(),
                       title: Row(
                         children: [
                           Image.asset('assets/images/open-book.png',
-                              width: 30, height: 30),
+                              width: 35, height: 35),
                           SizedBox(width: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -292,12 +295,13 @@ class _GrammarPageState extends State<GrammarPage> {
                               Text(
                                 "Adjectives",
                                 style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 "3 Material",
                                 style: TextStyle(
-                                    fontSize: 9, fontWeight: FontWeight.normal),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal),
                               ),
                             ],
                           ),
@@ -314,10 +318,11 @@ class _GrammarPageState extends State<GrammarPage> {
                       border: Border.all(width: 1.0, color: Colors.black),
                     ),
                     child: ExpansionTile(
+                      shape: Border(),
                       title: Row(
                         children: [
                           Image.asset('assets/images/open-book.png',
-                              width: 30, height: 30),
+                              width: 35, height: 35),
                           SizedBox(width: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -325,12 +330,13 @@ class _GrammarPageState extends State<GrammarPage> {
                               Text(
                                 "Adverbs",
                                 style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 "3 Material",
                                 style: TextStyle(
-                                    fontSize: 9, fontWeight: FontWeight.normal),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal),
                               ),
                             ],
                           ),

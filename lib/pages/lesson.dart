@@ -15,6 +15,7 @@ class _LessonPageState extends State<LessonPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.0,
         title: Text(
           'LESSON',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -111,27 +112,10 @@ class _LessonPageState extends State<LessonPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Welcome to Our App',
+                            'Get ready to elevate your English proficiency with our comprehensive TOEFL lessons. ',
                             style: TextStyle(
-                              fontSize: 8,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            'Ignite Your TOEFL Journey with Passion',
-                            style: TextStyle(
-                              fontSize: 8,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            'and Purpose!',
-                            style: TextStyle(
-                              fontSize: 8,
-                              fontWeight: FontWeight.normal,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
                           ),
@@ -302,6 +286,7 @@ class _LessonPageState extends State<LessonPage> {
                       border: Border.all(width: 1.0, color: Colors.black),
                     ),
                     child: ExpansionTile(
+                      shape: Border(),
                       title: Row(
                         children: [
                           Image.asset('assets/images/speaking.png',
@@ -336,6 +321,7 @@ class _LessonPageState extends State<LessonPage> {
                       border: Border.all(width: 1.0, color: Colors.black),
                     ),
                     child: ExpansionTile(
+                      shape: Border(),
                       title: Row(
                         children: [
                           Image.asset('assets/images/open-book.png',
@@ -370,6 +356,7 @@ class _LessonPageState extends State<LessonPage> {
                       border: Border.all(width: 1.0, color: Colors.black),
                     ),
                     child: ExpansionTile(
+                      shape: Border(),
                       title: Row(
                         children: [
                           Image.asset('assets/images/copy-writing.png',
