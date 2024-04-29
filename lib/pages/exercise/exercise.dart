@@ -25,12 +25,6 @@ class _Exercise extends State<Exercise> {
           ),
         ),
         backgroundColor: const Color(0xFF0D0443),
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-        //   onPressed: () {
-        //     Navigator.pop(context);
-        //   },
-        // ),
       ),
       backgroundColor: const Color(0xFF0D0443),
       body: SingleChildScrollView(
@@ -54,10 +48,6 @@ class _Exercise extends State<Exercise> {
             ],
           ),
           padding: const EdgeInsets.all(15),
-          // child: Container( // Tambahkan Container untuk memastikan latar belakang putih
-          //   decoration: BoxDecoration(
-          //     color: Colors.white, // Latar belakang putih
-          //   ),
           child: Column(
             children: [
               _buildHeader(containerWidth),
@@ -190,15 +180,6 @@ class _Exercise extends State<Exercise> {
     int totalLevels,
   ) {
     return Card(
-      // shape: RoundedRectangleBorder(
-      //   borderRadius: BorderRadius.circular(15),
-      //   side: const BorderSide(
-      //     color: Colors.black,
-      //     width: 1,
-      //   ),
-      // ),
-      // elevation: 5,
-      // color: Colors.white,
       child: Container(
         decoration: BoxDecoration(
             color: Colors.white,
