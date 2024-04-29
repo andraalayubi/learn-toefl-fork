@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:learn_toefl/screens/exercise_question_answer.dart';
 
-class ExercisePage extends StatefulWidget {
-  const ExercisePage({Key? key}) : super(key: key);
+class Exercise extends StatefulWidget {
+  const Exercise({Key? key}) : super(key: key);
 
   @override
-  _ExercisePageState createState() => _ExercisePageState();
+  _Exercise createState() => _Exercise();
 }
 
-class _ExercisePageState extends State<ExercisePage> {
+class _Exercise extends State<Exercise> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -268,7 +269,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 borderRadius: BorderRadius.circular(14),
               ),
               child: Text(
-                '0%', // Contoh nilai skor
+                '0%', // Skor contoh
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 9,
@@ -281,7 +282,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      ExerciseQuestionAnswer(), // Navigasi ke ExerciseQuestionAnswer
+                      ExerciseQuestionAnswer(), // Pastikan ini valid
                 ),
               );
             },
@@ -291,5 +292,8 @@ class _ExercisePageState extends State<ExercisePage> {
     );
   }
 
-  ExerciseQuestionAnswer() {}
+  // Periksa apakah ini benar-benar diperlukan
+  Widget exerciseQuestionAnswerWidget() {
+    return ExerciseQuestionAnswer(); // Pastikan ini benar
+  }
 }
