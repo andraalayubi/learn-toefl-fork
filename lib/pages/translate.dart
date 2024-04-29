@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:learn_toefl/screens/grammar_video.dart';
-import 'package:learn_toefl/screens/lesson_video.dart';
 
 class TranslatePage extends StatefulWidget {
   const TranslatePage({super.key});

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'exercise_question_answer.dart';
-
 class ExercisePage extends StatefulWidget {
   const ExercisePage({Key? key}) : super(key: key);
 

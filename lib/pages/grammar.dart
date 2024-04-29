@@ -1,22 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:learn_toefl/screens/lesson_video.dart';
+import 'package:learn_toefl/pages/grammar_video.dart';
 
-class LessonPage extends StatefulWidget {
-  const LessonPage({super.key});
+class GrammarPage extends StatefulWidget {
+  const GrammarPage({super.key});
 
   @override
-  State<LessonPage> createState() => _LessonPageState();
+  State<GrammarPage> createState() => _GrammarPageState();
 }
 
-class _LessonPageState extends State<LessonPage> {
+class _GrammarPageState extends State<GrammarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'LESSON',
+          'GRAMMAR',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Color(0xFF0D0443),
@@ -111,26 +109,9 @@ class _LessonPageState extends State<LessonPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Welcome to Our App',
+                            'Grammar serves as the backbone of language, ensuring clarity and precision in communication',
                             style: TextStyle(
-                              fontSize: 8,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            'Ignite Your TOEFL Journey with Passion',
-                            style: TextStyle(
-                              fontSize: 8,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            'and Purpose!',
-                            style: TextStyle(
-                              fontSize: 8,
+                              fontSize: 12,
                               fontWeight: FontWeight.normal,
                               color: Colors.white,
                             ),
@@ -142,7 +123,7 @@ class _LessonPageState extends State<LessonPage> {
                     Padding(
                       padding: EdgeInsets.only(top: 10),
                       child: Image.asset(
-                        'assets/images/writing.png',
+                        'assets/images/reading-book.png',
                         width: 85,
                         height: 80,
                         fit: BoxFit.cover,
@@ -173,7 +154,7 @@ class _LessonPageState extends State<LessonPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Listening",
+                                "Nouns",
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
                               ),
@@ -193,11 +174,11 @@ class _LessonPageState extends State<LessonPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LessonVideoPage()));
+                                    builder: (context) => GrammarVideoPage()));
                           },
                           child: ListTile(
                             title: Text(
-                              '100 Idioms in Listening skills ',
+                              'Type and Basic Function',
                               style: TextStyle(fontSize: 9),
                             ),
                             trailing: Container(
@@ -221,7 +202,7 @@ class _LessonPageState extends State<LessonPage> {
                         ),
                         ListTile(
                           title: Text(
-                            '200 Idioms in Listening skills ',
+                            'Subjects, Objects, and Complements',
                             style: TextStyle(fontSize: 9),
                           ),
                           trailing: Container(
@@ -244,7 +225,7 @@ class _LessonPageState extends State<LessonPage> {
                         ),
                         ListTile(
                           title: Text(
-                            '300 Idioms in Listening skills ',
+                            'Formation and Usage',
                             style: TextStyle(fontSize: 9),
                           ),
                           trailing: Container(
@@ -267,7 +248,7 @@ class _LessonPageState extends State<LessonPage> {
                         ),
                         ListTile(
                           title: Text(
-                            '400 Idioms in Listening skills ',
+                            'Proper Nouns, Collective Nouns, and Abstract Nouns',
                             style: TextStyle(fontSize: 9),
                           ),
                           trailing: Container(
@@ -302,14 +283,14 @@ class _LessonPageState extends State<LessonPage> {
                     child: ExpansionTile(
                       title: Row(
                         children: [
-                          Image.asset('assets/images/speaking.png',
+                          Image.asset('assets/images/open-book.png',
                               width: 30, height: 30),
                           SizedBox(width: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Speaking",
+                                "Adjectives",
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
                               ),
@@ -342,40 +323,7 @@ class _LessonPageState extends State<LessonPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Reading",
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "3 Material",
-                                style: TextStyle(
-                                    fontSize: 9, fontWeight: FontWeight.normal),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 26),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      border: Border.all(width: 1.0, color: Colors.black),
-                    ),
-                    child: ExpansionTile(
-                      title: Row(
-                        children: [
-                          Image.asset('assets/images/copy-writing.png',
-                              width: 30, height: 30),
-                          SizedBox(width: 8),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Writing",
+                                "Adverbs",
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
                               ),

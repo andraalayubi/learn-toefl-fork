@@ -1,23 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:learn_toefl/screens/grammar_video.dart';
-import 'package:learn_toefl/screens/lesson_video.dart';
+import 'package:learn_toefl/pages/lesson_video.dart';
 
-class GrammarPage extends StatefulWidget {
-  const GrammarPage({super.key});
+class LessonPage extends StatefulWidget {
+  const LessonPage({super.key});
 
   @override
-  State<GrammarPage> createState() => _GrammarPageState();
+  State<LessonPage> createState() => _LessonPageState();
 }
 
-class _GrammarPageState extends State<GrammarPage> {
+class _LessonPageState extends State<LessonPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'GRAMMAR',
+          'LESSON',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Color(0xFF0D0443),
@@ -112,9 +111,26 @@ class _GrammarPageState extends State<GrammarPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Grammar serves as the backbone of language, ensuring clarity and precision in communication',
+                            'Welcome to Our App',
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 8,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            'Ignite Your TOEFL Journey with Passion',
+                            style: TextStyle(
+                              fontSize: 8,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Text(
+                            'and Purpose!',
+                            style: TextStyle(
+                              fontSize: 8,
                               fontWeight: FontWeight.normal,
                               color: Colors.white,
                             ),
@@ -126,7 +142,7 @@ class _GrammarPageState extends State<GrammarPage> {
                     Padding(
                       padding: EdgeInsets.only(top: 10),
                       child: Image.asset(
-                        'assets/images/reading-book.png',
+                        'assets/images/writing.png',
                         width: 85,
                         height: 80,
                         fit: BoxFit.cover,
@@ -148,6 +164,7 @@ class _GrammarPageState extends State<GrammarPage> {
                       border: Border.all(width: 1.0, color: Colors.black),
                     ),
                     child: ExpansionTile(
+                      shape: Border(),
                       title: Row(
                         children: [
                           Image.asset('assets/images/music.png',
@@ -157,7 +174,7 @@ class _GrammarPageState extends State<GrammarPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Nouns",
+                                "Listening",
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
                               ),
@@ -177,11 +194,11 @@ class _GrammarPageState extends State<GrammarPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => GrammarVideoPage()));
+                                    builder: (context) => LessonVideoPage()));
                           },
                           child: ListTile(
                             title: Text(
-                              'Type and Basic Function',
+                              '100 Idioms in Listening skills ',
                               style: TextStyle(fontSize: 9),
                             ),
                             trailing: Container(
@@ -205,7 +222,7 @@ class _GrammarPageState extends State<GrammarPage> {
                         ),
                         ListTile(
                           title: Text(
-                            'Subjects, Objects, and Complements',
+                            '200 Idioms in Listening skills ',
                             style: TextStyle(fontSize: 9),
                           ),
                           trailing: Container(
@@ -228,7 +245,7 @@ class _GrammarPageState extends State<GrammarPage> {
                         ),
                         ListTile(
                           title: Text(
-                            'Formation and Usage',
+                            '300 Idioms in Listening skills ',
                             style: TextStyle(fontSize: 9),
                           ),
                           trailing: Container(
@@ -251,7 +268,7 @@ class _GrammarPageState extends State<GrammarPage> {
                         ),
                         ListTile(
                           title: Text(
-                            'Proper Nouns, Collective Nouns, and Abstract Nouns',
+                            '400 Idioms in Listening skills ',
                             style: TextStyle(fontSize: 9),
                           ),
                           trailing: Container(
@@ -286,14 +303,14 @@ class _GrammarPageState extends State<GrammarPage> {
                     child: ExpansionTile(
                       title: Row(
                         children: [
-                          Image.asset('assets/images/open-book.png',
+                          Image.asset('assets/images/speaking.png',
                               width: 30, height: 30),
                           SizedBox(width: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Adjectives",
+                                "Speaking",
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
                               ),
@@ -326,7 +343,40 @@ class _GrammarPageState extends State<GrammarPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Adverbs",
+                                "Reading",
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "3 Material",
+                                style: TextStyle(
+                                    fontSize: 9, fontWeight: FontWeight.normal),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 26),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      border: Border.all(width: 1.0, color: Colors.black),
+                    ),
+                    child: ExpansionTile(
+                      title: Row(
+                        children: [
+                          Image.asset('assets/images/copy-writing.png',
+                              width: 30, height: 30),
+                          SizedBox(width: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Writing",
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
                               ),

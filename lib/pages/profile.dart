@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_toefl/screens/update_profile.dart';
+import 'package:learn_toefl/pages/update_profile.dart';
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
