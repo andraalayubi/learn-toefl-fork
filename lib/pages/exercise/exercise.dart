@@ -17,12 +17,15 @@ class _Exercise extends State<Exercise> {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        title: const Text(
-          "EXERCISE",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: const Text(
+            "EXERCISE",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         backgroundColor: const Color(0xFF0D0443),
@@ -30,8 +33,9 @@ class _Exercise extends State<Exercise> {
       backgroundColor: const Color(0xFF0D0443),
       body: SingleChildScrollView(
         child: Container(
+          // height: double.infinity,
           constraints: BoxConstraints(
-            minHeight: screenHeight, 
+            minHeight: screenHeight,
           ),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -62,51 +66,54 @@ class _Exercise extends State<Exercise> {
   }
 
   Widget _buildHeader(double containerWidth) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF0D0443),
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.8),
-            spreadRadius: 2,
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(15),
-      child: Row(
-        children: [
-          Expanded(
-            child: RichText(
-              text: const TextSpan(
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.white,
-                ),
-                children: [
-                  TextSpan(
-                    text: "Vocabulary",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFF0D0443),
+          borderRadius: BorderRadius.circular(10),
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.black.withOpacity(0.8),
+          //     spreadRadius: 2,
+          //     blurRadius: 10,
+          //     offset: const Offset(0, 3),
+          //   ),
+          // ],
+        ),
+        padding: const EdgeInsets.all(15),
+        child: Row(
+          children: [
+            Expanded(
+              child: RichText(
+                text: const TextSpan(
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: "Vocabulary",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  TextSpan(
-                    text:
-                        " is the cornerstone of communication, shaping our thoughts into articulate expressions.",
-                  ),
-                ],
+                    TextSpan(
+                      text:
+                          " is the cornerstone of communication, shaping our thoughts into articulate expressions.",
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Image.asset(
-            'assets/images/writing.png',
-            width: 120,
-            height: 120,
-            fit: BoxFit.cover,
-          ),
-        ],
+            Image.asset(
+              'assets/images/writing.png',
+              width: 120,
+              height: 120,
+              fit: BoxFit.cover,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -180,113 +187,115 @@ class _Exercise extends State<Exercise> {
     int levelDone,
     int totalLevels,
   ) {
-    return Card(
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(width: 1.0, color: Colors.black),
-            borderRadius: BorderRadius.circular(12)),
-        child: ExpansionTile(
-          shape: const Border(),
-          title: Row(
-            children: [
-              Image.asset(
-                imagePath,
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Card(
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(width: 1.0, color: Colors.black),
+              borderRadius: BorderRadius.circular(12)),
+          child: ExpansionTile(
+            shape: const Border(),
+            title: Row(
+              children: [
+                Image.asset(
+                  imagePath,
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                          children: [
+                            TextSpan(
+                                text: '$levelDone Level $totalLevels Done'),
+                            const TextSpan(
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            children: levels.map((level) {
+              final parts = level.split('\n');
+              return ListTile(
+                title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      parts[0], // "Level 1"
                       style: const TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
                       ),
                     ),
-                    const SizedBox(height: 2),
-                    RichText(
-                      text: TextSpan(
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Color.fromARGB(255, 0, 0, 0),
-                        ),
-                        children: [
-                          TextSpan(text: '$levelDone Level $totalLevels Done'),
-                          const TextSpan(
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                    Text(
+                      parts[1], // "10 Questions"
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+                trailing: Container(
+                  width: 58,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 24, 11, 70),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: const Text(
+                    '0%', // Skor contoh
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 9,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ExerciseQuestionAnswer(),
+                    ),
+                  );
+                },
+              );
+            }).toList(),
           ),
-          children: levels.map((level) {
-            final parts = level.split('\n');
-            return ListTile(
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    parts[0], // "Level 1"
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    parts[1], // "10 Questions"
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-              trailing: Container(
-                width: 58,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 24, 11, 70),
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: const Text(
-                  '0%', // Skor contoh
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 9,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        const ExerciseQuestionAnswer(), 
-                  ),
-                );
-              },
-            );
-          }).toList(),
         ),
       ),
     );
   }
 
-  
   Widget exerciseQuestionAnswerWidget() {
     return const ExerciseQuestionAnswer(); // Pastikan ini benar
   }

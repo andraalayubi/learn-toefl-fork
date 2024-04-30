@@ -101,7 +101,7 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -159,7 +159,7 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
                 children: [
                   Container(
                     height: 60,
-                    margin: EdgeInsets.symmetric(horizontal: 26),
+                    margin: const EdgeInsets.symmetric(horizontal: 26),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       color: Theme.of(context).scaffoldBackgroundColor,
@@ -181,10 +181,10 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Container(
                     height: 60,
-                    margin: EdgeInsets.symmetric(horizontal: 26),
+                    margin: const EdgeInsets.symmetric(horizontal: 26),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       color: Theme.of(context).scaffoldBackgroundColor,
@@ -209,7 +209,7 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
                   const SizedBox(height: 16),
                   Container(
                     height: 60,
-                    margin: EdgeInsets.symmetric(horizontal: 26),
+                    margin: const EdgeInsets.symmetric(horizontal: 26),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       color: Theme.of(context).scaffoldBackgroundColor,
@@ -235,7 +235,7 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                 ],
               ),
             )

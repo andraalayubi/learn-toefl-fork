@@ -14,15 +14,15 @@ class _GrammarPageState extends State<GrammarPage> {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        title: Text(
+        title: const Text(
           'GRAMMAR',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Color(0xFF0D0443),
+        backgroundColor: const Color(0xFF0D0443),
         leading: Padding(
           padding: const EdgeInsets.only(left: 22.0),
           child: IconButton(
-              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+              icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
               onPressed: () {
                 Navigator.of(context).pop();
               }),
@@ -38,7 +38,7 @@ class _GrammarPageState extends State<GrammarPage> {
                 child: Container(
                   height: 235,
                   width: double.infinity,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xFF0D0443),
                   ),
                   child: Row(
@@ -53,14 +53,14 @@ class _GrammarPageState extends State<GrammarPage> {
                               Container(
                                 width: 300,
                                 height: 40,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(12),
                                     bottomLeft: Radius.circular(12),
                                   ),
                                 ),
-                                child: TextField(
+                                child: const TextField(
                                   decoration: InputDecoration(
                                     hintText: "Search here",
                                     border: InputBorder.none,
@@ -72,7 +72,7 @@ class _GrammarPageState extends State<GrammarPage> {
                               Container(
                                 width: 40,
                                 height: 40,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: Color.fromARGB(255, 252, 232, 177),
                                   borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(12),
@@ -324,7 +324,7 @@ class _GrammarPageState extends State<GrammarPage> {
                         children: [
                           Image.asset('assets/images/open-book.png',
                               width: 35, height: 35),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
