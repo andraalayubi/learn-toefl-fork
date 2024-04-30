@@ -138,7 +138,7 @@ class _TransletePageState extends State<TranslatePage> {
                           const Icon(Icons.swap_horiz),
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.all(8),
+                              margin: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
