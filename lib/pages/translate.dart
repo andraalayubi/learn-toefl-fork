@@ -224,7 +224,7 @@ class _TransletePageState extends State<TranslatePage> {
                                 ),
                               ),
                               IconButton(
-                                icon: Icon(Icons.content_copy),
+                                icon: const Icon(Icons.content_copy),
                                 onPressed: () {},
                               ),
                             ],
@@ -237,9 +237,9 @@ class _TransletePageState extends State<TranslatePage> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: const [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 26.0),
+                          padding: EdgeInsets.symmetric(horizontal: 26.0),
                           child: Text('Translete To'),
                         ),
                       ],
@@ -266,7 +266,7 @@ class _TransletePageState extends State<TranslatePage> {
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 12.0),
-                              child: TextField(
+                              child: const TextField(
                                 decoration: InputDecoration(
                                   hintText: 'Enter text here...',
                                   border: InputBorder.none,
