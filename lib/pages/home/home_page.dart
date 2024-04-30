@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learn_toefl/pages/grammar.dart';
-import 'package:learn_toefl/pages/lesson.dart';
 import 'package:learn_toefl/pages/translate.dart';
+import 'package:learn_toefl/pages/video_list.dart';
 import 'package:learn_toefl/utilities.dart';
 
 class HomePage extends StatefulWidget {
@@ -156,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const LessonPage()));
+                                            const VideoListPage(title: 'LESSON', id: 1)));
                               },
                               child: Container(
                                 height: 150,
@@ -218,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const GrammarPage(),
+                                    builder: (context) => const VideoListPage(title: 'GRAMMAR', id: 2),
                                   ),
                                 );
                               },

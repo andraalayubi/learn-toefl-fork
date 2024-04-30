@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 Future<List<Practice>> fetchReading() async {
-  final response = await http.get(Uri.parse('http://192.168.43.138:3000/practice'));
+  final response = await http.get(Uri.parse('http://192.168.0.119:3000/practice'));
 
   if (response.statusCode == 200) {
     List jsonResponse = json.decode(response.body);
