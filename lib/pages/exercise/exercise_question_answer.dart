@@ -1,8 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/widget/question_widgets.dart';
+import 'package:learn_toefl/pages/exercise/correct_incorrect.dart';
+
+class CustomAppBar extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height);
+    path.quadraticBezierTo(size.width / 4, size.height - 40, size.width / 2, size.height - 20);
+    path.quadraticBezierTo(3 / 4 * size.width, size.height, size.width, size.height - 20);
+    path.lineTo(size.width, 0);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
+  }
+}
 
 class ExerciseQuestionAnswer extends StatefulWidget {
-  const ExerciseQuestionAnswer({super.key});
+  const ExerciseQuestionAnswer({Key? key}) : super(key: key);
 
   @override
   _ExerciseQuestionAnswerState createState() => _ExerciseQuestionAnswerState();
@@ -21,32 +39,48 @@ class _ExerciseQuestionAnswerState extends State<ExerciseQuestionAnswer> {
         currentQuestion += 1;
       } // Menambah progres setiap kali pertanyaan dijawab
     });
+// Jika semua pertanyaan telah dijawab, arahkan ke halaman CorrectIncorrectScreen
+    if (currentQuestion >= totalQuestions) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                CorrectIncorrect()), // Halaman yang akan dituju
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Level 1',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100),
+        child: ClipPath(
+          clipper: CustomAppBar(),
+          child: AppBar(
+            title: Column(
+              //crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Level 1',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '10 Questions',
+                  style: TextStyle(color: Colors.white, fontSize: 14),
+                ),
+              ],
             ),
-            Text(
-              '10 Questions',
-              style: TextStyle(color: Colors.white, fontSize: 14),
+            backgroundColor: Color(0xFF0D0443),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_new, color: Colors.white),
+              onPressed: () => Navigator.pop(context),
             ),
-          ],
-        ),
-        backgroundColor: const Color(0xFF0D0443),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+          ),
         ),
       ),
       body: Column(
@@ -59,15 +93,18 @@ class _ExerciseQuestionAnswerState extends State<ExerciseQuestionAnswer> {
               children: [
                 Text(
                   '$currentQuestion/$totalQuestions', // Teks progress dengan format "1/10"
-                  style: const TextStyle(color: Colors.black, fontSize: 14),
+                  style: TextStyle(color: Colors.black, fontSize: 14),
                 ),
+                SizedBox(width: 10),
                 Expanded(
                   child: LinearProgressIndicator(
+                    borderRadius: BorderRadius.circular(50),
                     value: currentQuestion / totalQuestions, // Progress bar
                     backgroundColor:
                         Colors.grey[300], // Warna latar belakang progress bar
-                    valueColor: const AlwaysStoppedAnimation<Color>(
-                        Color(0xFF0D0443),), // Warna progress bar
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Color(0xFF0D0443),
+                    ), // Warna progress bar
                   ),
                 ),
               ],
@@ -79,7 +116,7 @@ class _ExerciseQuestionAnswerState extends State<ExerciseQuestionAnswer> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CustomBox(
+                  CustomBox(
                     // Menggunakan CustomBox untuk bacaan
                     title: 'Example 1',
                     content:
@@ -92,7 +129,7 @@ class _ExerciseQuestionAnswerState extends State<ExerciseQuestionAnswer> {
                   QuestionBox(
                     questionNumber: 1,
                     question: 'What is the main idea of the passage?',
-                    options:  [
+                    options: [
                       'In modern society we must make more time for our neighbors.',
                       'An accepted way of measuring time is essential for the smooth functioning of society.',
                       'Society judges people by the times at which they conduct certain activities.',
@@ -167,3 +204,4 @@ class _ExerciseQuestionAnswerState extends State<ExerciseQuestionAnswer> {
     );
   }
 }
+
