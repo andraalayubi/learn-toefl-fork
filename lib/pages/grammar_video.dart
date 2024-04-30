@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:learn_toefl/controller/video_controller.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class GrammarVideoPage extends StatefulWidget {
@@ -17,7 +16,7 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
   @override
   void initState() {
     super.initState();
-    _videoData = fetchVideoData(1);
+    // _videoData = fetchVideoData(1);
   }
 
   @override
