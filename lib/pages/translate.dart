@@ -18,6 +18,7 @@ class _TransletePageState extends State<TranslatePage> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: Text(
           'TRANSLATOR',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),

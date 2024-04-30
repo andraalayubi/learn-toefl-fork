@@ -16,7 +16,36 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ToeTion'),
+        surfaceTintColor: Colors.transparent,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 5.0),
+                child: Text(
+                  'ToeTion',
+                  style: tFOnt(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: const BoxDecoration(
+                  color: mColor,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.favorite,
+                  color: Colors.white,
+                ),
+              )
+            ],
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: SafeArea(
@@ -26,37 +55,8 @@ class _HomePageState extends State<HomePage> {
             ),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8,
-                    bottom: 10,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5.0),
-                        child: Text(
-                          'ToeTion',
-                          style: tFOnt(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: const BoxDecoration(
-                          color: mColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.favorite,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
+                SizedBox(
+                  height: 8,
                 ),
                 Card(
                   child: Container(

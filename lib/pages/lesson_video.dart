@@ -14,6 +14,7 @@ class _LessonVideoPageState extends State<LessonVideoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: const Padding(
           padding: EdgeInsets.only(left: 50),
           child: Column(
@@ -63,8 +64,9 @@ class _LessonVideoPageState extends State<LessonVideoPage> {
                         height: 210,
                         width: 370,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),                         color: Colors.black,
-),
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ],
@@ -163,8 +165,7 @@ class _LessonVideoPageState extends State<LessonVideoPage> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                      height: 16),
+                  SizedBox(height: 16),
                   Container(
                     height: 60,
                     margin: EdgeInsets.symmetric(horizontal: 26),

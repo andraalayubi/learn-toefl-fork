@@ -15,6 +15,7 @@ class _LessonPageState extends State<LessonPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         elevation: 0.0,
         title: Text(
           'LESSON',

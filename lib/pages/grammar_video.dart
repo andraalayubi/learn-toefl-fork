@@ -24,6 +24,7 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: const Padding(
           padding: EdgeInsets.only(left: 50),
           child: Column(
@@ -46,7 +47,7 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
         leading: Padding(
           padding: const EdgeInsets.only(left: 22.0),
           child: IconButton(
-              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+              icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
               onPressed: () {
                 Navigator.of(context).pop();
               }),
@@ -60,14 +61,14 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
               child: Container(
                 height: 435,
                 width: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color(0xFF0D0443),
                 ),
                 child: FutureBuilder<Map<String, dynamic>>(
                   future: _videoData,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     } else {
@@ -75,7 +76,7 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
                       return YoutubePlayer(
                         controller: YoutubePlayerController(
                           initialVideoId: snapshot.data!['url'],
-                          flags: YoutubePlayerFlags(
+                          flags: const YoutubePlayerFlags(
                             autoPlay: false,
                             mute: false,
                           ),
@@ -89,12 +90,12 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
               ),
             ),
             Transform.translate(
-              offset: Offset(0, -110),
+              offset: const Offset(0, -110),
               child: Container(
                 width: 360,
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Color(0xFF0D0443),
+                  color: const Color(0xFF0D0443),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -123,7 +124,7 @@ class _GrammarVideoPageState extends State<GrammarVideoPage> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
                       child: Image.asset(

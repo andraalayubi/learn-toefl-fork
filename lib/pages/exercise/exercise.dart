@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learn_toefl/pages/exercise/exercise_question_answer.dart';
 
 class Exercise extends StatefulWidget {
-  const Exercise({Key? key}) : super(key: key);
+  const Exercise({super.key});
 
   @override
   _Exercise createState() => _Exercise();
@@ -16,6 +16,7 @@ class _Exercise extends State<Exercise> {
 
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: const Text(
           "EXERCISE",
           style: TextStyle(
@@ -30,7 +31,7 @@ class _Exercise extends State<Exercise> {
       body: SingleChildScrollView(
         child: Container(
           constraints: BoxConstraints(
-            minHeight: screenHeight, // Menutupi seluruh tinggi layar
+            minHeight: screenHeight, 
           ),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -57,7 +58,7 @@ class _Exercise extends State<Exercise> {
           ),
         ),
       ),
-      );
+    );
   }
 
   Widget _buildHeader(double containerWidth) {
@@ -79,15 +80,15 @@ class _Exercise extends State<Exercise> {
         children: [
           Expanded(
             child: RichText(
-              text: TextSpan(
-                style: const TextStyle(
+              text: const TextSpan(
+                style: TextStyle(
                   fontSize: 15,
                   color: Colors.white,
                 ),
                 children: [
                   TextSpan(
                     text: "Vocabulary",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -185,107 +186,108 @@ class _Exercise extends State<Exercise> {
             color: Colors.white,
             border: Border.all(width: 1.0, color: Colors.black),
             borderRadius: BorderRadius.circular(12)),
-      child: ExpansionTile(
-        shape: Border(),
-        title: Row(
-          children: [
-            Image.asset(
-              imagePath,
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
+        child: ExpansionTile(
+          shape: const Border(),
+          title: Row(
+            children: [
+              Image.asset(
+                imagePath,
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    RichText(
+                      text: TextSpan(
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ),
+                        children: [
+                          TextSpan(text: '$levelDone Level $totalLevels Done'),
+                          const TextSpan(
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          children: levels.map((level) {
+            final parts = level.split('\n');
+            return ListTile(
+              title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    parts[0], // "Level 1"
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
                     ),
                   ),
-                  const SizedBox(height: 2),
-                  RichText(
-                    text: TextSpan(
-                      style: const TextStyle(
-                        fontSize: 12,
-                          color: Color.fromARGB(255, 0, 0, 0),
-                      ),
-                      children: [
-                        TextSpan(text: '$levelDone Level $totalLevels Done'),
-                        TextSpan(
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                  Text(
+                    parts[1], // "10 Questions"
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
                     ),
                   ),
                 ],
               ),
-            ),
-          ],
+              trailing: Container(
+                width: 58,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 24, 11, 70),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: const Text(
+                  '0%', // Skor contoh
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 9,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const ExerciseQuestionAnswer(), 
+                  ),
+                );
+              },
+            );
+          }).toList(),
         ),
-        children: levels.map((level) {
-          final parts = level.split('\n');
-          return ListTile(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  parts[0], // "Level 1"
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  parts[1], // "10 Questions"
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-            trailing: Container(
-              width: 58,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 24, 11, 70),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Text(
-                '0%', // Skor contoh
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 9,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      ExerciseQuestionAnswer(), // Pastikan ini valid
-                ),
-              );
-            },
-          );
-        }).toList(),
-      ),
       ),
     );
   }
 
-  // Periksa apakah ini benar-benar diperlukan
+  
   Widget exerciseQuestionAnswerWidget() {
-    return ExerciseQuestionAnswer(); // Pastikan ini benar
+    return const ExerciseQuestionAnswer(); // Pastikan ini benar
   }
 }
