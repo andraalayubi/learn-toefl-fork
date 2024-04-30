@@ -15,6 +15,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('ToeTion'),
+      ),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -432,7 +435,7 @@ class _HomePageState extends State<HomePage> {
                                                 padding:
                                                     const EdgeInsets.all(3.0),
                                                 child: Text(
-                                                  'Listening 1  - 100 idiom',
+                                                  'Listening 1  - 100 idiom ',
                                                   style: tFOnt(
                                                     fontSize: 15,
                                                     fontWeight: FontWeight.w700,
