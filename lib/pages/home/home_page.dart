@@ -17,18 +17,15 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 5.0),
-                child: Text(
-                  'ToeTion',
-                  style: tFOnt(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+              Text(
+                'ToeTion',
+                style: tFOnt(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               Container(
@@ -50,7 +47,7 @@ class _HomePageState extends State<HomePage> {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 26.0,
+              horizontal: 20.0,
             ),
             child: Column(
               children: [
@@ -155,7 +152,8 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const VideoListPage(title: 'LESSON', id: 1)));
+                                            const VideoListPage(
+                                                title: 'LESSON', id: 1)));
                               },
                               child: Container(
                                 height: 150,
@@ -217,13 +215,14 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const VideoListPage(title: 'GRAMMAR', id: 2),
+                                    builder: (context) => const VideoListPage(
+                                        title: 'GRAMMAR', id: 2),
                                   ),
                                 );
                               },
                               child: Container(
                                 height: 150,
-                                margin: const EdgeInsets.only(right: 10),
+                                margin: const EdgeInsets.only(right: 12),
                                 decoration: BoxDecoration(
                                   gradient: const LinearGradient(
                                     colors: [
@@ -253,7 +252,7 @@ class _HomePageState extends State<HomePage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Image.asset(
-                                      'assets/images/grammar.png', // Ganti dengan path gambar Anda
+                                      'assets/images/grammar.png', 
                                       width: 70,
                                       height: 70,
                                       fit: BoxFit.cover,
@@ -286,7 +285,7 @@ class _HomePageState extends State<HomePage> {
                               },
                               child: Container(
                                 height: 150,
-                                margin: const EdgeInsets.only(right: 10),
+                                margin: const EdgeInsets.only(right: 8),
                                 decoration: BoxDecoration(
                                   gradient: const LinearGradient(
                                     colors: [

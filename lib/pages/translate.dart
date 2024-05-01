@@ -466,7 +466,6 @@ class _TransletePageState extends State<TranslatePage> {
                                   const EdgeInsets.symmetric(horizontal: 12.0),
                               child: SelectableText(
                                 data,
-                                style: TextStyle(),
                               ),
                             ),
                           ),

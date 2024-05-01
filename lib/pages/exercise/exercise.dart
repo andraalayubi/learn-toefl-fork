@@ -33,6 +33,7 @@ class _Exercise extends State<Exercise> {
       backgroundColor: const Color(0xFF0D0443),
       body: SingleChildScrollView(
         child: Container(
+          margin: const EdgeInsets.only(top: 12),
           // height: double.infinity,
           constraints: BoxConstraints(
             minHeight: screenHeight,
@@ -167,7 +168,7 @@ class _Exercise extends State<Exercise> {
           "Writing",
           'assets/images/iconVideo_4.png',
           [
-            "Level 1\n10 Questions",  
+            "Level 1\n10 Questions",
             "Level 2\n10 Questions",
             "Level 3\n10 Questions",
             "Level 4\n10 Questions",
@@ -188,7 +189,7 @@ class _Exercise extends State<Exercise> {
     int totalLevels,
   ) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Card(
         child: Container(
           decoration: BoxDecoration(
