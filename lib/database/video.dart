@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 // Fungsi untuk mengambil data
 Future<List<VideoCategory>> fetchVideos(int id) async {
-  final response = await http.get(Uri.parse('http://192.168.0.119:3000/video/$id'));
+  final response = await http.get(Uri.parse('http://192.168.1.6:3000/video/$id'));
 
   if (response.statusCode == 200) {
     Iterable list = json.decode(response.body);

@@ -1,6 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/services.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:translator/translator.dart';
 
 class TranslatePage extends StatefulWidget {
   const TranslatePage({super.key});
@@ -10,13 +13,95 @@ class TranslatePage extends StatefulWidget {
 }
 
 class _TransletePageState extends State<TranslatePage> {
-  var height, width;
+  List<String> languages = [
+    'English',
+    'Indonesian',
+    'Korean',
+    'Russian',
+    'German',
+    'Japanese',
+    'Arabic'
+  ];
+  List<String> languagesCode = ['en', 'id', 'ko', 'ru', 'de', 'ja', 'ar'];
+
+  final translator = GoogleTranslator();
+  String from = 'en';
+  String to = 'id';
+  String data = '';
+  String selectedValue1 = 'English';
+  String selectedValue2 = 'Indonesian';
+  TextEditingController controller = TextEditingController(text: '');
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool isLoading = false;
+  Future<void> translate() async {
+    try {
+      if (formKey.currentState != null &&
+          formKey.currentState!.validate() &&
+          controller.text.isNotEmpty) {
+        await translator
+            .translate(controller.text, from: from, to: to)
+            .then((value) {
+          setState(() {
+            data = value.text;
+          });
+          print(value);
+        });
+      }
+    } on SocketException catch (_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('No Internet'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 5),
+        ),
+      );
+      setState(() {});
+    }
+  }
+
+  void translateOnChange() {
+    translate();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(translateOnChange);
+
+    translate();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
+    _copy() {
+      final nilai = ClipboardData(text: controller.text);
+      Clipboard.setData(nilai);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Text copied to clipboard'),
+          duration: Duration(seconds: 2), // Adjust the duration as needed
+        ),
+      );
+    }
+
+    _paste() async {
+      final data = await Clipboard.getData(Clipboard.kTextPlain);
+      if (data != null) {
+        controller.text = data.text ?? '';
+      }
+    }
+
+    final screenHeight = MediaQuery.of(context).size.height;
+    final containerWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color(0xFF0D0443),
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         title: const Text(
@@ -35,16 +120,23 @@ class _TransletePageState extends State<TranslatePage> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: Color(0xFF0D0443),
-          height: height,
-          width: width,
+          margin: EdgeInsets.only(top: 12),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
+          ),
+          constraints: BoxConstraints(minHeight: screenHeight),
+          width: containerWidth,
           child: Column(
             children: [
-              Container(
-                decoration: const BoxDecoration(),
-                height: height * 0.03,
-                width: width,
-              ),
+              // Container(
+              //   decoration: const BoxDecoration(),
+              //   height: height * 0.03,
+              //   width: width,
+              // ),
               Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -53,8 +145,8 @@ class _TransletePageState extends State<TranslatePage> {
                     topRight: Radius.circular(30),
                   ),
                 ),
-                height: height * 0.97,
-                width: width,
+                // height: height * 0.97,
+                width: containerWidth,
                 child: Column(
                   children: [
                     const SizedBox(
@@ -70,7 +162,7 @@ class _TransletePageState extends State<TranslatePage> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -85,9 +177,9 @@ class _TransletePageState extends State<TranslatePage> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 40),
+                          const SizedBox(height: 40),
                           Padding(
-                            padding: EdgeInsets.only(top: 10),
+                            padding: const EdgeInsets.only(top: 10),
                             child: Image.asset(
                               'assets/images/proud.png',
                               width: 85,
@@ -104,7 +196,7 @@ class _TransletePageState extends State<TranslatePage> {
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 26.0),
                       height: 60,
-                      width: width,
+                      width: containerWidth,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(width: 1.0, color: Colors.black),
@@ -121,6 +213,7 @@ class _TransletePageState extends State<TranslatePage> {
                                       width: 1.0, color: Colors.black)),
                               child: Center(
                                 child: DropdownButton(
+                                  value: selectedValue1,
                                   hint: const Text(
                                     'English',
                                     style: TextStyle(
@@ -128,14 +221,56 @@ class _TransletePageState extends State<TranslatePage> {
                                       color: Color(0xFF0D0443),
                                     ),
                                   ),
-                                  items: [],
-                                  onChanged: (value) {},
+                                  items: languages.map((lang) {
+                                    return DropdownMenuItem(
+                                      value: lang,
+                                      child: Text(lang),
+                                      onTap: () {
+                                        if (lang == languages[0]) {
+                                          from = languagesCode[0];
+                                        } else if (lang == languages[1]) {
+                                          from = languagesCode[1];
+                                        } else if (lang == languages[2]) {
+                                          from = languagesCode[2];
+                                        } else if (lang == languages[3]) {
+                                          from = languagesCode[3];
+                                        } else if (lang == languages[4]) {
+                                          from = languagesCode[4];
+                                        } else if (lang == languages[5]) {
+                                          from = languagesCode[5];
+                                        } else if (lang == languages[6]) {
+                                          from = languagesCode[6];
+                                        }
+                                        setState(() {
+                                          print(lang);
+                                          print(from);
+                                          from = languagesCode[
+                                              languages.indexOf(lang)];
+                                          print('From : $from');
+                                          translate();
+                                        });
+                                      },
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    selectedValue1 = value!;
+                                    setState(() {
+                                      from = languagesCode[
+                                          languages.indexOf(value)];
+                                      translate();
+                                    });
+                                  },
                                   underline: Container(),
                                 ),
                               ),
                             ),
                           ),
-                          const Icon(Icons.swap_horiz),
+                          // GestureDetector(
+                          //   child: Icon(Icons.swap_horiz),
+                          //   onTap: () {
+                          //     print('Pembalik');
+                          //   },
+                          // ),
                           Expanded(
                             child: Container(
                               margin: const EdgeInsets.all(8),
@@ -145,6 +280,7 @@ class _TransletePageState extends State<TranslatePage> {
                                       width: 1.0, color: Colors.black)),
                               child: Center(
                                 child: DropdownButton(
+                                  value: selectedValue2,
                                   hint: const Text(
                                     'Indonesian',
                                     style: TextStyle(
@@ -152,8 +288,46 @@ class _TransletePageState extends State<TranslatePage> {
                                       color: Color(0xFF0D0443),
                                     ),
                                   ),
-                                  items: [],
-                                  onChanged: (value) {},
+                                  items: languages.map((lang) {
+                                    return DropdownMenuItem(
+                                      value: lang,
+                                      child: Text(lang),
+                                      onTap: () {
+                                        if (lang == languages[0]) {
+                                          to = languagesCode[0];
+                                        } else if (lang == languages[1]) {
+                                          to = languagesCode[1];
+                                        } else if (lang == languages[2]) {
+                                          to = languagesCode[2];
+                                        } else if (lang == languages[3]) {
+                                          to = languagesCode[3];
+                                        } else if (lang == languages[4]) {
+                                          to = languagesCode[4];
+                                        } else if (lang == languages[5]) {
+                                          to = languagesCode[5];
+                                        } else if (lang == languages[6]) {
+                                          to = languagesCode[6];
+                                        }
+                                        setState(() {
+                                          print(lang);
+                                          print(from);
+                                          selectedValue2 = lang;
+                                          to = languagesCode[
+                                              languages.indexOf(lang)];
+                                          print('to : $to');
+                                          translate();
+                                        });
+                                      },
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    selectedValue2 = value!;
+                                    setState(() {
+                                      to = languagesCode[
+                                          languages.indexOf(value)];
+                                      translate();
+                                    });
+                                  },
                                   underline: Container(),
                                 ),
                               ),
@@ -174,7 +348,7 @@ class _TransletePageState extends State<TranslatePage> {
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 26.0),
-                              child: Text('Translete From'),
+                              child: Text('Translate From'),
                             ),
                           ],
                         ),
@@ -202,12 +376,27 @@ class _TransletePageState extends State<TranslatePage> {
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 12.0),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'Enter text here...',
-                                  border: InputBorder.none,
+                              child: Form(
+                                key: formKey,
+                                child: TextFormField(
+                                  controller: controller,
+                                  maxLines: null,
+                                  minLines: null,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter some text';
+                                    }
+                                    return null;
+                                  },
+                                  textInputAction: TextInputAction.done,
+                                  decoration: InputDecoration(
+                                      hintText: 'Enter text here...',
+                                      enabledBorder: InputBorder.none,
+                                      border: InputBorder.none,
+                                      errorBorder: InputBorder.none),
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16),
                                 ),
-                                maxLines: 10,
                               ),
                             ),
                           ),
@@ -218,37 +407,46 @@ class _TransletePageState extends State<TranslatePage> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 12.0),
                                 child: Text(
-                                  'English',
+                                  selectedValue1,
                                   style:
                                       TextStyle(fontWeight: FontWeight.normal),
                                 ),
                               ),
-                              IconButton(
-                                icon: const Icon(Icons.content_copy),
-                                onPressed: () {},
+                              InkWell(
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: _copy,
+                                      icon: const Icon(Icons.content_copy),
+                                    ),
+                                    IconButton(
+                                        onPressed: _paste,
+                                        icon: const Icon(Icons.content_paste))
+                                  ],
+                                ),
                               ),
                             ],
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
+                      children: [
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 26.0),
-                          child: Text('Translete To'),
+                          child: Text('Translate To'),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 26.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 26.0),
                       height: 240,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -258,20 +456,17 @@ class _TransletePageState extends State<TranslatePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 8),
                           ),
                           Expanded(
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 12.0),
-                              child: const TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'Enter text here...',
-                                  border: InputBorder.none,
-                                ),
-                                maxLines: 10,
+                              child: SelectableText(
+                                data,
+                                style: TextStyle(),
                               ),
                             ),
                           ),
@@ -281,15 +476,20 @@ class _TransletePageState extends State<TranslatePage> {
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 12.0),
-                                child: const Text(
-                                  'Indonesian',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.normal),
+                                child: Text(
+                                  selectedValue2,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.normal),
                                 ),
                               ),
-                              IconButton(
-                                icon: Icon(Icons.content_copy),
-                                onPressed: () {},
+                              InkWell(
+                                onTap: _copy,
+                                child: IconButton(
+                                    icon: Icon(
+                                      Icons.content_copy,
+                                      color: Colors.black,
+                                    ),
+                                    onPressed: null),
                               ),
                             ],
                           ),
@@ -299,6 +499,33 @@ class _TransletePageState extends State<TranslatePage> {
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                onPressed: translate,
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  backgroundColor: MaterialStateProperty.all(
+                    const Color(0xFF0D0443),
+                  ),
+                ),
+                child: isLoading
+                    ? const SizedBox.square(
+                        dimension: 20,
+                        child: CircularProgressIndicator(color: Colors.white),
+                      )
+                    : const Text(
+                        'Translate',
+                        style: TextStyle(color: Colors.white),
+                      ),
+              ),
+
+              const SizedBox(height: 20),
             ],
           ),
         ),

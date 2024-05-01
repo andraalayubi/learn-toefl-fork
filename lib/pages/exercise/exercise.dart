@@ -123,7 +123,7 @@ class _Exercise extends State<Exercise> {
       children: [
         _buildMenuItem(
           "Listening",
-          'assets/images/music.png',
+          'assets/images/iconVideo_1.png',
           [
             "Level 1\n10 Questions",
             "Level 2\n10 Questions",
@@ -137,7 +137,7 @@ class _Exercise extends State<Exercise> {
         const SizedBox(height: 10),
         _buildMenuItem(
           "Speaking",
-          'assets/images/speaking.png',
+          'assets/images/iconVideo_2.png',
           [
             "Level 1\n10 Questions",
             "Level 2\n10 Questions",
@@ -151,7 +151,7 @@ class _Exercise extends State<Exercise> {
         const SizedBox(height: 10),
         _buildMenuItem(
           "Reading",
-          'assets/images/open-book.png',
+          'assets/images/iconVideo_3.png',
           [
             "Level 1\n10 Questions",
             "Level 2\n10 Questions",
@@ -165,9 +165,9 @@ class _Exercise extends State<Exercise> {
         const SizedBox(height: 10),
         _buildMenuItem(
           "Writing",
-          'assets/images/copy-writing.png',
+          'assets/images/iconVideo_4.png',
           [
-            "Level 1\n10 Questions",
+            "Level 1\n10 Questions",  
             "Level 2\n10 Questions",
             "Level 3\n10 Questions",
             "Level 4\n10 Questions",

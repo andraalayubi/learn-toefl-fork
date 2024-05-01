@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 Future<List<Practice>> fetchReading() async {
-  final response = await http.get(Uri.parse('http://192.168.0.119:3000/practice'));
+  final response =
+      await http.get(Uri.parse('http://192.168.1.6:3000/practice'));
 
   if (response.statusCode == 200) {
     List jsonResponse = json.decode(response.body);
@@ -18,11 +19,13 @@ class Practice {
   final String readingText;
   final List<Question> questions;
 
-  Practice({required this.name, required this.readingText, required this.questions});
+  Practice(
+      {required this.name, required this.readingText, required this.questions});
 
   factory Practice.fromJson(Map<String, dynamic> json) {
     var questionJson = json['questions'] as List;
-    List<Question> questionList = questionJson.map((i) => Question.fromJson(i)).toList();
+    List<Question> questionList =
+        questionJson.map((i) => Question.fromJson(i)).toList();
 
     return Practice(
       name: json['name'],
@@ -40,7 +43,8 @@ class Question {
 
   factory Question.fromJson(Map<String, dynamic> json) {
     var answerJson = json['answers'] as List;
-    List<Answer> answerList = answerJson.map((i) => Answer.fromJson(i)).toList();
+    List<Answer> answerList =
+        answerJson.map((i) => Answer.fromJson(i)).toList();
 
     return Question(
       question: json['question'],
