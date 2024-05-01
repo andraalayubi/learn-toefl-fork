@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/database/video.dart';
-import 'package:learn_toefl/pages/lesson_video.dart';
 import 'package:learn_toefl/pages/video.dart';
 
 class VideoListPage extends StatefulWidget {
