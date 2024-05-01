@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:learn_toefl/database/ip.dart';
 
 Future<List<Practice>> fetchReading() async {
   final response =
-      await http.get(Uri.parse('http://192.168.1.6:3000/practice'));
+      await http.get(Uri.parse('$ip/practice'));
 
   if (response.statusCode == 200) {
     List jsonResponse = json.decode(response.body);

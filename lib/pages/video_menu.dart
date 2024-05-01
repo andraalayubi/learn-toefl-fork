@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/database/video.dart';
 import 'package:learn_toefl/pages/lesson_video.dart';
+import 'package:learn_toefl/pages/video.dart';
 
 class VideoListPage extends StatefulWidget {
   final String title;
@@ -18,6 +19,7 @@ class _VideoListPageState extends State<VideoListPage> {
   late Future<List<VideoCategory>> _futureCategories;
   late String description;
   late String urlCardImage;
+  List<Video> allVideos = [];
 
   @override
   void initState() {
@@ -29,10 +31,12 @@ class _VideoListPageState extends State<VideoListPage> {
 
   String getDescription() {
     if (widget.id == 1) {
-      description = 'Get ready to elevate your English proficiency with our comprehensive TOEFL lessons.';
+      description =
+          'Get ready to elevate your English proficiency with our comprehensive TOEFL lessons.';
       urlCardImage = 'assets/images/writing.png';
     } else if (widget.id == 2) {
-      description = 'Grammar serves as the backbone of language, ensuring clarity and precision in communication.';
+      description =
+          'Grammar serves as the backbone of language, ensuring clarity and precision in communication.';
       urlCardImage = 'assets/images/reading-book.png';
     } else {
       description = 'Default description';
@@ -174,12 +178,19 @@ class _VideoListPageState extends State<VideoListPage> {
                 future: _futureCategories,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
+                    for (var category in snapshot.data!) {
+                      for (var video in category.videos) {
+                        allVideos.add(
+                            Video(id: video.id, name: video.name, url: video.url));
+                      }
+                    }
                     return ListView.builder(
                       shrinkWrap: true,
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 26, vertical: 10),
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 26, vertical: 10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             color: Theme.of(context).scaffoldBackgroundColor,
@@ -189,8 +200,10 @@ class _VideoListPageState extends State<VideoListPage> {
                             shape: const Border(),
                             title: Row(
                               children: [
-                                Image.asset('assets/images/iconVideo_${snapshot.data![index].id}.png',
-                                    width: 35, height: 35),
+                                Image.asset(
+                                    'assets/images/iconVideo_${snapshot.data![index].id}.png',
+                                    width: 35,
+                                    height: 35),
                                 const SizedBox(width: 8),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,7 +231,7 @@ class _VideoListPageState extends State<VideoListPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const LessonVideoPage()));
+                                              VideoPage(id: video.id, idCategory: widget.id, video: allVideos)));
                                 },
                                 child: ListTile(
                                   title: Text(
@@ -247,7 +260,7 @@ class _VideoListPageState extends State<VideoListPage> {
                               );
                             }).toList(),
                           ),
-                        // SizedBox(height: 10);
+                          // SizedBox(height: 10);
                         );
                       },
                     );

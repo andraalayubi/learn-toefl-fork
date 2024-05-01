@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/pages/translate.dart';
-import 'package:learn_toefl/pages/video_list.dart';
+import 'package:learn_toefl/pages/video_menu.dart';
 import 'package:learn_toefl/utilities.dart';
 
 class HomePage extends StatefulWidget {

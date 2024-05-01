@@ -4,7 +4,7 @@ const { Pool } = require('pg');
 
 const app = express();
 const port = 3000;
-const ip = '192.168.1.6';
+const ip = '192.168.0.119';
 // const ip = 'localhost';
 
 // Middleware untuk parsing body permintaan
@@ -31,10 +31,10 @@ app.get('/practice', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-app.get('/video/:id', async (req, res) => {
+app.get('/video/all/:id', async (req, res) => {
     const { id } = req.params;  
     try {
-        const { rows } = await pool.query("SELECT VideoCategory.id AS vid, VideoCategory.name AS category_name, Video.id, Video.name FROM SubCategory JOIN VideoCategory ON SubCategory.id = VideoCategory.subCategory_id JOIN Video ON VideoCategory.id = Video.video_category_id WHERE SubCategory.id = $1", [id]);
+        const { rows } = await pool.query("SELECT VideoCategory.id AS vid, VideoCategory.name AS category_name, Video.id, Video.name, Video.url FROM SubCategory JOIN VideoCategory ON SubCategory.id = VideoCategory.subCategory_id JOIN Video ON VideoCategory.id = Video.video_category_id WHERE SubCategory.id = $1", [id]);
         // console.log(rows);
 
         function transformData(data) {
@@ -46,7 +46,8 @@ app.get('/video/:id', async (req, res) => {
               if (existingCategory) {
                 existingCategory.videos.push({
                   id: item.id,
-                  name: item.name
+                  name: item.name,
+                  url: item.url
                 });
               } else {
                 result.push({
@@ -55,7 +56,8 @@ app.get('/video/:id', async (req, res) => {
                   videos: [
                     {
                       id: item.id,
-                      name: item.name
+                      name: item.name,
+                      url: item.url
                     }
                   ]
                 });
@@ -68,6 +70,17 @@ app.get('/video/:id', async (req, res) => {
         const result = transformData(rows);
         // console.log(result);
         res.json(result);
+    } catch (error) {
+        console.error('Error executing query', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.get('/video/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const { rows } = await pool.query('SELECT * FROM Video WHERE id = $1', [id]);
+        res.json(rows[0]);
     } catch (error) {
         console.error('Error executing query', error);
         res.status(500).json({ error: 'Internal server error' });

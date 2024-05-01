@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
+import 'package:learn_toefl/database/ip.dart';
 
 // Fungsi untuk mengambil data
 Future<List<VideoCategory>> fetchVideos(int id) async {
-  final response = await http.get(Uri.parse('http://192.168.1.6:3000/video/$id'));
+  final response = await http.get(Uri.parse('$ip/video/all/$id'));
 
   if (response.statusCode == 200) {
     Iterable list = json.decode(response.body);
@@ -13,16 +15,28 @@ Future<List<VideoCategory>> fetchVideos(int id) async {
   }
 }
 
+Future<Video> getDataVideo(int id) async {
+  final response = await http.get(Uri.parse('$ip/video/$id'));
+
+  if (response.statusCode == 200) {
+    return Video.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Failed to load videos');
+  }
+}
+
 class Video {
   final int id;
   final String name;
+  final String url;
 
-  Video({required this.id, required this.name});
+  Video({required this.id, required this.name, required this.url});
 
   factory Video.fromJson(Map<String, dynamic> json) {
     return Video(
       id: json['id'] ?? 0,
       name: json['name'] ?? '',
+      url: json['url'] ?? '',
     );
   }
 }
