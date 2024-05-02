@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/database/video.dart';
+import 'package:learn_toefl/database/video_history.dart';
 import 'package:learn_toefl/pages/video.dart';
 
 class VideoListPage extends StatefulWidget {
@@ -26,6 +27,11 @@ class _VideoListPageState extends State<VideoListPage> {
     _futureCategories =
         fetchVideos(widget.id); // Ganti 1 dengan vid yang diinginkan
     description = getDescription();
+  }
+
+  void insertHistory(int id, String name) async {
+    print('otw nambah $id');
+    await VideoHistory.addHistory(id, name, widget.title);
   }
 
   String getDescription() {
@@ -226,6 +232,7 @@ class _VideoListPageState extends State<VideoListPage> {
                             children: snapshot.data![index].videos.map((video) {
                               return GestureDetector(
                                 onTap: () {
+                                  insertHistory(video.id, video.name);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
