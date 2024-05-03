@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learn_toefl/pages/update_profile.dart';
+import 'package:learn_toefl/pages/profile/update_profile.dart';
+import 'package:learn_toefl/pages/test_speaking.dart';
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
@@ -15,7 +16,7 @@ class _ProfilPageState extends State<ProfilPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Center(
+        title: const Center(
           child: Text(
             'Profile',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -24,7 +25,7 @@ class _ProfilPageState extends State<ProfilPage> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(25),
+          padding: const EdgeInsets.all(25),
           child: Column(
             children: [
               SizedBox(
@@ -40,7 +41,7 @@ class _ProfilPageState extends State<ProfilPage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
@@ -51,7 +52,7 @@ class _ProfilPageState extends State<ProfilPage> {
                 'jiaracing@gmail.com',
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               SizedBox(
@@ -64,19 +65,19 @@ class _ProfilPageState extends State<ProfilPage> {
                         MaterialPageRoute(
                             builder: (context) => UpdateProfile()));
                   },
-                  child: Text(
-                    'Edit Profile',
-                    style: TextStyle(color: Colors.white),
-                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0D0443),
                   ),
+                  child: const Text(
+                    'Edit Profile',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               ListTile(
@@ -87,12 +88,12 @@ class _ProfilPageState extends State<ProfilPage> {
                     borderRadius: BorderRadius.circular(100),
                     color: Colors.grey[100],
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.favorite,
                     color: Color(0xFF0D0443),
                   ),
                 ),
-                title: Text('Favorite Lesson'),
+                title: const Text('Favorite Lesson'),
                 trailing: Container(
                   width: 30,
                   height: 30,
@@ -100,7 +101,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     borderRadius: BorderRadius.circular(100),
                     color: Colors.grey[50],
                   ),
-                  child: Icon(Icons.arrow_forward_ios_sharp),
+                  child: const Icon(Icons.arrow_forward_ios_sharp),
                 ),
               ),
               ListTile(
@@ -116,7 +117,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     color: Color(0xFF0D0443),
                   ),
                 ),
-                title: Text('History'),
+                title: const Text('History'),
                 trailing: Container(
                   width: 30,
                   height: 30,
@@ -124,10 +125,40 @@ class _ProfilPageState extends State<ProfilPage> {
                     borderRadius: BorderRadius.circular(100),
                     color: Colors.grey[50],
                   ),
-                  child: Icon(Icons.arrow_forward_ios_sharp),
+                  child: const Icon(Icons.arrow_forward_ios_sharp),
                 ),
               ),
-              SizedBox(
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const SpeakingTest()));
+                },
+                child: ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.grey[100],
+                    ),
+                    child: const Icon(
+                      Icons.mic,
+                      color: Color(0xFF0D0443),
+                    ),
+                  ),
+                  title: const Text('Speaking'),
+                  trailing: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.grey[50],
+                    ),
+                    child: const Icon(Icons.arrow_forward_ios_sharp),
+                  ),
+                ),
+              ),
+              const SizedBox(
                 height: 90,
               ),
               ListTile(
