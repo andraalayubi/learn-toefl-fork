@@ -13,7 +13,7 @@ class SpeakingTest extends StatefulWidget {
 
 class _SpeakingTestState extends State<SpeakingTest> {
   String providedText =
-      'In todays interconnected world the significance of multiculturalism cannot be overstated As societies become increasingly diverse understanding and embracing cultural differences have become essential components of social cohesion and progress';
+      'in todays interconnected world the significance of multiculturalism cannot be overstated as societies become increasingly diverse understanding and embracing cultural differences have become essential components of social cohesion and progress';
   var textSpeech = 'Click on Mic to Record';
   SpeechToText speechToText = SpeechToText();
   var isListening = false;
@@ -59,7 +59,7 @@ class _SpeakingTestState extends State<SpeakingTest> {
               child: const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                    'In todays interconnected world the significance of multiculturalism cannot be overstated As societies become increasingly diverse understanding and embracing cultural differences have become essential components of social cohesion and progress'),
+                    'in todays interconnected world the significance of multiculturalism cannot be overstated as societies become increasingly diverse understanding and embracing cultural differences have become essential components of social cohesion and progress'),
               ),
             ),
             const SizedBox(
@@ -109,7 +109,7 @@ class _SpeakingTestState extends State<SpeakingTest> {
                     });
 
                     speechToText.listen(
-                        listenFor: Duration(seconds: 120),
+                        listenFor: const Duration(seconds: 120),
                         onResult: (result) {
                           setState(() {
                             textSpeech = result.recognizedWords;
@@ -117,9 +117,7 @@ class _SpeakingTestState extends State<SpeakingTest> {
                                 calculateAccuracy(providedText, textSpeech);
                             print("Provided Text: $providedText");
                             print("Speech Text: $textSpeech");
-
                             print("Akurasi: ${accuracy.toStringAsFixed(2)}%");
-                            // isListening = false;
                           });
                         });
                   }
@@ -132,8 +130,8 @@ class _SpeakingTestState extends State<SpeakingTest> {
               },
               child: CircleAvatar(
                 child: isListening
-                    ? Icon(Icons.record_voice_over)
-                    : Icon(Icons.mic),
+                    ? const Icon(Icons.record_voice_over)
+                    : const Icon(Icons.mic),
               ),
             )
           ],
@@ -141,6 +139,7 @@ class _SpeakingTestState extends State<SpeakingTest> {
       ),
     );
   }
+  //logika menghitung akurasi
 
   double calculateAccuracy(String providedText, String textSpeech) {
     int matchingCharacters = 0;
