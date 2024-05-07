@@ -102,23 +102,33 @@ class _VideoPageState extends State<VideoPage> {
                     ClipPath(
                       // clipper: MyClipper(),
                       child: Container(
-                        height: 435,
+                        height: 310,
                         width: double.infinity,
                         decoration: const BoxDecoration(
                           color: Color(0xFF0D0443),
                         ),
-                        child: YoutubePlayer(
-                          controller: YoutubePlayerController(
-                            initialVideoId: snapshot.data?.url ?? '',
-                            flags: const YoutubePlayerFlags(
-                              autoPlay: false,
-                              mute: false,
+                        child: YoutubePlayerBuilder(
+                            player: YoutubePlayer(
+                              controller: YoutubePlayerController(
+                                initialVideoId: snapshot.data?.url ?? '',
+                                flags: const YoutubePlayerFlags(
+                                  autoPlay: false,
+                                  mute: false,
+                                ),
+                              ),
+                              showVideoProgressIndicator: true,
+                              aspectRatio:
+                                  16 / 9, // Rasio aspek 16:9 (lebar/tinggi)
                             ),
-                          ),
-                          showVideoProgressIndicator: true,
-                          aspectRatio:
-                              16 / 9, // Rasio aspek 16:9 (lebar/tinggi)
-                        ),
+                            builder: (context, player) {
+                              return Column(
+                                children: [
+                                  // some widgets
+                                  player,
+                                  //some other widgets
+                                ],
+                              );
+                            }),
                       ),
                     ),
                     SizedBox(
