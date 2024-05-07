@@ -413,15 +413,11 @@ class _HomePageState extends State<HomePage> {
                                           onTap: () {},
                                           child: Container(
                                             margin: const EdgeInsets.only(
-                                                right: 10),
+                                                right: 10, bottom: 10),
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              // border: Border.all(
-                                              //   width: 1,
-                                              //   color: Colors.black,
-                                              // ),
                                               boxShadow: const [
                                                 BoxShadow(
                                                   color: Color.fromARGB(
@@ -447,58 +443,36 @@ class _HomePageState extends State<HomePage> {
                                                               5),
                                                       child: Image.asset(
                                                         'assets/images/video.png', // Ganti dengan path gambar Anda
-
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 10.0),
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Container(
-                                                            decoration: BoxDecoration(
-                                                                color: const Color
-                                                                    .fromARGB(
-                                                                    255,
-                                                                    255,
-                                                                    174,
-                                                                    148),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5)),
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(3.0),
-                                                              child: Text(
-                                                                video[
-                                                                    'category'],
-                                                                style: tFOnt(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  color: Colors
-                                                                      .black,
-                                                                ),
-                                                              ),
-                                                            ),
+                                                    const SizedBox(
+                                                        height:
+                                                            4), // Tambahkan widget SizedBox untuk memberi jarak
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: const Color
+                                                                .fromARGB(255,
+                                                                255, 174, 148),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5),
                                                           ),
-                                                          Padding(
+                                                          child: Padding(
                                                             padding:
                                                                 const EdgeInsets
                                                                     .all(3.0),
                                                             child: Text(
-                                                              video['name'],
-                                                              maxLines: 1,
+                                                              video['category'],
                                                               style: tFOnt(
-                                                                fontSize: 15,
+                                                                fontSize: 12,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w700,
@@ -507,8 +481,21 @@ class _HomePageState extends State<HomePage> {
                                                               ),
                                                             ),
                                                           ),
-                                                        ],
-                                                      ),
+                                                        ),
+                                                        const SizedBox(
+                                                            height:
+                                                                2), // Tambahkan widget SizedBox untuk memberi jarak
+                                                        Text(
+                                                          video['name'],
+                                                          maxLines: 1,
+                                                          style: tFOnt(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ],
                                                 ),
@@ -524,7 +511,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
 
                       // ARTICLE Section

@@ -15,6 +15,7 @@ class _ProfilPageState extends State<ProfilPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.white,
         title: const Center(
           child: Text(
@@ -130,8 +131,10 @@ class _ProfilPageState extends State<ProfilPage> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const SpeakingTest()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SpeakingTest()));
                 },
                 child: ListTile(
                   leading: Container(

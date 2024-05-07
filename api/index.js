@@ -4,7 +4,7 @@ const { Pool } = require('pg');
 
 const app = express();
 const port = 3000;
-const ip = '10.252.132.9';
+const ip = '10.252.133.224';
 // const ip = 'localhost';
 
 // Middleware untuk parsing body permintaan
@@ -14,8 +14,8 @@ app.use(bodyParser.json());
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
-    database: 'toefl',
-    password: 'andra123', // Ganti dengan kata sandi PostgreSQL Anda
+    database: 'toetion',
+    password: 'Argyadwi123_', // Ganti dengan kata sandi PostgreSQL Anda
     port: 5432, // Port default PostgreSQL
 });
 
