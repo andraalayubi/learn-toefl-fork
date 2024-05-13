@@ -1,15 +1,15 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:learn_toefl/database/video.dart';
 import 'package:learn_toefl/database/video_history.dart';
 import 'package:learn_toefl/pages/translate.dart';
+import 'package:learn_toefl/database/video.dart';
+
 import 'package:learn_toefl/pages/video.dart';
 import 'package:learn_toefl/pages/video_menu.dart';
 import 'package:learn_toefl/utilities.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -555,121 +555,37 @@ class _HomePageState extends State<HomePage> {
                           height: 10,
                         ),
 
-                        // ARTICLE Section
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Article',
-                              style: tFOnt(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18,
-                              ),
-                              textAlign: TextAlign.left,
+                      // ARTICLE Section
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Article',
+                            style: tFOnt(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        SingleChildScrollView(
-                          clipBehavior: Clip.none,
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: List.generate(5, (index) {
-                              return GestureDetector(
-                                onTap: () {},
-                                child: Container(
-                                  margin: const EdgeInsets.only(right: 10),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    // border: Border.all(
-                                    //   width: 1,
-                                    //   color: Colors.black,
-                                    // ),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color:
-                                            Color.fromARGB(255, 197, 196, 196),
-                                        offset: Offset(2, 4),
-                                        blurRadius: 5,
-                                        spreadRadius: 0,
-                                      )
-                                    ],
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: SizedBox(
-                                      width: 159.2,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            child: Image.asset(
-                                              'assets/images/article.jpg', // Ganti dengan path gambar Anda
-                                              // width: 159.2,
-                                              height: 180,
-                                              width: 159.2,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 10.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(3.0),
-                                                  child: Text(
-                                                    'Listening 1  - 100 idioms',
-                                                    style: tFOnt(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(3.0),
-                                                  child: Text(
-                                                    'detik.com',
-                                                    style: tFOnt(
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.black45,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }),
+                            textAlign: TextAlign.left,
                           ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SingleChildScrollView(
+                        clipBehavior: Clip.none,
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: ArticleData.articleData.map((e) => ArticleCard(data: e,)).toList(),
                         ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

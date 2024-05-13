@@ -22,10 +22,7 @@ dependencies:
   shared_preferences: ^2.2.3
   get: ^4.6.6
   speech_to_text: ^6.6.0
-
-
-
-
+  cupertino_icons: ^1.0.0
 
 dev_dependencies:
   flutter_test:
