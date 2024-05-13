@@ -4,7 +4,7 @@ const { Pool } = require('pg');
 
 const app = express();
 const port = 3000;
-const ip = '10.252.133.224';
+const ip = '172.20.10.7';
 // const ip = 'localhost';
 
 // Middleware untuk parsing body permintaan

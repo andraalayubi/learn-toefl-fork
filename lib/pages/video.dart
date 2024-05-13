@@ -108,27 +108,28 @@ class _VideoPageState extends State<VideoPage> {
                           color: Color(0xFF0D0443),
                         ),
                         child: YoutubePlayerBuilder(
-                            player: YoutubePlayer(
-                              controller: YoutubePlayerController(
-                                initialVideoId: snapshot.data?.url ?? '',
-                                flags: const YoutubePlayerFlags(
-                                  autoPlay: false,
-                                  mute: false,
-                                ),
+                          player: YoutubePlayer(
+                            controller: YoutubePlayerController(
+                              initialVideoId: snapshot.data?.url ?? '',
+                              flags: const YoutubePlayerFlags(
+                                autoPlay: false,
+                                mute: false,
                               ),
-                              showVideoProgressIndicator: true,
-                              aspectRatio:
-                                  16 / 9, // Rasio aspek 16:9 (lebar/tinggi)
                             ),
-                            builder: (context, player) {
-                              return Column(
-                                children: [
-                                  // some widgets
-                                  player,
-                                  //some other widgets
-                                ],
-                              );
-                            }),
+                            showVideoProgressIndicator: true,
+                            aspectRatio:
+                                16 / 9, // Rasio aspek 16:9 (lebar/tinggi)
+                          ),
+                          builder: (context, player) {
+                            return Column(
+                              children: [
+                                // some widgets
+                                player,
+                                //some other widgets
+                              ],
+                            );
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(
