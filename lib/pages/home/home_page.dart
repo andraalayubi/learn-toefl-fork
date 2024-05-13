@@ -1,7 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:learn_toefl/database/video_history.dart';
+import 'package:learn_toefl/models/article_model.dart';
+import 'package:learn_toefl/widget/article_card.dart';
+import 'package:learn_toefl/widget/history_card.dart';
 import 'package:learn_toefl/pages/translate.dart';
 import 'package:learn_toefl/pages/video_menu.dart';
 import 'package:learn_toefl/utilities.dart';
@@ -9,25 +9,12 @@ import 'package:learn_toefl/utilities.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  late Future<List<dynamic>> _history;
-
-  @override
-  void initState() {
-    super.initState();
-    _history = fetchHistory();
-  }
-
-  Future<List<dynamic>> fetchHistory() async {
-    var videoHistory = await VideoHistory.getHistory();
-    print('videoHistory $videoHistory');
-    return videoHistory;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -166,11 +153,12 @@ class _HomePageState extends State<HomePage> {
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const VideoListPage(
-                                                title: 'LESSON', id: 1)));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const VideoListPage(
+                                        title: 'LESSON', id: 1),
+                                  ),
+                                );
                               },
                               child: Container(
                                 height: 150,
@@ -376,140 +364,7 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      SingleChildScrollView(
-                        // physics: NeverScrollableScrollPhysics(),
-                        clipBehavior: Clip.none,
-                        scrollDirection: Axis.horizontal,
-                        padding: EdgeInsets.only(right: 20),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 160,
-                          child: Expanded(
-                            child: FutureBuilder<List<dynamic>>(
-                                future: _history,
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return Center(
-                                      child: Text('Error: ${snapshot.error}'),
-                                    );
-                                  } else if (snapshot.data!.isEmpty) {
-                                    return const Text(
-                                        'You haven`t started studying yet');
-                                  } else {
-                                    // return Text('Berhasil');
-                                    return ListView.builder(
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: snapshot.data!.length,
-                                      itemBuilder: (context, index) {
-                                        final video = snapshot.data![index];
-                                        print(video);
-                                        return GestureDetector(
-                                          onTap: () {},
-                                          child: Container(
-                                            margin: const EdgeInsets.only(
-                                                right: 10, bottom: 10),
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  color: Color.fromARGB(
-                                                      255, 197, 196, 196),
-                                                  offset: Offset(2, 4),
-                                                  blurRadius: 5,
-                                                  spreadRadius: 0,
-                                                )
-                                              ],
-                                            ),
-                                            child: SizedBox(
-                                              width: 159.2,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
-                                                      child: Image.asset(
-                                                        'assets/images/video.png', // Ganti dengan path gambar Anda
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                        height:
-                                                            4), // Tambahkan widget SizedBox untuk memberi jarak
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: const Color
-                                                                .fromARGB(255,
-                                                                255, 174, 148),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
-                                                          ),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(3.0),
-                                                            child: Text(
-                                                              video['category'],
-                                                              style: tFOnt(
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                color: Colors
-                                                                    .black,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            height:
-                                                                2), // Tambahkan widget SizedBox untuk memberi jarak
-                                                        Text(
-                                                          video['name'],
-                                                          maxLines: 1,
-                                                          style: tFOnt(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color: Colors.black,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  }
-                                }),
-                          ),
-                        ),
-                      ),
+                      const LessonPage(),
                       const SizedBox(
                         height: 10,
                       ),
@@ -535,87 +390,7 @@ class _HomePageState extends State<HomePage> {
                         clipBehavior: Clip.none,
                         scrollDirection: Axis.horizontal,
                         child: Row(
-                          children: List.generate(5, (index) {
-                            return GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  // border: Border.all(
-                                  //   width: 1,
-                                  //   color: Colors.black,
-                                  // ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Color.fromARGB(255, 197, 196, 196),
-                                      offset: Offset(2, 4),
-                                      blurRadius: 5,
-                                      spreadRadius: 0,
-                                    )
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    width: 159.2,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          child: Image.asset(
-                                            'assets/images/article.jpg', // Ganti dengan path gambar Anda
-                                            // width: 159.2,
-                                            height: 180,
-                                            width: 159.2,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(3.0),
-                                                child: Text(
-                                                  'Listening 1  - 100 idioms',
-                                                  style: tFOnt(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(3.0),
-                                                child: Text(
-                                                  'detik.com',
-                                                  style: tFOnt(
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Colors.black45,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
+                          children: ArticleData.articleData.map((e) => ArticleCard(data: e,)).toList(),
                         ),
                       ),
                       const SizedBox(
