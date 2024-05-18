@@ -188,6 +188,7 @@ class _Exercise extends State<Exercise> {
     int levelDone,
     int totalLevels,
   ) {
+    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Card(
@@ -294,6 +295,7 @@ class _Exercise extends State<Exercise> {
           ),
         ),
       ),
+      
     );
   }
 

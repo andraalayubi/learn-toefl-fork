@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class VideoHistory {
   static const String _historyKey = 'video_history';
 
-  static Future<void> addHistory(int id, String name, String category) async {
+  static Future<void> addHistory(int id, String name, int id_category, String category, String url) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> videoHistory = prefs.getStringList(_historyKey) ?? [];
 
@@ -12,7 +12,9 @@ class VideoHistory {
     Map<String, dynamic> videoMap = {
       'id': id,
       'name': name,
+      'id_category': id_category,
       'category': category,
+      'url': url,
     };
 
     // Convert the map to a JSON string

@@ -9,7 +9,11 @@ class VideoPage extends StatefulWidget {
   final int idCategory;
   final List<Video> video;
 
-  const VideoPage({super.key, required this.id, required this.video, required this.idCategory});
+  const VideoPage(
+      {super.key,
+      required this.id,
+      required this.video,
+      required this.idCategory});
 
   @override
   State<VideoPage> createState() => _VideoPageState();
@@ -20,7 +24,7 @@ class _VideoPageState extends State<VideoPage> {
   int? id;
   late String title;
   late String urlImage;
-  List<Video>? allVideos;
+  late List<Video> allVideos;
 
   @override
   void initState() {
@@ -33,12 +37,10 @@ class _VideoPageState extends State<VideoPage> {
 
   String getTitle() {
     if (widget.idCategory == 1) {
-      title =
-          'LESSON';
+      title = 'LESSON';
       urlImage = 'assets/images/waiting.png';
     } else if (widget.idCategory == 2) {
-      title =
-          'GRAMMAR';
+      title = 'GRAMMAR';
       urlImage = 'assets/images/proud.png';
     } else {
       title = '';
@@ -98,29 +100,43 @@ class _VideoPageState extends State<VideoPage> {
                 child: Column(
                   children: <Widget>[
                     ClipPath(
-                      clipper: MyClipper(),
+                      // clipper: MyClipper(),
                       child: Container(
-                        height: 435,
+                        height: 310,
                         width: double.infinity,
                         decoration: const BoxDecoration(
                           color: Color(0xFF0D0443),
                         ),
-                        child: YoutubePlayer(
-                          controller: YoutubePlayerController(
-                            initialVideoId: snapshot.data?.url ?? '',
-                            flags: const YoutubePlayerFlags(
-                              autoPlay: false,
-                              mute: false,
+                        child: YoutubePlayerBuilder(
+                          player: YoutubePlayer(
+                            controller: YoutubePlayerController(
+                              initialVideoId: snapshot.data?.url ?? '',
+                              flags: const YoutubePlayerFlags(
+                                autoPlay: false,
+                                mute: false,
+                              ),
                             ),
+                            showVideoProgressIndicator: true,
+                            aspectRatio:
+                                16 / 9, // Rasio aspek 16:9 (lebar/tinggi)
                           ),
-                          showVideoProgressIndicator: true,
-                          aspectRatio:
-                              16 / 9, // Rasio aspek 16:9 (lebar/tinggi)
+                          builder: (context, player) {
+                            return Column(
+                              children: [
+                                // some widgets
+                                player,
+                                //some other widgets
+                              ],
+                            );
+                          },
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 100,
+                    ),
                     Transform.translate(
-                      offset: const Offset(0, -110),
+                      offset: const Offset(0, -80),
                       child: Container(
                         width: 360,
                         padding: const EdgeInsets.all(20),
@@ -169,51 +185,67 @@ class _VideoPageState extends State<VideoPage> {
                       ),
                     ),
                     Transform.translate(
-                        offset: const Offset(0, -85),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 26.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'More Videos',
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        )),
-                    Transform.translate(
                       offset: const Offset(0, -65),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 26.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'More Videos',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Transform.translate(
+                      offset: const Offset(0, -55),
                       child: Column(
                         children: [
                           ...otherVideos.map(
-                            (v) => Container(
-                              height: 60,
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 26, vertical: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                border:
-                                    Border.all(width: 1.0, color: Colors.black),
-                              ),
-                              child: Row(
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsets.only(left: 8.0),
-                                    child: Icon(Icons.play_circle_outline),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 12.0),
-                                    child: Text(
-                                      v.name,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
+                            (v) => GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => VideoPage(
+                                            id: v.id,
+                                            video: allVideos,
+                                            idCategory: widget.idCategory)));
+                              },
+                              child: Container(
+                                height: 60,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 26, vertical: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  border: Border.all(
+                                      width: 1.0, color: Colors.black),
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(left: 8.0),
+                                      child: Icon(Icons.play_circle_outline),
                                     ),
-                                  ),
-                                ],
+                                    Expanded(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 12.0),
+                                        child: Text(
+                                          v.name,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

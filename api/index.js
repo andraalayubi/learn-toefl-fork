@@ -15,8 +15,8 @@ app.use(bodyParser.json());
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
-    database: 'toefl',
-    password: 'andra123', // Ganti dengan kata sandi PostgreSQL Anda
+    database: 'toetion',
+    password: 'Argyadwi123_', // Ganti dengan kata sandi PostgreSQL Anda
     port: 5432, // Port default PostgreSQL
 });
 

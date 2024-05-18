@@ -32,9 +32,9 @@ class _VideoListPageState extends State<VideoListPage> {
     description = getDescription();
   }
 
-  void insertHistory(int id, String name) async {
+  void insertHistory(int id, String name, String url) async {
     print('otw nambah $id');
-    await VideoHistory.addHistory(id, name, widget.title);
+    await VideoHistory.addHistory(id, name, widget.id, widget.title, url);
   }
 
   String getDescription() {
@@ -76,8 +76,7 @@ class _VideoListPageState extends State<VideoListPage> {
           child: IconButton(
               icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
               onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const HomePage()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
               }),
         ),
       ),
@@ -244,7 +243,7 @@ class _VideoListPageState extends State<VideoListPage> {
                             children: snapshot.data![index].videos.map((video) {
                               return GestureDetector(
                                 onTap: () {
-                                  insertHistory(video.id, video.name);
+                                  insertHistory(video.id, video.name, video.url);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

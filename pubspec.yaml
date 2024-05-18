@@ -20,7 +20,10 @@ dependencies:
   translator: ^1.0.0
   fluttertoast: ^8.2.5
   shared_preferences: ^2.2.3
-
+  get: ^4.6.6
+  speech_to_text: ^6.6.0
+  cupertino_icons: ^1.0.0
+  flutter_native_splash: ^2.4.0
 
 
 dev_dependencies:

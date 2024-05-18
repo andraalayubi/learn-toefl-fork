@@ -84,7 +84,7 @@ class _TransletePageState extends State<TranslatePage> {
       final nilai = ClipboardData(text: controller.text);
       Clipboard.setData(nilai);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Text copied to clipboard'),
           duration: Duration(seconds: 2), // Adjust the duration as needed
         ),
@@ -389,12 +389,12 @@ class _TransletePageState extends State<TranslatePage> {
                                     return null;
                                   },
                                   textInputAction: TextInputAction.done,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       hintText: 'Enter text here...',
                                       enabledBorder: InputBorder.none,
                                       border: InputBorder.none,
                                       errorBorder: InputBorder.none),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.black, fontSize: 16),
                                 ),
                               ),
@@ -409,7 +409,7 @@ class _TransletePageState extends State<TranslatePage> {
                                 child: Text(
                                   selectedValue1,
                                   style:
-                                      TextStyle(fontWeight: FontWeight.normal),
+                                      const TextStyle(fontWeight: FontWeight.normal),
                                 ),
                               ),
                               InkWell(
@@ -483,7 +483,7 @@ class _TransletePageState extends State<TranslatePage> {
                               ),
                               InkWell(
                                 onTap: _copy,
-                                child: IconButton(
+                                child: const IconButton(
                                     icon: Icon(
                                       Icons.content_copy,
                                       color: Colors.black,
