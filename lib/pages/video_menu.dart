@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/database/video.dart';
 import 'package:learn_toefl/database/video_history.dart';
+import 'package:learn_toefl/pages/home/home_page.dart';
 import 'package:learn_toefl/pages/video.dart';
 
 class VideoListPage extends StatefulWidget {
@@ -20,6 +21,8 @@ class _VideoListPageState extends State<VideoListPage> {
   late String description;
   late String urlCardImage;
   List<Video> allVideos = [];
+  // ignore: unused_field
+  late Future<List<dynamic>> _history;
 
   @override
   void initState() {
@@ -50,6 +53,12 @@ class _VideoListPageState extends State<VideoListPage> {
     return description;
   }
 
+  Future<List<dynamic>> fetchHistory() async {
+    var videoHistory = await VideoHistory.getHistory();
+    print('videoHistory $videoHistory');
+    return videoHistory;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +76,8 @@ class _VideoListPageState extends State<VideoListPage> {
           child: IconButton(
               icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const HomePage()));
               }),
         ),
       ),
@@ -104,6 +114,7 @@ class _VideoListPageState extends State<VideoListPage> {
                                   ),
                                 ),
                                 child: const TextField(
+                                  // onChanged: ,
                                   decoration: InputDecoration(
                                     hintText: "Search here",
                                     border: InputBorder.none,
@@ -185,11 +196,12 @@ class _VideoListPageState extends State<VideoListPage> {
                   if (snapshot.hasData) {
                     for (var category in snapshot.data!) {
                       for (var video in category.videos) {
-                        allVideos.add(
-                            Video(id: video.id, name: video.name, url: video.url));
+                        allVideos.add(Video(
+                            id: video.id, name: video.name, url: video.url));
                       }
                     }
                     return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
@@ -236,8 +248,10 @@ class _VideoListPageState extends State<VideoListPage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              VideoPage(id: video.id, idCategory: widget.id, video: allVideos)));
+                                          builder: (context) => VideoPage(
+                                              id: video.id,
+                                              idCategory: widget.id,
+                                              video: allVideos)));
                                 },
                                 child: ListTile(
                                   title: Text(

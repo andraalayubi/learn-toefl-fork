@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/database/video_history.dart';
 import 'package:learn_toefl/pages/translate.dart';
@@ -13,7 +12,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver{
   late Future<List<dynamic>> _history;
 
   @override

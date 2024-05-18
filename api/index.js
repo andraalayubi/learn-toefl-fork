@@ -4,8 +4,9 @@ const { Pool } = require('pg');
 
 const app = express();
 const port = 3000;
-const ip = '10.252.132.9';
+const ip = '192.168.100.6';
 // const ip = 'localhost';
+const authRoutes = require('./auth');
 
 // Middleware untuk parsing body permintaan
 app.use(bodyParser.json());
@@ -19,11 +20,12 @@ const pool = new Pool({
     port: 5432, // Port default PostgreSQL
 });
 
+app.use('/api/auth', authRoutes);
 // Endpoint untuk mendapatkan data video berdasarkan ID
 app.get('/practice', async (req, res) => {
     // const { id } = req.params;
     try {
-        const { rows } = await pool.query("SELECT qc.name, qc.reading_text,         json_agg( json_build_object( 'question', q.question_text,                'answers', ( SELECT json_agg( json_build_object(                            'answer_text', a.answer_text, 'correct', (a.id = q.correct_answer_id))) FROM Answer a WHERE a.question_id = q.id ))) AS questions FROM      Question_Category qc JOIN Question q ON qc.id = q.question_category_id    GROUP BY qc.id, qc.name, qc.reading_text ORDER BY qc.name;"
+        const { rows } = await pool.query("SELECT qc.name, qc.reading_text, json_agg( json_build_object('question', q.question_text, 'answers', ( SELECT json_agg( json_build_object('answer_text', a.answer_text, 'correct', (a.id = q.correct_answer_id))) FROM Answer a WHERE a.question_id = q.id ))) AS questions FROM Question_Category qc JOIN Question q ON qc.id = q.question_category_id    GROUP BY qc.id, qc.name, qc.reading_text ORDER BY qc.name;"
         );
         res.json(rows);
     } catch (error) {
@@ -91,3 +93,5 @@ app.get('/video/:id', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server berjalan di http://${ip}:${port}`);
 });
+
+module.exports = pool;
