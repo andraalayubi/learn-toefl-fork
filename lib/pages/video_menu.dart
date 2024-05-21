@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:learn_toefl/database/video.dart';
-import 'package:learn_toefl/database/video_history.dart';
+import 'package:learn_toefl/models/video.dart';
 import 'package:learn_toefl/pages/home/home_page.dart';
 import 'package:learn_toefl/pages/video.dart';
+import 'package:learn_toefl/services/video_history.dart';
 
 class VideoListPage extends StatefulWidget {
   final String title;

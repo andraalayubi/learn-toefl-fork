@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:learn_toefl/pages/auth/login.dart';
 import 'package:learn_toefl/pages/profile/update_profile.dart';
 import 'package:learn_toefl/pages/test_speaking.dart';
+import 'package:learn_toefl/services/auth_service.dart';
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
@@ -10,6 +12,16 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
+  final AuthService _authService = AuthService();
+
+  void _logout(BuildContext context) async {
+    await _authService.logout();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
+    );
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,6 +177,7 @@ class _ProfilPageState extends State<ProfilPage> {
                 height: 90,
               ),
               ListTile(
+                onTap: () => _logout(context),
                 leading: Container(
                   width: 40,
                   height: 40,

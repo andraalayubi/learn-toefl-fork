@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:learn_toefl/database/ip.dart';
+import 'package:learn_toefl/ip.dart';
 
 Future<List<Practice>> fetchReading() async {
   final response =

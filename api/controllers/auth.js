@@ -1,6 +1,9 @@
-const pool = require('../index');
+const pool = require('../connect');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+// Ganti 'your_secret_key' dengan kunci rahasia yang Anda tentukan
+const secretKey = 'your_secret_key';
 
 exports.register = async (req, res) => {
     const { username, email, password } = req.body;
@@ -31,8 +34,8 @@ exports.login = async (req, res) => {
             return res.status(400).json({ error: 'Invalid credentials' });
         }
 
-        const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, { expiresIn: '1h' });
-        res.json({ token });
+        const token = jwt.sign({ userId: user.id}, secretKey, { expiresIn: '1h' });
+        res.json({ token, isAdmin: user.is_admin });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

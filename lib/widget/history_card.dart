@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learn_toefl/database/video_history.dart';
+import 'package:learn_toefl/services/video_history.dart';
 import 'package:learn_toefl/utilities.dart';
 
 class LessonPage extends StatefulWidget {

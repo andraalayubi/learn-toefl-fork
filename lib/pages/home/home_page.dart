@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:learn_toefl/database/video_history.dart';
+import 'package:learn_toefl/services/video_history.dart';
 import 'package:learn_toefl/models/article_model.dart';
 import 'package:learn_toefl/pages/translate.dart';
-import 'package:learn_toefl/database/video.dart';
+import 'package:learn_toefl/models/video.dart';
 
 import 'package:learn_toefl/pages/video.dart';
 import 'package:learn_toefl/pages/video_menu.dart';

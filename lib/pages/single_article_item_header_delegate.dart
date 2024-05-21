@@ -37,7 +37,7 @@ class SingleArticlesItemHeaderDelegate extends SliverPersistentHeaderDelegate {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const MyApp(),
+                  builder: (context) => MyApp(),
                 ),
               );
             },

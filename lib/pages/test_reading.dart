@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_toefl/database/practice.dart';
+import 'package:learn_toefl/models/practice.dart';
 
 class ReadingQuestionPage extends StatefulWidget {
   @override
