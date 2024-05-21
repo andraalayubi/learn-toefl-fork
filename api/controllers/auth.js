@@ -19,6 +19,20 @@ exports.register = async (req, res) => {
     }
 };
 
+exports.registerAdmin = async (req, res) => {
+    const { username, email, password } = req.body;
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const result = await pool.query(
+            'INSERT INTO users (username, email, password, is_admin) VALUES ($1, $2, $3, TRUE) RETURNING *',
+            [username, email, hashedPassword]
+        );
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
 exports.login = async (req, res) => {
     const { email, password } = req.body;
     try {

@@ -9,8 +9,13 @@ const authRoutes = require('./auth');
 
 // Middleware untuk parsing body permintaan
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
+
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
 // Endpoint untuk mendapatkan data video berdasarkan ID
 app.get('/practice', async (req, res) => {
     // const { id } = req.params;
@@ -84,4 +89,4 @@ app.listen(port, () => {
     console.log(`Server berjalan di http://${ip}:${port}`);
 });
 
-module.exports = pool;
+module.exports = app;

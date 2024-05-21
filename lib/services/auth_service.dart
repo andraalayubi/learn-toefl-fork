@@ -26,6 +26,7 @@ class AuthService {
   }
 
   Future<String?> login(String email, String password) async {
+    print('login berjalan');
     final response = await http.post(
       Uri.parse('$ip/api/auth/login'),
       headers: <String, String>{
@@ -36,12 +37,15 @@ class AuthService {
         'password': password,
       }),
     );
+    print(response.statusCode);
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
+      print(data);
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', data['token']);
       await prefs.setBool('isAdmin', data['isAdmin']);
+      return data;
     } else {
       throw Exception('Failed to login');
     }
