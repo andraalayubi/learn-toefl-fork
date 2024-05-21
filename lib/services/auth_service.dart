@@ -25,8 +25,9 @@ class AuthService {
     }
   }
 
-  Future<String?> login(String email, String password) async {
-    print('login berjalan');
+  Future<bool?> login(String email, String password) async {
+  print('login berjalan');
+  try {
     final response = await http.post(
       Uri.parse('$ip/api/auth/login'),
       headers: <String, String>{
@@ -37,19 +38,74 @@ class AuthService {
         'password': password,
       }),
     );
-    print(response.statusCode);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 308) {
+      print('Redirect detected with status code 308');
+      final redirectLocation = response.headers['location'];
+
+      // Check if the redirect location is relative
+      final redirectUri = Uri.parse(redirectLocation!);
+      Uri newUri;
+
+      if (redirectUri.hasScheme) {
+        // Absolute URI
+        newUri = redirectUri;
+      } else {
+        // Relative URI, construct the absolute URI
+        final originalUri = Uri.parse('$ip/api/auth/login');
+        newUri = originalUri.resolveUri(redirectUri);
+      }
+
+      print('Redirect location: $newUri');
+
+      final redirectedResponse = await http.post(
+        newUri,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(<String, String>{
+          'email': email,
+          'password': password,
+        }),
+      );
+
+      if (redirectedResponse.statusCode == 200) {
+        final data = jsonDecode(redirectedResponse.body);
+        print('Response Data: $data');
+
+        if (data.containsKey('token') && data.containsKey('isAdmin')) {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('token', data['token']);
+          await prefs.setBool('isAdmin', data['isAdmin']);
+          return data['isAdmin'];
+        } else {
+          throw Exception('Invalid response structure');
+        }
+      } else {
+        throw Exception('Failed to login after redirect');
+      }
+    } else if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print(data);
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', data['token']);
-      await prefs.setBool('isAdmin', data['isAdmin']);
-      return data;
+      print('Response Data: $data');
+
+      if (data.containsKey('token') && data.containsKey('isAdmin')) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', data['token']);
+        await prefs.setBool('isAdmin', data['isAdmin']);
+        return data['isAdmin'];
+      } else {
+        throw Exception('Invalid response structure');
+      }
     } else {
+      print('Failed to login with status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
       throw Exception('Failed to login');
     }
+  } catch (e) {
+    print('Error during login: $e');
+    throw Exception('Failed to login');
   }
+}
 
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
