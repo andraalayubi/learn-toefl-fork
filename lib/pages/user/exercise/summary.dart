@@ -1,29 +1,5 @@
 import 'package:flutter/material.dart';
 
-// CustomClipper untuk setengah lingkaran terbalik
-class InvertedHalfCircleClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    final centerX = size.width / 2;
-    final radius = size.width / 2;
-
-    // Membuat setengah lingkaran terbalik yang mencapai setengah layar
-    path.moveTo(0, 0); // Mulai dari atas
-    path.quadraticBezierTo(centerX, radius, size.width, 0); // Setengah lingkaran
-    path.lineTo(size.width, size.height); // Lanjutkan ke bawah
-    path.lineTo(0, size.height); // Tutup bagian bawah
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    return false; // Tidak perlu reclip
-  }
-}
-
-
 class Summary extends StatefulWidget {
   final int score;
   final int correct;
@@ -42,7 +18,8 @@ class Summary extends StatefulWidget {
 class _SummaryState extends State<Summary> {
   @override
   Widget build(BuildContext context) {
-    
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -53,27 +30,35 @@ class _SummaryState extends State<Summary> {
           ),
         ),
         backgroundColor: Color(0xFF0D0443),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: Stack(
         children: [
-          // ClipPath dengan setengah lingkaran terbalik
-          ClipPath(
-            clipper: InvertedHalfCircleClipper(),
-            child: Container(
-              color: Color(0xFF0D0443),
-              height: 400, // Tinggi untuk setengah lingkaran terbalik
+          Container(
+            color: Colors.white,
+          ),
+          Container(
+            height: screenHeight / 1.7,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/sparkle.png"),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20), // Padding untuk tata letak
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 50), // Jarak agar konten tidak terlalu dekat
+                SizedBox(height: 50),
                 Text(
                   'Congratulations!\nYou have completed all questions.',
-                  textAlign: TextAlign.center, // Rata tengah
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -89,7 +74,7 @@ class _SummaryState extends State<Summary> {
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(height: 20), 
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,7 +84,7 @@ class _SummaryState extends State<Summary> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
-                        boxShadow:[
+                        boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 5,
@@ -109,23 +94,23 @@ class _SummaryState extends State<Summary> {
                         ],
                       ),
                       child: Text(
-                        '${widget.score}', 
+                        '${widget.score}',
                         style: TextStyle(
-                          fontSize: 60, 
+                          fontSize: 60,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
                       ),
                     ),
-                    SizedBox(width: 20), 
+                    SizedBox(width: 20),
                     Column(
                       children: [
                         Container(
                           padding: EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: Colors.green[100], 
+                            color: Colors.green[100],
                             borderRadius: BorderRadius.circular(16),
-                            boxShadow:[
+                            boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 5,
@@ -143,13 +128,13 @@ class _SummaryState extends State<Summary> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10), 
+                        SizedBox(height: 10),
                         Container(
                           padding: EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: Colors.red[100], 
+                            color: Colors.red[100],
                             borderRadius: BorderRadius.circular(16),
-                            boxShadow:[
+                            boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 5,
@@ -163,7 +148,7 @@ class _SummaryState extends State<Summary> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: Colors.red[700], 
+                              color: Colors.red[700],
                             ),
                           ),
                         ),
@@ -172,19 +157,17 @@ class _SummaryState extends State<Summary> {
                   ],
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('Go Back to Home'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFFFFFF),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                ),
               ],
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: Image.asset(
+              "assets/images/writing.png",
+              width: 250,
+              height: 250,
+              alignment: Alignment.bottomRight,
             ),
           ),
         ],
