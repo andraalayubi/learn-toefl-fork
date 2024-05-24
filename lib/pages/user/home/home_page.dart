@@ -4,11 +4,11 @@ import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/pages/user/pages/fav_video.dart';
 import 'package:learn_toefl/services/video_history.dart';
 import 'package:learn_toefl/models/article_model.dart';
-import 'package:learn_toefl/pages/translate.dart';
+import 'package:learn_toefl/pages/user/pages/translate.dart';
 import 'package:learn_toefl/models/video.dart';
 
-import 'package:learn_toefl/pages/video.dart';
-import 'package:learn_toefl/pages/video_menu.dart';
+import 'package:learn_toefl/pages/user/pages/video.dart';
+import 'package:learn_toefl/pages/user/pages/video_menu.dart';
 import 'package:learn_toefl/utilities.dart';
 import 'package:learn_toefl/widget/article_card.dart';
 

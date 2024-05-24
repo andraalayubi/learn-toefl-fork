@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/widget/question_widgets.dart'; // Widget kustom untuk soal
-import 'package:learn_toefl/pages/exercise/summary.dart'; 
+import 'package:learn_toefl/pages/user/exercise/summary.dart'; 
 
 class CorrectIncorrect extends StatefulWidget {
   const CorrectIncorrect({Key? key}) : super(key: key);

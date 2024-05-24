@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_toefl/pages/admin/home.dart';
+import 'package:learn_toefl/pages/admin/home/home.dart';
 import 'package:learn_toefl/pages/auth/register.dart';
 import 'package:learn_toefl/services/auth_service.dart';
 import 'package:learn_toefl/widget/bottom_navigation.dart';

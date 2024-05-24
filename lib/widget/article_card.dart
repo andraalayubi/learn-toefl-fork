@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/models/article_model.dart';
-import 'package:learn_toefl/pages/single_article_page.dart';
+import 'package:learn_toefl/pages/user/pages/single_article_page.dart';
 import 'package:learn_toefl/utilities.dart';
 
 class ArticleCard extends StatefulWidget {
