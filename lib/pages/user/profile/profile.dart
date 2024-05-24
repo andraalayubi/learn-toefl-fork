@@ -1,7 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/pages/auth/login.dart';
-import 'package:learn_toefl/pages/profile/update_profile.dart';
+import 'package:learn_toefl/pages/user/pages/history_video.dart';
+import 'package:learn_toefl/pages/user/profile/update_profile.dart';
 import 'package:learn_toefl/pages/test_speaking.dart';
+import 'package:learn_toefl/pages/user/pages/fav_video.dart';
+import 'package:learn_toefl/pages/user/pages/history_video.dart';
 import 'package:learn_toefl/services/auth_service.dart';
 
 class ProfilPage extends StatefulWidget {
@@ -21,7 +26,7 @@ class _ProfilPageState extends State<ProfilPage> {
       MaterialPageRoute(builder: (context) => LoginScreen()),
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,52 +98,72 @@ class _ProfilPageState extends State<ProfilPage> {
               const SizedBox(
                 height: 10,
               ),
-              ListTile(
-                leading: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.grey[100],
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FavVideo(),
+                    ),
+                  );
+                },
+                child: ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.grey[100],
+                    ),
+                    child: const Icon(
+                      Icons.favorite,
+                      color: Color(0xFF0D0443),
+                    ),
                   ),
-                  child: const Icon(
-                    Icons.favorite,
-                    color: Color(0xFF0D0443),
+                  title: const Text('Favorite Video'),
+                  trailing: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.grey[50],
+                    ),
+                    child: const Icon(Icons.arrow_forward_ios_sharp),
                   ),
-                ),
-                title: const Text('Favorite Lesson'),
-                trailing: Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.grey[50],
-                  ),
-                  child: const Icon(Icons.arrow_forward_ios_sharp),
                 ),
               ),
-              ListTile(
-                leading: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.grey[100],
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HistoryVideo(),
+                    ),
+                  );
+                },
+                child: ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.grey[100],
+                    ),
+                    child: Icon(
+                      Icons.history,
+                      color: Color(0xFF0D0443),
+                    ),
                   ),
-                  child: Icon(
-                    Icons.history,
-                    color: Color(0xFF0D0443),
+                  title: const Text('History'),
+                  trailing: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.grey[50],
+                    ),
+                    child: const Icon(Icons.arrow_forward_ios_sharp),
                   ),
-                ),
-                title: const Text('History'),
-                trailing: Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.grey[50],
-                  ),
-                  child: const Icon(Icons.arrow_forward_ios_sharp),
                 ),
               ),
               GestureDetector(

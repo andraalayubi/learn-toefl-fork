@@ -2,7 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/pages/exercise/exercise.dart';
 import 'package:learn_toefl/pages/home/home_page.dart';
-import 'package:learn_toefl/pages/profile/profile.dart';
+import 'package:learn_toefl/pages/user/profile/profile.dart';
 import 'package:learn_toefl/utilities.dart';
 
 class BottomNavigation extends StatefulWidget {
