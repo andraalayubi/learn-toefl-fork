@@ -585,7 +585,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                 'Article',
                                 style: tFOnt(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                 ),
                                 textAlign: TextAlign.left,
                               ),

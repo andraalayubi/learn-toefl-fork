@@ -65,7 +65,7 @@ class _FavVideoState extends State<FavVideo> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Let’s see your Favorite Lesson HoHoHo',
+                              'Let’s see your Favorite Video HoHoHo',
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,

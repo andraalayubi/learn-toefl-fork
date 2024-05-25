@@ -16,13 +16,8 @@ class _TransletePageState extends State<TranslatePage> {
   List<String> languages = [
     'English',
     'Indonesian',
-    'Korean',
-    'Russian',
-    'German',
-    'Japanese',
-    'Arabic'
   ];
-  List<String> languagesCode = ['en', 'id', 'ko', 'ru', 'de', 'ja', 'ar'];
+  List<String> languagesCode = ['en', 'id'];
 
   final translator = GoogleTranslator();
   String from = 'en';
@@ -408,8 +403,8 @@ class _TransletePageState extends State<TranslatePage> {
                                     horizontal: 12.0),
                                 child: Text(
                                   selectedValue1,
-                                  style:
-                                      const TextStyle(fontWeight: FontWeight.normal),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.normal),
                                 ),
                               ),
                               InkWell(

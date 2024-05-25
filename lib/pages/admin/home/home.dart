@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_toefl/pages/admin/exercise/exercise.dart';
 import 'package:learn_toefl/pages/admin/exercise/subexercise_page.dart';
 import 'package:learn_toefl/pages/admin/grammar/grammar_page.dart';
 import 'package:learn_toefl/pages/admin/lesson/lesson_page.dart';
@@ -174,7 +175,7 @@ class AdminHomeScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            'assets/images/vocabolary.png', 
+                            'assets/images/vocabolary.png',
                             width: 70,
                             height: 70,
                             fit: BoxFit.cover,
@@ -289,7 +290,7 @@ class AdminHomeScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SubExercisePage()),
+                              builder: (context) => const ExercisePage()),
                         );
                       },
                       child: Container(
