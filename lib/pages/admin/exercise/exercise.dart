@@ -19,9 +19,9 @@ class _ExercisePageState extends State<ExercisePage> {
       backgroundColor: const Color(0xFF0D0443),
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        title: const Text(
+        title: Text(
           'EXERCISE',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: tFOnt(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: const Color(0xFF0D0443),
         leading: Padding(
