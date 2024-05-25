@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:learn_toefl/utilities.dart';
 
 class LessonPage extends StatefulWidget {
   const LessonPage({super.key});
@@ -20,9 +22,9 @@ class _LessonPageState extends State<LessonPage> {
       backgroundColor: const Color(0xFF0D0443),
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        title: const Text(
+        title: Text(
           'LESSON',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: tFOnt(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: const Color(0xFF0D0443),
         leading: Padding(
@@ -50,7 +52,8 @@ class _LessonPageState extends State<LessonPage> {
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: 12, horizontal: 26),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 26),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -59,20 +62,18 @@ class _LessonPageState extends State<LessonPage> {
                         _showFormDialog(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Color.fromARGB(255, 10, 29, 88), // Background color
+                        backgroundColor: const Color.fromARGB(255, 10, 29, 88),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
                         textStyle: const TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(12), // Border radius
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Create',
-                        style: TextStyle(color: Colors.white),
+                        style: tFOnt(color: Colors.white),
                       ),
                     ),
                   ],
@@ -82,48 +83,250 @@ class _LessonPageState extends State<LessonPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    width: 150,
-                    height: 150,
-                    margin: const EdgeInsets.all(12),
+                    width: 170,
+                    height: 200,
                     decoration: BoxDecoration(
-                      color: Colors.amber,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.black, width: 1),
+                      border: Border.all(width: 1.0, color: Colors.grey),
+                      gradient: const LinearGradient(
+                        colors: [
+                          Colors.white,
+                          Color.fromARGB(255, 240, 242, 246),
+                          Color.fromARGB(255, 178, 198, 249),
+                        ],
+                        stops: [0, 0.5, 1],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18.0, vertical: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Listening',
+                                style: tFOnt(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: mColor),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          right: 18,
+                          child: Image.asset(
+                            'assets/images/iconVideo_1.png',
+                            width: 90,
+                            height: 90,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Container(
-                    width: 150,
-                    height: 150,
-                    margin: const EdgeInsets.all(12),
+                    width: 170,
+                    height: 200,
                     decoration: BoxDecoration(
-                      color: Colors.amber,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.black, width: 1),
+                      border: Border.all(width: 1.0, color: Colors.grey),
+                      gradient: const LinearGradient(
+                        colors: [
+                          Colors.white,
+                          Color.fromARGB(255, 249, 246, 242),
+                          Color.fromARGB(255, 245, 218, 206),
+                        ],
+                        stops: [0, 0.5, 1],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18.0, vertical: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Speaking',
+                                style: tFOnt(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  color: mColor,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          right: 18,
+                          child: Image.asset(
+                            'assets/images/iconVideo_2.png',
+                            width: 90,
+                            height: 90,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 30,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    width: 150,
-                    height: 150,
-                    margin: const EdgeInsets.all(12),
+                    width: 170,
+                    height: 200,
                     decoration: BoxDecoration(
-                      color: Colors.amber,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.black, width: 1),
+                      border: Border.all(width: 1.0, color: Colors.grey),
+                      gradient: const LinearGradient(
+                        colors: [
+                          Colors.white,
+                          Color.fromARGB(255, 252, 252, 246),
+                          Color.fromARGB(255, 243, 251, 167),
+                        ],
+                        stops: [0, 0.5, 1],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18.0, vertical: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Reading',
+                                style: tFOnt(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  color: mColor,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          right: 18,
+                          child: Image.asset(
+                            'assets/images/iconVideo_3.png',
+                            width: 90,
+                            height: 90,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Container(
-                    width: 150,
-                    height: 150,
-                    margin: const EdgeInsets.all(12),
+                    width: 170,
+                    height: 200,
                     decoration: BoxDecoration(
-                      color: Colors.amber,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.black, width: 1),
+                      border: Border.all(width: 1.0, color: Colors.grey),
+                      gradient: const LinearGradient(
+                        colors: [
+                          Colors.white,
+                          Color.fromARGB(255, 247, 243, 243),
+                          Color.fromARGB(255, 227, 195, 247),
+                        ],
+                        stops: [0, 0.5, 1],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18.0, vertical: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Writing',
+                                style: tFOnt(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          right: 18,
+                          child: Image.asset(
+                            'assets/images/iconVideo_4.png',
+                            width: 90,
+                            height: 90,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -136,88 +339,172 @@ class _LessonPageState extends State<LessonPage> {
   }
 
   _showFormDialog(BuildContext context) {
-    return showDialog(
+    showDialog(
       context: context,
-      builder: (param) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.grey,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              child: const Text(
-                "Cancel",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            TextButton(
-              onPressed: () async {},
-              style: TextButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 10, 29, 88),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              child: const Text("Add", style: TextStyle(color: Colors.white)),
-            ),
-          ],
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: mColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(25.0),
+            side: const BorderSide(color: Colors.black, width: 1.0),
           ),
-          title: const Center(
-            child: Text(
-              'Add New Lesson',
-              style: TextStyle(fontWeight: FontWeight.bold),
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 12),
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.6,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12.0),
             ),
-          ),
-          content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                    hintText: 'Choose type',
-                    labelText: 'Type of Lesson',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                  value: selectedCourse,
-                  items: courses.map((String course) {
-                    return DropdownMenuItem<String>(
-                      value: course,
-                      child: Text(course),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedCourse = newValue;
-                    });
-                  },
-                ),
-                const SizedBox(height: 15),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Input title',
-                    labelText: 'Title of Video',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20, bottom: 30),
+                  child: Text(
+                    'Create New Lesson',
+                    style: tFOnt(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 19,
+                        color: Colors.white),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-                const SizedBox(height: 15),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Link URL',
-                    labelText: 'Input link URL',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Type of Lesson',
+                              style: tFOnt(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            DropdownButtonFormField<String>(
+                              decoration: InputDecoration(
+                                hintText: 'Choose type',
+                                hintStyle: tFOnt(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    fontStyle: FontStyle.italic),
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                              value: selectedCourse,
+                              items: courses.map((String course) {
+                                return DropdownMenuItem<String>(
+                                  value: course,
+                                  child: Text(course),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedCourse = newValue;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 15),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Title of Material Video',
+                              style: tFOnt(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
+                            ),
+                            const SizedBox(height: 5),
+                            TextField(
+                              decoration: InputDecoration(
+                                hintText: 'Input title',
+                                hintStyle: tFOnt(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    fontStyle: FontStyle.italic),
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 15),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Link URL Video',
+                              style: tFOnt(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
+                            ),
+                            const SizedBox(height: 5),
+                            TextField(
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                hintText: 'Input Link URL',
+                                hintStyle: tFOnt(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    fontStyle: FontStyle.italic),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.grey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        child: Text(
+                          "Cancel",
+                          style: tFOnt(color: Colors.white),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      TextButton(
+                        onPressed: () async {},
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        child: Text("Add", style: tFOnt(color: Colors.white)),
+                      ),
+                    ],
                   ),
                 ),
               ],

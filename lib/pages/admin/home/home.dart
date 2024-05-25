@@ -22,31 +22,49 @@ class AdminHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2.0),
-          child: Text(
-            'Toetion',
-            style: tFOnt(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'ToeTion',
+                style: tFOnt(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Container(
+                decoration:
+                    const BoxDecoration(color: mColor, shape: BoxShape.circle),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.logout,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => _logout(context),
+                ),
+              ),
+            ],
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 18.0),
-            child: Container(
-              decoration: BoxDecoration(color: mColor, shape: BoxShape.circle),
-              child: IconButton(
-                icon: Icon(
-                  Icons.logout,
-                  color: Colors.white,
-                ),
-                onPressed: () => _logout(context),
-              ),
-            ),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 18.0),
+        //     child: Container(
+        //       decoration:
+        //           const BoxDecoration(color: mColor, shape: BoxShape.circle),
+        //       child: IconButton(
+        //         icon: const Icon(
+        //           Icons.logout,
+        //           color: Colors.white,
+        //         ),
+        //         onPressed: () => _logout(context),
+        //       ),
+        //     ),
+        //   ),
+        // ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -99,12 +117,6 @@ class AdminHomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Image.asset(
-                    //   'assets/images/welcome.png', // Ganti dengan path gambar Anda
-                    //   width: 150,
-                    //   height: 150,
-                    //   fit: BoxFit.fitHeight,
-                    // ),
                   ],
                 ),
               ),
@@ -127,11 +139,11 @@ class AdminHomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
                   Expanded(
@@ -174,11 +186,35 @@ class AdminHomeScreen extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(
-                            'assets/images/vocabolary.png',
-                            width: 70,
-                            height: 70,
-                            fit: BoxFit.cover,
+                          ColorFiltered(
+                            colorFilter: const ColorFilter.matrix(<double>[
+                              0.2126,
+                              0.7152,
+                              0.0722,
+                              0,
+                              0,
+                              0.2126,
+                              0.7152,
+                              0.0722,
+                              0,
+                              0,
+                              0.2126,
+                              0.7152,
+                              0.0722,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              1,
+                              0,
+                            ]),
+                            child: Image.asset(
+                              'assets/images/iconVideo_3.png',
+                              width: 70,
+                              height: 70,
+                              fit: BoxFit.cover,
+                            ), 
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 10.0),
@@ -234,11 +270,35 @@ class AdminHomeScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              'assets/images/grammar.png',
-                              width: 70,
-                              height: 70,
-                              fit: BoxFit.cover,
+                            ColorFiltered(
+                              colorFilter: const ColorFilter.matrix(<double>[
+                                0.2126,
+                                0.7152,
+                                0.0722,
+                                0,
+                                0,
+                                0.2126,
+                                0.7152,
+                                0.0722,
+                                0,
+                                0,
+                                0.2126,
+                                0.7152,
+                                0.0722,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                1,
+                                0,
+                              ]),
+                              child: Image.asset(
+                                'assets/images/iconVideo_2.png',
+                                width: 70,
+                                height: 70,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 10.0),
@@ -294,7 +354,7 @@ class AdminHomeScreen extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        height: 150,
+                        height: 250,
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             colors: [

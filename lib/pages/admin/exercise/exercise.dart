@@ -302,6 +302,9 @@ class _ExercisePageState extends State<ExercisePage> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),

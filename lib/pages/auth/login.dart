@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learn_toefl/pages/admin/home/home.dart';
 import 'package:learn_toefl/pages/auth/register.dart';
 import 'package:learn_toefl/services/auth_service.dart';
+import 'package:learn_toefl/utilities.dart';
 import 'package:learn_toefl/widget/bottom_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -57,10 +58,10 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Text.rich(
                 TextSpan(
-                  text: 'Hello!\nWelcome\nBack',
-                  style: TextStyle(
+                  text: "Hello\nWelcome\nBack",
+                  style: tFOnt(
                     fontSize: 45,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w800,
                     foreground: Paint()
                       ..shader = const LinearGradient(
                         colors: [
@@ -81,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.email),
                   hintText: 'Email',
+                  hintStyle: tFOnt(fontSize: 16, fontWeight: FontWeight.w500),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(26),
                   ),
@@ -96,6 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock),
                   hintText: 'Password',
+                  hintStyle: tFOnt(fontSize: 16, fontWeight: FontWeight.w500),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(26),
                   ),
@@ -109,22 +112,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: _login,
                 style: ElevatedButton.styleFrom(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 156, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 158, vertical: 15),
                   backgroundColor: const Color.fromARGB(255, 16, 9, 61),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(26),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Login',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: tFOnt(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Don't have an account?"),
+                  Text("Don't have an account?", style: tFOnt(fontSize: 12)),
                   TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -133,9 +139,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             builder: (context) => RegisterScreen()),
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       'Sign Up',
-                      style: TextStyle(color: Colors.black),
+                      style: tFOnt(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
