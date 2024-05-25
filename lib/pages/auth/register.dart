@@ -139,7 +139,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Text(
                     'Sign Up',
                     style: tFOnt(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),

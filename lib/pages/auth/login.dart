@@ -117,12 +117,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 50),
               SizedBox(
-                 width: double.infinity,
+                width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _login,
                   style: ElevatedButton.styleFrom(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 156, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 156, vertical: 15),
                     backgroundColor: const Color.fromARGB(255, 16, 9, 61),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(26),
@@ -131,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text(
                     'Login',
                     style: tFOnt(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
