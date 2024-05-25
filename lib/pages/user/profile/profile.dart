@@ -8,6 +8,7 @@ import 'package:learn_toefl/pages/test_speaking.dart';
 import 'package:learn_toefl/pages/user/pages/fav_video.dart';
 import 'package:learn_toefl/pages/user/pages/history_video.dart';
 import 'package:learn_toefl/services/auth_service.dart';
+import 'package:learn_toefl/utilities.dart';
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
@@ -34,10 +35,10 @@ class _ProfilPageState extends State<ProfilPage> {
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.white,
-        title: const Center(
+        title: Center(
           child: Text(
             'Profile',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: tFOnt(fontWeight: FontWeight.bold),
           ),
         ),
       ),
@@ -64,11 +65,11 @@ class _ProfilPageState extends State<ProfilPage> {
               ),
               Text(
                 'Jia JNE',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: tFOnt(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               Text(
                 'jiaracing@gmail.com',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+                style: tFOnt(fontSize: 14, fontWeight: FontWeight.normal),
               ),
               const SizedBox(
                 height: 20,
@@ -81,14 +82,14 @@ class _ProfilPageState extends State<ProfilPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => UpdateProfile()));
+                            builder: (context) => const UpdateProfile()));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0D0443),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Edit Profile',
-                    style: TextStyle(color: Colors.white),
+                    style: tFOnt(color: Colors.white),
                   ),
                 ),
               ),
@@ -120,7 +121,10 @@ class _ProfilPageState extends State<ProfilPage> {
                       color: Color(0xFF0D0443),
                     ),
                   ),
-                  title: const Text('Favorite Video'),
+                  title: Text(
+                    'Favorite Video',
+                    style: tFOnt(),
+                  ),
                   trailing: Container(
                     width: 30,
                     height: 30,
@@ -149,12 +153,15 @@ class _ProfilPageState extends State<ProfilPage> {
                       borderRadius: BorderRadius.circular(100),
                       color: Colors.grey[100],
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.history,
                       color: Color(0xFF0D0443),
                     ),
                   ),
-                  title: const Text('History'),
+                  title: Text(
+                    'History',
+                    style: tFOnt(),
+                  ),
                   trailing: Container(
                     width: 30,
                     height: 30,
@@ -217,7 +224,7 @@ class _ProfilPageState extends State<ProfilPage> {
                 ),
                 title: Text(
                   'Logout',
-                  style: TextStyle(color: Colors.red[900]),
+                  style: tFOnt(color: Colors.red[900]),
                 ),
               ),
             ],

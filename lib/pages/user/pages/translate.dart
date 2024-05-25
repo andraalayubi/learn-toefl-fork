@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
+import 'package:learn_toefl/utilities.dart';
 import 'package:translator/translator.dart';
 
 class TranslatePage extends StatefulWidget {
@@ -75,13 +76,14 @@ class _TransletePageState extends State<TranslatePage> {
 
   @override
   Widget build(BuildContext context) {
-    _copy() {
-      final nilai = ClipboardData(text: controller.text);
+    void _copy(String textToCopy) {
+      final nilai = ClipboardData(text: textToCopy);
       Clipboard.setData(nilai);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Text copied to clipboard'),
-          duration: Duration(seconds: 2), // Adjust the duration as needed
+          duration:
+              Duration(seconds: 2), // Sesuaikan durasinya sesuai kebutuhan
         ),
       );
     }
@@ -99,15 +101,15 @@ class _TransletePageState extends State<TranslatePage> {
       backgroundColor: const Color(0xFF0D0443),
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        title: const Text(
+        title: Text(
           'TRANSLATOR',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: tFOnt(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: const Color(0xFF0D0443),
         leading: Padding(
           padding: const EdgeInsets.only(left: 22.0),
           child: IconButton(
-              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+              icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
               onPressed: () {
                 Navigator.of(context).pop();
               }),
@@ -115,7 +117,7 @@ class _TransletePageState extends State<TranslatePage> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.only(top: 12),
+          margin: const EdgeInsets.only(top: 12),
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
@@ -147,42 +149,50 @@ class _TransletePageState extends State<TranslatePage> {
                     const SizedBox(
                       height: 25,
                     ),
-                    Container(
-                      width: 360,
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF0D0443),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Understand comfortably in your own language.',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Container(
+                        padding:
+                            const EdgeInsets.only(top: 30, left: 20, right: 20),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              mColor,
+                              mColor.withOpacity(0.8),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            stops: const [0.4, 1],
                           ),
-                          const SizedBox(height: 40),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Image.asset(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Understand comfortably in your own language.',
+                                    style: tFOnt(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 40),
+                            Image.asset(
                               'assets/images/proud.png',
                               width: 85,
                               height: 80,
                               fit: BoxFit.cover,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -209,11 +219,12 @@ class _TransletePageState extends State<TranslatePage> {
                               child: Center(
                                 child: DropdownButton(
                                   value: selectedValue1,
-                                  hint: const Text(
+                                  hint: Text(
                                     'English',
-                                    style: TextStyle(
+                                    style: tFOnt(
+                                      fontSize: 15,
                                       fontWeight: FontWeight.bold,
-                                      color: Color(0xFF0D0443),
+                                      color: const Color(0xFF0D0443),
                                     ),
                                   ),
                                   items: languages.map((lang) {
@@ -276,11 +287,12 @@ class _TransletePageState extends State<TranslatePage> {
                               child: Center(
                                 child: DropdownButton(
                                   value: selectedValue2,
-                                  hint: const Text(
+                                  hint: Text(
                                     'Indonesian',
-                                    style: TextStyle(
+                                    style: tFOnt(
+                                      fontSize: 15,
                                       fontWeight: FontWeight.bold,
-                                      color: Color(0xFF0D0443),
+                                      color: mColor,
                                     ),
                                   ),
                                   items: languages.map((lang) {
@@ -343,7 +355,10 @@ class _TransletePageState extends State<TranslatePage> {
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 26.0),
-                              child: Text('Translate From'),
+                              child: Text(
+                                'Translate From',
+                                style: tFOnt(fontWeight: FontWeight.normal),
+                              ),
                             ),
                           ],
                         ),
@@ -363,9 +378,8 @@ class _TransletePageState extends State<TranslatePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
                           ),
                           Expanded(
                             child: Padding(
@@ -384,8 +398,9 @@ class _TransletePageState extends State<TranslatePage> {
                                     return null;
                                   },
                                   textInputAction: TextInputAction.done,
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                       hintText: 'Enter text here...',
+                                      hintStyle: tFOnt(),
                                       enabledBorder: InputBorder.none,
                                       border: InputBorder.none,
                                       errorBorder: InputBorder.none),
@@ -411,7 +426,10 @@ class _TransletePageState extends State<TranslatePage> {
                                 child: Row(
                                   children: [
                                     IconButton(
-                                      onPressed: _copy,
+                                      onPressed: () {
+                                        _copy(controller
+                                            .text); // Salin dari translate from
+                                      },
                                       icon: const Icon(Icons.content_copy),
                                     ),
                                     IconButton(
@@ -428,12 +446,15 @@ class _TransletePageState extends State<TranslatePage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 26.0),
-                          child: Text('Translate To'),
+                          padding: const EdgeInsets.symmetric(horizontal: 26.0),
+                          child: Text(
+                            'Translate To',
+                            style: tFOnt(fontWeight: FontWeight.normal),
+                          ),
                         ),
                       ],
                     ),
@@ -477,7 +498,9 @@ class _TransletePageState extends State<TranslatePage> {
                                 ),
                               ),
                               InkWell(
-                                onTap: _copy,
+                                onTap: () {
+                                  _copy(data); // Salin dari translate to
+                                },
                                 child: const IconButton(
                                     icon: Icon(
                                       Icons.content_copy,
@@ -513,9 +536,9 @@ class _TransletePageState extends State<TranslatePage> {
                         dimension: 20,
                         child: CircularProgressIndicator(color: Colors.white),
                       )
-                    : const Text(
+                    : Text(
                         'Translate',
-                        style: TextStyle(color: Colors.white),
+                        style: tFOnt(color: Colors.white),
                       ),
               ),
 

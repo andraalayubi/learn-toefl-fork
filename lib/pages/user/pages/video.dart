@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/models/video.dart';
+import 'package:learn_toefl/utilities.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoPage extends StatefulWidget {
@@ -69,7 +70,7 @@ class _VideoPageState extends State<VideoPage> {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
+                      style: tFOnt(
                         color: Colors.white,
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -77,7 +78,7 @@ class _VideoPageState extends State<VideoPage> {
                     ),
                     Text(
                       snapshot.data!.name,
-                      style: const TextStyle(
+                      style: tFOnt(
                         color: Colors.white,
                         fontSize: 12,
                       ),
@@ -132,7 +133,7 @@ class _VideoPageState extends State<VideoPage> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 100,
                     ),
                     Transform.translate(
@@ -147,13 +148,13 @@ class _VideoPageState extends State<VideoPage> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Expanded(
+                            Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     'Explore more ',
-                                    style: TextStyle(
+                                    style: tFOnt(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -161,7 +162,7 @@ class _VideoPageState extends State<VideoPage> {
                                   ),
                                   Text(
                                     'lesson videos now!',
-                                    style: TextStyle(
+                                    style: tFOnt(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -186,14 +187,14 @@ class _VideoPageState extends State<VideoPage> {
                     ),
                     Transform.translate(
                       offset: const Offset(0, -65),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 26.0),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 26.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
                               'More Videos',
-                              style: TextStyle(
+                              style: tFOnt(
                                   fontSize: 14, fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -238,7 +239,7 @@ class _VideoPageState extends State<VideoPage> {
                                             const EdgeInsets.only(left: 12.0),
                                         child: Text(
                                           v.name,
-                                          style: const TextStyle(
+                                          style: tFOnt(
                                               fontWeight: FontWeight.bold),
                                           maxLines: 1,
                                         ),

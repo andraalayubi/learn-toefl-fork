@@ -5,6 +5,7 @@ import 'package:learn_toefl/models/video.dart';
 import 'package:learn_toefl/pages/user/home/home_page.dart';
 import 'package:learn_toefl/pages/user/pages/video.dart';
 import 'package:learn_toefl/services/video_history.dart';
+import 'package:learn_toefl/utilities.dart';
 
 class VideoListPage extends StatefulWidget {
   final String title;
@@ -67,8 +68,7 @@ class _VideoListPageState extends State<VideoListPage> {
         elevation: 0.0,
         title: Text(
           widget.title,
-          style:
-              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: tFOnt(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: const Color(0xFF0D0443),
         leading: Padding(
@@ -112,13 +112,14 @@ class _VideoListPageState extends State<VideoListPage> {
                                     bottomLeft: Radius.circular(12),
                                   ),
                                 ),
-                                child: const TextField(
+                                child: TextField(
                                   // onChanged: ,
                                   decoration: InputDecoration(
                                     hintText: "Search here",
+                                    hintStyle: tFOnt(),
                                     border: InputBorder.none,
-                                    contentPadding:
-                                        EdgeInsets.only(left: 12, bottom: 12),
+                                    contentPadding: const EdgeInsets.only(
+                                        left: 12, bottom: 12),
                                   ),
                                 ),
                               ),
@@ -164,7 +165,7 @@ class _VideoListPageState extends State<VideoListPage> {
                         children: [
                           Text(
                             description,
-                            style: const TextStyle(
+                            style: tFOnt(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -226,13 +227,13 @@ class _VideoListPageState extends State<VideoListPage> {
                                   children: [
                                     Text(
                                       snapshot.data![index].name,
-                                      style: const TextStyle(
+                                      style: tFOnt(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
                                       "${snapshot.data![index].videos.length} Material",
-                                      style: const TextStyle(
+                                      style: tFOnt(
                                           fontSize: 12,
                                           fontWeight: FontWeight.normal),
                                     ),
@@ -256,7 +257,7 @@ class _VideoListPageState extends State<VideoListPage> {
                                 child: ListTile(
                                   title: Text(
                                     video.name,
-                                    style: const TextStyle(fontSize: 12),
+                                    style: tFOnt(fontSize: 12),
                                   ),
                                   trailing: Container(
                                     width: 58,
@@ -267,10 +268,10 @@ class _VideoListPageState extends State<VideoListPage> {
                                           const Color.fromARGB(255, 24, 11, 70),
                                       borderRadius: BorderRadius.circular(14),
                                     ),
-                                    child: const Text(
+                                    child: Text(
                                       'Done',
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: tFOnt(
                                         fontSize: 9,
                                         color: Colors.white,
                                       ),
