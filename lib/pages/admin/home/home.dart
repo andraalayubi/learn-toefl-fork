@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_toefl/pages/admin/exercise/subexercise_page.dart';
 import 'package:learn_toefl/pages/admin/grammar/grammar_page.dart';
 import 'package:learn_toefl/pages/admin/lesson/lesson_page.dart';
 import 'package:learn_toefl/pages/auth/login.dart';
@@ -173,7 +174,7 @@ class AdminHomeScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            'assets/images/vocabolary.png', // Ganti dengan path gambar Anda
+                            'assets/images/vocabolary.png', 
                             width: 70,
                             height: 70,
                             fit: BoxFit.cover,
@@ -256,6 +257,98 @@ class AdminHomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'TOEFL Exercise',
+                    style: tFOnt(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SubExercisePage()),
+                        );
+                      },
+                      child: Container(
+                        height: 150,
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [
+                              Colors.white,
+                              Color.fromARGB(255, 233, 244, 255),
+                              Color.fromARGB(255, 148, 179, 255),
+                            ],
+                            stops: [0, 0.5, 1],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            width: 0.8,
+                            color: Colors.black12,
+                          ),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color.fromARGB(255, 197, 196, 196),
+                              offset: Offset(2, 4),
+                              blurRadius: 5,
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/iconVideo_4.png',
+                              width: 70,
+                              height: 70,
+                              fit: BoxFit.cover,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Text(
+                                'Exercise',
+                                style: tFOnt(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 30,
             ),
           ],
         ),
