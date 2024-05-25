@@ -76,7 +76,7 @@ class _VideoListPageState extends State<VideoListPage> {
           child: IconButton(
               icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
               onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
+                Navigator.pop(context);
               }),
         ),
       ),
@@ -243,7 +243,8 @@ class _VideoListPageState extends State<VideoListPage> {
                             children: snapshot.data![index].videos.map((video) {
                               return GestureDetector(
                                 onTap: () {
-                                  insertHistory(video.id, video.name, video.url);
+                                  insertHistory(
+                                      video.id, video.name, video.url);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
