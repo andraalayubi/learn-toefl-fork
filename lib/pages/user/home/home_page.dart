@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/pages/user/pages/fav_video.dart';
 import 'package:learn_toefl/services/video_history.dart';
 import 'package:learn_toefl/models/article_model.dart';
@@ -202,11 +201,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                       gradient: const LinearGradient(
                                         colors: [
                                           Colors.white,
-                                          Colors.white,
-                                          Color.fromARGB(255, 255, 241, 236),
-                                          Color.fromRGBO(255, 148, 113, 0.4)
+                                          Color.fromARGB(255, 255, 219, 219)
                                         ],
-                                        stops: [0, 0.14, 0.42, 1],
+                                        stops: [0.54, 1],
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
                                       ),
@@ -271,10 +268,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                       gradient: const LinearGradient(
                                         colors: [
                                           Colors.white,
-                                          Color.fromRGBO(255, 253, 240, 0.65),
-                                          Color.fromRGBO(255, 241, 114, 0.6)
+                                          Color.fromARGB(255, 255, 245, 160)
                                         ],
-                                        stops: [0, 0.5, 1],
+                                        stops: [0.55, 1],
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
                                       ),
@@ -338,10 +334,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                       gradient: const LinearGradient(
                                         colors: [
                                           Colors.white,
-                                          Color.fromARGB(255, 230, 244, 255),
-                                          Color.fromRGBO(156, 200, 235, 0.8)
+                                          Color.fromARGB(255, 197, 229, 255),
                                         ],
-                                        stops: [0, 0.5, 1],
+                                        stops: [0.54, 1],
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
                                       ),
@@ -585,7 +580,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                 'Article',
                                 style: tFOnt(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 16,
+                                  fontSize: 18,
                                 ),
                                 textAlign: TextAlign.left,
                               ),
@@ -597,12 +592,15 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           SingleChildScrollView(
                             clipBehavior: Clip.none,
                             scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: ArticleData.articleData
-                                  .map((e) => ArticleCard(
-                                        data: e,
-                                      ))
-                                  .toList(),
+                            child: IntrinsicHeight(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: ArticleData.articleData
+                                    .map((e) => ArticleCard(
+                                          data: e,
+                                        ))
+                                    .toList(),
+                              ),
                             ),
                           ),
                           const SizedBox(

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:learn_toefl/pages/admin/home/home.dart';
 import 'package:learn_toefl/pages/auth/register.dart';
 import 'package:learn_toefl/services/auth_service.dart';
-import 'package:learn_toefl/utilities.dart';
 import 'package:learn_toefl/widget/bottom_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:learn_toefl/utilities.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -58,10 +58,10 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Text.rich(
                 TextSpan(
-                  text: "Hello\nWelcome\nBack",
+                  text: 'Hello!\nWelcome\nBack',
                   style: tFOnt(
                     fontSize: 45,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w900,
                     foreground: Paint()
                       ..shader = const LinearGradient(
                         colors: [
@@ -81,8 +81,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: _emailController,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.email),
-                  hintText: 'Email',
-                  hintStyle: tFOnt(fontSize: 16, fontWeight: FontWeight.w500),
+                  hintText: 'youremail@email.com',
+                  hintStyle: tFOnt(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black45,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(26),
                   ),
@@ -98,7 +102,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock),
                   hintText: 'Password',
-                  hintStyle: tFOnt(fontSize: 16, fontWeight: FontWeight.w500),
+                  hintStyle: tFOnt(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black45,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(26),
                   ),
@@ -108,43 +116,51 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 50),
-              ElevatedButton(
-                onPressed: _login,
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 158, vertical: 15),
-                  backgroundColor: const Color.fromARGB(255, 16, 9, 61),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(26),
+              SizedBox(
+                 width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _login,
+                  style: ElevatedButton.styleFrom(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 156, vertical: 15),
+                    backgroundColor: const Color.fromARGB(255, 16, 9, 61),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(26),
+                    ),
+                  ),
+                  child: Text(
+                    'Login',
+                    style: tFOnt(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-                child: Text(
-                  'Login',
-                  style: tFOnt(
-                      fontSize: 15,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't have an account?", style: tFOnt(fontSize: 12)),
-                  TextButton(
-                    onPressed: () {
+                  Text(
+                    "Don't have an account?",
+                    style: tFOnt(),
+                  ),
+                  GestureDetector(
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => RegisterScreen()),
+                          builder: (context) => RegisterScreen(),
+                        ),
                       );
                     },
                     child: Text(
-                      'Sign Up',
+                      ' Sign Up',
                       style: tFOnt(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold),
+                        fontWeight: FontWeight.w500,
+                        color: mColor,
+                      ),
                     ),
                   ),
                 ],

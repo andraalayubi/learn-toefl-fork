@@ -1,10 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:learn_toefl/main.dart';
 import 'package:learn_toefl/models/article_model.dart';
 import 'package:learn_toefl/utilities.dart';
+import 'package:learn_toefl/widget/bottom_navigation.dart';
 
 class SingleArticlesItemHeaderDelegate extends SliverPersistentHeaderDelegate {
   final ArticleData data;
@@ -31,20 +32,36 @@ class SingleArticlesItemHeaderDelegate extends SliverPersistentHeaderDelegate {
         ),
         Positioned(
           top: 50,
-          left: 25,
+          left: 20,
           child: GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyApp(),
+                  builder: (context) => BottomNavigation(),
                 ),
               );
             },
-            child: const Icon(
-              CupertinoIcons.back,
-              size: 35,
-              color: Colors.grey,
+            child: Material(
+              borderRadius: BorderRadius.circular(56),
+              color: mColor,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(56),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(
+                    sigmaX: 5.0,
+                    sigmaY: 5.0,
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      size: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         ),
