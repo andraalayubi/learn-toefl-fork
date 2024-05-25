@@ -302,7 +302,7 @@ class _ExercisePageState extends State<ExercisePage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               )
             ],

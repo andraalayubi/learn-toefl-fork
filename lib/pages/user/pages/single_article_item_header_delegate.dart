@@ -35,12 +35,7 @@ class SingleArticlesItemHeaderDelegate extends SliverPersistentHeaderDelegate {
           left: 20,
           child: GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BottomNavigation(),
-                ),
-              );
+              Navigator.pop(context);
             },
             child: Material(
               borderRadius: BorderRadius.circular(56),
