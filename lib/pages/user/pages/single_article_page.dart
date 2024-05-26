@@ -19,27 +19,6 @@ class _SingleArticlePageState extends State<SingleArticlePage> {
 
     return Scaffold(
       backgroundColor: mColor,
-      // appBar: AppBar(
-      //   leading: GestureDetector(
-      //     onTap: () {
-      //       Navigator.push(
-      //         context,
-      //         MaterialPageRoute(
-      //           builder: (context) => const MyApp(),
-      //         ),
-      //       );
-      //     },
-      //     child: const SafeArea(
-      //       child: Padding(
-      //         padding: EdgeInsets.only(left: 10.0),
-      //         child: Icon(
-      //           CupertinoIcons.back,
-      //           size: 30,
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // ),
       body: CustomScrollView(
         slivers: [
           SliverPersistentHeader(

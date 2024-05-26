@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_toefl/utilities.dart';
 
 class FavVideo extends StatefulWidget {
   const FavVideo({super.key});
@@ -18,9 +19,9 @@ class _FavVideoState extends State<FavVideo> {
         backgroundColor: const Color(0xFF0D0443),
         appBar: AppBar(
           surfaceTintColor: Colors.transparent,
-          title: const Text(
+          title: Text(
             "FAVORITE VIDEO",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: tFOnt(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           backgroundColor: const Color(0xFF0D0443),
           leading: Padding(
@@ -50,42 +51,52 @@ class _FavVideoState extends State<FavVideo> {
                 const SizedBox(
                   height: 25,
                 ),
-                Container(
-                  width: 360,
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF0D0443),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Let’s see your Favorite Lesson HoHoHo',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          mColor,
+                          mColor.withOpacity(0.8),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        stops: const [0.4, 1],
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Let’s see your Favorite Video HoHoHo',
+                                style: tFOnt(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 40),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Image.asset(
-                          'assets/images/reading-book.png',
-                          width: 85,
-                          height: 80,
-                          fit: BoxFit.cover,
+                        const SizedBox(height: 40),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Image.asset(
+                            'assets/images/reading-book.png',
+                            width: 85,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -110,12 +121,11 @@ class _FavVideoState extends State<FavVideo> {
                             horizontal: 12, vertical: 16),
                         color: Colors.white,
                         child: ListView.builder(
-                          itemCount: 3, // Number of containers you want
+                          itemCount: 3,
                           itemBuilder: (context, index) {
                             return Container(
                               margin: const EdgeInsets.all(12),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12), // Adjust height as needed
+                              padding: const EdgeInsets.symmetric(vertical: 12),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(12),
@@ -140,7 +150,7 @@ class _FavVideoState extends State<FavVideo> {
                                             horizontal: 8.0),
                                         child: Text(
                                           'Video Lesson  ${index + 1}',
-                                          style: const TextStyle(
+                                          style: tFOnt(
                                               fontSize: 12,
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -163,12 +173,11 @@ class _FavVideoState extends State<FavVideo> {
                             horizontal: 12, vertical: 16),
                         color: Colors.white,
                         child: ListView.builder(
-                          itemCount: 3, // Number of containers you want
+                          itemCount: 3,
                           itemBuilder: (context, index) {
                             return Container(
                               margin: const EdgeInsets.all(12),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12), // Adjust height as needed
+                              padding: const EdgeInsets.symmetric(vertical: 12),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(12),
@@ -193,7 +202,7 @@ class _FavVideoState extends State<FavVideo> {
                                             horizontal: 8.0),
                                         child: Text(
                                           'Video Grammar  ${index + 1}',
-                                          style: const TextStyle(
+                                          style: tFOnt(
                                               fontSize: 12,
                                               fontWeight: FontWeight.bold),
                                         ),

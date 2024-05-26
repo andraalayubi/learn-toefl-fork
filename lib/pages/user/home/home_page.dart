@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 ),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Card(
@@ -121,7 +121,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.all(20.0),
+                                padding: const EdgeInsets.only(
+                                    top: 20.0, left: 20, right: 20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -585,7 +586,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                 'Article',
                                 style: tFOnt(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                 ),
                                 textAlign: TextAlign.left,
                               ),
@@ -597,12 +598,15 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           SingleChildScrollView(
                             clipBehavior: Clip.none,
                             scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: ArticleData.articleData
-                                  .map((e) => ArticleCard(
-                                        data: e,
-                                      ))
-                                  .toList(),
+                            child: IntrinsicHeight(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: ArticleData.articleData
+                                    .map((e) => ArticleCard(
+                                          data: e,
+                                        ))
+                                    .toList(),
+                              ),
                             ),
                           ),
                           const SizedBox(

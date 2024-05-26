@@ -3,6 +3,7 @@ import 'package:learn_toefl/models/question.dart';
 import 'package:learn_toefl/pages/test_reading.dart';
 import 'package:learn_toefl/pages/user/exercise/correct_incorrect%20copy.dart';
 import 'package:learn_toefl/pages/user/exercise/exercise_question_answer.dart';
+import 'package:learn_toefl/utilities.dart';
 
 class Exercise extends StatefulWidget {
   const Exercise({super.key});
@@ -22,9 +23,9 @@ class _Exercise extends State<Exercise> {
         surfaceTintColor: Colors.transparent,
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: const Text(
+          child: Text(
             "EXERCISE",
-            style: TextStyle(
+            style: tFOnt(
               color: Colors.white,
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -90,21 +91,22 @@ class _Exercise extends State<Exercise> {
           children: [
             Expanded(
               child: RichText(
-                text: const TextSpan(
-                  style: TextStyle(
+                text: TextSpan(
+                  style: tFOnt(
                     fontSize: 15,
                     color: Colors.white,
                   ),
                   children: [
                     TextSpan(
                       text: "Vocabulary",
-                      style: TextStyle(
+                      style: tFOnt(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     TextSpan(
                       text:
                           " is the cornerstone of communication, shaping our thoughts into articulate expressions.",
+                      style: tFOnt(),
                     ),
                   ],
                 ),
@@ -212,7 +214,7 @@ class _Exercise extends State<Exercise> {
                     children: [
                       Text(
                         title,
-                        style: const TextStyle(
+                        style: tFOnt(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -221,9 +223,9 @@ class _Exercise extends State<Exercise> {
                       const SizedBox(height: 2),
                       RichText(
                         text: TextSpan(
-                          style: const TextStyle(
+                          style: tFOnt(
                             fontSize: 12,
-                            color: Color.fromARGB(255, 0, 0, 0),
+                            color: const Color.fromARGB(255, 0, 0, 0),
                           ),
                           children: [
                             TextSpan(
@@ -269,10 +271,10 @@ class _Exercise extends State<Exercise> {
                     color: const Color.fromARGB(255, 24, 11, 70),
                     borderRadius: BorderRadius.circular(14),
                   ),
-                  child: const Text(
+                  child: Text(
                     '0%', // Skor contoh
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: tFOnt(
                       fontSize: 9,
                       color: Colors.white,
                     ),

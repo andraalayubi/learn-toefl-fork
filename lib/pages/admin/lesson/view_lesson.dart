@@ -1,30 +1,39 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/utilities.dart';
 
-class GrammarPage extends StatefulWidget {
-  const GrammarPage({super.key});
+class ListViewVideo extends StatefulWidget {
+  const ListViewVideo({super.key});
 
   @override
-  State<GrammarPage> createState() => _GrammarPageState();
+  State<ListViewVideo> createState() => _ListViewVideoState();
 }
 
-class _GrammarPageState extends State<GrammarPage> {
-  String? selectedCourse;
-  final List<String> courses = ['Nouns', 'Adjectives', 'Adverbs', 'Pronouns'];
+class _ListViewVideoState extends State<ListViewVideo> {
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final containerWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0443),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        title: Text(
-          'GRAMMAR',
-          style: tFOnt(color: Colors.white, fontWeight: FontWeight.bold),
+        toolbarHeight: 150,
+        elevation: 0.0,
+        flexibleSpace: ClipPath(
+          clipper: AppBarCustomClipper(),
+          child: Container(
+            height: 200,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(color: mColor),
+          ),
         ),
-        backgroundColor: const Color(0xFF0D0443),
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        title: Padding(
+          padding: EdgeInsets.only(left: 80),
+          child: Text(
+            'Listening',
+            style: tFOnt(fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+        ),
         leading: Padding(
           padding: const EdgeInsets.only(left: 22.0),
           child: IconButton(
@@ -36,47 +45,25 @@ class _GrammarPageState extends State<GrammarPage> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.only(top: 12),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-          ),
-          constraints: BoxConstraints(minHeight: screenHeight),
-          width: containerWidth,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 26),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        _showFormDialog(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 10, 29, 88),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        textStyle: const TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.bold),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: Text(
-                        'Create',
-                        style: tFOnt(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
+              Text(
+                "Listening's Videos",
+                style: tFOnt(fontSize: 13, fontWeight: FontWeight.bold),
               ),
+              const SizedBox(
+                height: 12,
+              ),
+              videoItem(),
+              videoItem(),
+              videoItem(),
+              videoItem(),
+              videoItem(),
+              videoItem(),
+              videoItem(),
             ],
           ),
         ),
@@ -84,7 +71,61 @@ class _GrammarPageState extends State<GrammarPage> {
     );
   }
 
-  _showFormDialog(BuildContext context) {
+  Widget videoItem() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            width: 1.0,
+            color: Colors.black,
+          ),
+          borderRadius: BorderRadius.circular(14)),
+      height: 90,
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                'assets/images/video.png',
+                width: 100,
+                height: 60,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              '200 Idioms in Listening Ski...',
+              style: tFOnt(fontSize: 12, fontWeight: FontWeight.w600),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          IconButton(
+            icon: const Icon(
+              CupertinoIcons.square_pencil,
+              color: Colors.blue,
+            ),
+            onPressed: () {
+              _showUpdateDialog(context);
+            },
+          ),
+          IconButton(
+            icon: const Icon(
+              CupertinoIcons.delete,
+              color: Colors.red,
+            ),
+            onPressed: () {},
+          ),
+        ],
+      ),
+    );
+  }
+
+  _showUpdateDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -107,7 +148,7 @@ class _GrammarPageState extends State<GrammarPage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 30),
                   child: Text(
-                    'Create New Grammar',
+                    'Update Videos',
                     style: tFOnt(
                         fontWeight: FontWeight.w700,
                         fontSize: 19,
@@ -120,44 +161,11 @@ class _GrammarPageState extends State<GrammarPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(
                       children: <Widget>[
-                        Column(
+                        const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Type of Grammar',
-                              style: tFOnt(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white),
-                            ),
-                            const SizedBox(
+                            SizedBox(
                               height: 5,
-                            ),
-                            DropdownButtonFormField<String>(
-                              decoration: InputDecoration(
-                                hintText: 'Choose type',
-                                hintStyle: tFOnt(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    fontStyle: FontStyle.italic),
-                                filled: true,
-                                fillColor: Colors.white,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
-                              value: selectedCourse,
-                              items: courses.map((String course) {
-                                return DropdownMenuItem<String>(
-                                  value: course,
-                                  child: Text(course),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedCourse = newValue;
-                                });
-                              },
                             ),
                           ],
                         ),
@@ -181,7 +189,8 @@ class _GrammarPageState extends State<GrammarPage> {
                                     fontWeight: FontWeight.w400,
                                     fontStyle: FontStyle.italic),
                                 filled: true,
-                                fillColor: Colors.white,
+                                fillColor:
+                                    const Color.fromARGB(255, 214, 214, 214),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
@@ -204,7 +213,7 @@ class _GrammarPageState extends State<GrammarPage> {
                             TextField(
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.white,
+                                fillColor: Color.fromARGB(255, 214, 214, 214),
                                 hintText: 'Input Link URL',
                                 hintStyle: tFOnt(
                                     fontSize: 12,
@@ -248,7 +257,8 @@ class _GrammarPageState extends State<GrammarPage> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                        child: Text("Add", style: tFOnt(color: Colors.white)),
+                        child:
+                            Text("Update", style: tFOnt(color: Colors.white)),
                       ),
                     ],
                   ),
@@ -259,5 +269,24 @@ class _GrammarPageState extends State<GrammarPage> {
         );
       },
     );
+  }
+}
+
+class AppBarCustomClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    double height = size.height;
+    double width = size.width;
+    var path = Path();
+    path.lineTo(0, height - 70);
+    path.quadraticBezierTo(width / 2, height + 10, width, height - 70);
+    path.lineTo(width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return false;
   }
 }

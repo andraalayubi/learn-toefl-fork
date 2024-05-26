@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learn_toefl/pages/auth/login.dart';
 import 'package:learn_toefl/services/auth_service.dart';
 import 'package:learn_toefl/widget/bottom_navigation.dart';
+import 'package:learn_toefl/utilities.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -9,12 +10,16 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  bool _isLoading = false;
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _authService = AuthService();
 
   void _register() async {
+    setState(() {
+      _isLoading = true;
+    });
     try {
       await _authService.register(
         _usernameController.text,
@@ -31,6 +36,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       print(e);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Registration failed')));
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -47,7 +56,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Text.rich(
                 TextSpan(
                   text: 'Lets!\nGet\nStarted',
-                  style: TextStyle(
+                  style: tFOnt(
                     fontSize: 45,
                     fontWeight: FontWeight.w900,
                     foreground: Paint()
@@ -70,6 +79,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.person),
                   hintText: 'Username',
+                  hintStyle: tFOnt(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black45,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(26),
                   ),
@@ -83,7 +97,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 controller: _emailController,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.email),
-                  hintText: 'Email',
+                  hintText: 'youremail@email.com',
+                  hintStyle: tFOnt(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black45,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(26),
                   ),
@@ -99,6 +118,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock),
                   hintText: 'Password',
+                  hintStyle: tFOnt(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black45,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(26),
                   ),
@@ -108,33 +132,53 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               const SizedBox(height: 50),
-              ElevatedButton(
-                onPressed: _register,
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 147, vertical: 15),
-                  backgroundColor: const Color.fromARGB(255, 16, 9, 61),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(26),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _register,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 147, vertical: 15),
+                    backgroundColor: const Color.fromARGB(255, 16, 9, 61),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(26),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  'Sign Up',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  child:_isLoading
+                      ? const CircularProgressIndicator()
+                      : Text(
+                          'Sign Up',
+                          style: tFOnt(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Already have an account?'),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
+                  Text(
+                    "Already have an account?",
+                    style: tFOnt(),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginScreen(),
+                        ),
+                      );
                     },
-                    child: const Text(
-                      'Login',
-                      style: TextStyle(color: Colors.black),
+                    child: Text(
+                      ' Login',
+                      style: tFOnt(
+                        fontWeight: FontWeight.w500,
+                        color: mColor,
+                      ),
                     ),
                   ),
                 ],

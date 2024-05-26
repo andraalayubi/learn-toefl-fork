@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_toefl/utilities.dart';
 
 class HistoryVideo extends StatefulWidget {
   const HistoryVideo({super.key});
@@ -17,9 +18,9 @@ class _HistoryVideoState extends State<HistoryVideo> {
       backgroundColor: const Color(0xFF0D0443),
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        title: const Text(
+        title: Text(
           'HISTORY',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: tFOnt(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: const Color(0xFF0D0443),
         leading: Padding(
@@ -49,53 +50,64 @@ class _HistoryVideoState extends State<HistoryVideo> {
               const SizedBox(
                 height: 25,
               ),
-              Container(
-                width: 360,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF0D0443),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Take a look back at your viewed videos.',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Container(
+                  padding: const EdgeInsets.only(
+                      top: 20, left: 20, right: 20, bottom: 10),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        mColor,
+                        mColor.withOpacity(0.8),
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      stops: const [0.4, 1],
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Take a look back at your viewed videos.',
+                              style: tFOnt(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 40),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Image.asset(
-                        'assets/images/watching.png',
-                        width: 155,
-                        height: 120,
-                        fit: BoxFit.cover,
+                      const SizedBox(height: 40),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Image.asset(
+                          'assets/images/watching.png',
+                          width: 155,
+                          height: 120,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
-              const Padding(
-                padding: EdgeInsets.only(left: 26.0),
+              Padding(
+                padding: const EdgeInsets.only(left: 26.0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'All History',
-                      style: TextStyle(
+                      style: tFOnt(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -128,7 +140,7 @@ class _HistoryVideoState extends State<HistoryVideo> {
                               'assets/images/video.png',
                               width: 200,
                               height: 200,
-                              fit: BoxFit.cover, // Atur jenis tata letak gambar
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
@@ -139,14 +151,15 @@ class _HistoryVideoState extends State<HistoryVideo> {
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Color.fromRGBO(0xFF, 0x86, 0x5F, 1),
+                                  color:
+                                      const Color.fromRGBO(0xFF, 0x86, 0x5F, 1),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 4, horizontal: 12),
-                                child: const Text(
+                                child: Text(
                                   'Lesson',
-                                  style: TextStyle(
+                                  style: tFOnt(
                                     fontSize: 8,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -162,7 +175,7 @@ class _HistoryVideoState extends State<HistoryVideo> {
                               const SizedBox(height: 8),
                               Text(
                                 'Listening 1  - 100 idiom in Listening Skill',
-                                style: const TextStyle(
+                                style: tFOnt(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
@@ -196,7 +209,7 @@ class _HistoryVideoState extends State<HistoryVideo> {
                               'assets/images/video.png',
                               width: 200,
                               height: 200,
-                              fit: BoxFit.cover, // Atur jenis tata letak gambar
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
@@ -207,14 +220,15 @@ class _HistoryVideoState extends State<HistoryVideo> {
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 255, 250, 148),
+                                  color:
+                                      const Color.fromARGB(255, 255, 250, 148),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 4, horizontal: 12),
-                                child: const Text(
+                                child: Text(
                                   'Grammar',
-                                  style: TextStyle(
+                                  style: tFOnt(
                                     fontSize: 8,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -230,7 +244,7 @@ class _HistoryVideoState extends State<HistoryVideo> {
                               const SizedBox(height: 8),
                               Text(
                                 'Nouns - Subjects, Objects, and Complements',
-                                style: const TextStyle(
+                                style: tFOnt(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
@@ -264,7 +278,7 @@ class _HistoryVideoState extends State<HistoryVideo> {
                               'assets/images/video.png',
                               width: 200,
                               height: 200,
-                              fit: BoxFit.cover, // Atur jenis tata letak gambar
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
@@ -275,14 +289,15 @@ class _HistoryVideoState extends State<HistoryVideo> {
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Color.fromRGBO(0xFF, 0x86, 0x5F, 1),
+                                  color:
+                                      const Color.fromRGBO(0xFF, 0x86, 0x5F, 1),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 4, horizontal: 12),
-                                child: const Text(
+                                child: Text(
                                   'Lesson',
-                                  style: TextStyle(
+                                  style: tFOnt(
                                     fontSize: 8,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -298,7 +313,7 @@ class _HistoryVideoState extends State<HistoryVideo> {
                               const SizedBox(height: 8),
                               Text(
                                 'Speaking - 400 Idioms in Speaking Skill',
-                                style: const TextStyle(
+                                style: tFOnt(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,

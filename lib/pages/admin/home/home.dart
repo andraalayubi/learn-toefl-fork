@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:learn_toefl/pages/admin/exercise/exercise.dart';
+import 'package:learn_toefl/pages/admin/exercise/subexercise_page.dart';
 import 'package:learn_toefl/pages/admin/grammar/grammar_page.dart';
 import 'package:learn_toefl/pages/admin/lesson/lesson_page.dart';
 import 'package:learn_toefl/pages/auth/login.dart';
@@ -20,31 +22,49 @@ class AdminHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2.0),
-          child: Text(
-            'Toetion',
-            style: tFOnt(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'ToeTion',
+                style: tFOnt(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Container(
+                decoration:
+                    const BoxDecoration(color: mColor, shape: BoxShape.circle),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.logout,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => _logout(context),
+                ),
+              ),
+            ],
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 18.0),
-            child: Container(
-              decoration: BoxDecoration(color: mColor, shape: BoxShape.circle),
-              child: IconButton(
-                icon: Icon(
-                  Icons.logout,
-                  color: Colors.white,
-                ),
-                onPressed: () => _logout(context),
-              ),
-            ),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 18.0),
+        //     child: Container(
+        //       decoration:
+        //           const BoxDecoration(color: mColor, shape: BoxShape.circle),
+        //       child: IconButton(
+        //         icon: const Icon(
+        //           Icons.logout,
+        //           color: Colors.white,
+        //         ),
+        //         onPressed: () => _logout(context),
+        //       ),
+        //     ),
+        //   ),
+        // ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -97,12 +117,6 @@ class AdminHomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Image.asset(
-                    //   'assets/images/welcome.png', // Ganti dengan path gambar Anda
-                    //   width: 150,
-                    //   height: 150,
-                    //   fit: BoxFit.fitHeight,
-                    // ),
                   ],
                 ),
               ),
@@ -125,11 +139,11 @@ class AdminHomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
                   Expanded(
@@ -172,11 +186,35 @@ class AdminHomeScreen extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(
-                            'assets/images/vocabolary.png', // Ganti dengan path gambar Anda
-                            width: 70,
-                            height: 70,
-                            fit: BoxFit.cover,
+                          ColorFiltered(
+                            colorFilter: const ColorFilter.matrix(<double>[
+                              0.2126,
+                              0.7152,
+                              0.0722,
+                              0,
+                              0,
+                              0.2126,
+                              0.7152,
+                              0.0722,
+                              0,
+                              0,
+                              0.2126,
+                              0.7152,
+                              0.0722,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              1,
+                              0,
+                            ]),
+                            child: Image.asset(
+                              'assets/images/iconVideo_3.png',
+                              width: 70,
+                              height: 70,
+                              fit: BoxFit.cover,
+                            ), 
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 10.0),
@@ -232,11 +270,35 @@ class AdminHomeScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              'assets/images/grammar.png',
-                              width: 70,
-                              height: 70,
-                              fit: BoxFit.cover,
+                            ColorFiltered(
+                              colorFilter: const ColorFilter.matrix(<double>[
+                                0.2126,
+                                0.7152,
+                                0.0722,
+                                0,
+                                0,
+                                0.2126,
+                                0.7152,
+                                0.0722,
+                                0,
+                                0,
+                                0.2126,
+                                0.7152,
+                                0.0722,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                1,
+                                0,
+                              ]),
+                              child: Image.asset(
+                                'assets/images/iconVideo_2.png',
+                                width: 70,
+                                height: 70,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 10.0),
@@ -256,6 +318,98 @@ class AdminHomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'TOEFL Exercise',
+                    style: tFOnt(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ExercisePage()),
+                        );
+                      },
+                      child: Container(
+                        height: 250,
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [
+                              Colors.white,
+                              Color.fromARGB(255, 233, 244, 255),
+                              Color.fromARGB(255, 148, 179, 255),
+                            ],
+                            stops: [0, 0.5, 1],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            width: 0.8,
+                            color: Colors.black12,
+                          ),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color.fromARGB(255, 197, 196, 196),
+                              offset: Offset(2, 4),
+                              blurRadius: 5,
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/iconVideo_4.png',
+                              width: 70,
+                              height: 70,
+                              fit: BoxFit.cover,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Text(
+                                'Exercise',
+                                style: tFOnt(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 30,
             ),
           ],
         ),

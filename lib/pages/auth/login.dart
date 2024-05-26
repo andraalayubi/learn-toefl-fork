@@ -4,6 +4,7 @@ import 'package:learn_toefl/pages/auth/register.dart';
 import 'package:learn_toefl/services/auth_service.dart';
 import 'package:learn_toefl/widget/bottom_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:learn_toefl/utilities.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,11 +14,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool _isLoading = false;
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _authService = AuthService();
 
   void _login() async {
+    setState(() {
+      _isLoading = true;
+    });
+
     try {
       await _authService.login(
         _emailController.text,
@@ -40,8 +47,15 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (e) {
       print(e);
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Login failed')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Login failed. Please check your credentials.'),
+        ),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -58,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Text.rich(
                 TextSpan(
                   text: 'Hello!\nWelcome\nBack',
-                  style: TextStyle(
+                  style: tFOnt(
                     fontSize: 45,
                     fontWeight: FontWeight.w900,
                     foreground: Paint()
@@ -80,7 +94,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: _emailController,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.email),
-                  hintText: 'Email',
+                  hintText: 'youremail@email.com',
+                  hintStyle: tFOnt(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black45,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(26),
                   ),
@@ -96,6 +115,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock),
                   hintText: 'Password',
+                  hintStyle: tFOnt(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black45,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(26),
                   ),
@@ -105,37 +129,53 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 50),
-              ElevatedButton(
-                onPressed: _login,
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 156, vertical: 15),
-                  backgroundColor: const Color.fromARGB(255, 16, 9, 61),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(26),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _isLoading ? null : _login,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 156, vertical: 15),
+                    backgroundColor: const Color.fromARGB(255, 16, 9, 61),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(26),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  'Login',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  child: _isLoading
+                      ? const CircularProgressIndicator()
+                      : Text(
+                          'Login',
+                          style: tFOnt(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Don't have an account?"),
-                  TextButton(
-                    onPressed: () {
+                  Text(
+                    "Don't have an account?",
+                    style: tFOnt(),
+                  ),
+                  GestureDetector(
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => RegisterScreen()),
+                          builder: (context) => RegisterScreen(),
+                        ),
                       );
                     },
-                    child: const Text(
-                      'Sign Up',
-                      style: TextStyle(color: Colors.black),
+                    child: Text(
+                      ' Sign Up',
+                      style: tFOnt(
+                        fontWeight: FontWeight.w500,
+                        color: mColor,
+                      ),
                     ),
                   ),
                 ],
