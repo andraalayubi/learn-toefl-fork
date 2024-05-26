@@ -116,6 +116,7 @@ class AuthService {
   Future<void> updateUser(String username, String email) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
+    final id = prefs.getInt('id');
 
     if (token != null) {
       final response = await http.put(
@@ -150,16 +151,17 @@ class AuthService {
         print('Redirect location: $newUri');
 
         final redirectedResponse = await http.put(
-        newUri,
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: jsonEncode(<String, String>{
-          'username': username,
-          'email': email,
-        }),
-      );
+          newUri,
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode(<String, String>{
+            'id': id!.toString(),
+            'username': username,
+            'email': email,
+          }),
+        );
 
         if (redirectedResponse.statusCode == 200) {
           final data = jsonDecode(response.body);

@@ -56,25 +56,15 @@ exports.login = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
-exports.updateProfile = async (req, res) => {
-    const { username, email } = req.body;
+exports.update = async (req, res) => {
+    const { id, username, email } = req.body;
+
+    console.log(id);
     console.log(username);
     console.log(email);
     try {
-        const result = await pool.query('UPDATE * FROM users WHERE email = $1', [email]);
-        if (result.rows.length === 0) {
-            return res.status(400).json({ error: 'User not found' });
-        }
-
-        const user = result.rows[0];
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
-            return res.status(400).json({ error: 'Invalid credentials' });
-        }
-
-        const token = jwt.sign({ userId: user.id}, secretKey, { expiresIn: '1h' });
-        res.json({ token, isAdmin: user.is_admin, user });
+        const result = await pool.query('UPDATE users SET username = $2, email = $3 WHERE id = $1', [id. username, email])
+        res.json({ message: 'User updated successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
