@@ -1,5 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:learn_toefl/models/video.dart';
+import 'package:learn_toefl/pages/user/pages/video.dart';
 import 'package:learn_toefl/utilities.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class VideoFav {
+  static const String _favKey = 'video_fav';
+
+  static Future<void> addFav(
+      int id, String name, int id_category, String category, String url) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> videoFavorite = prefs.getStringList(_favKey) ?? [];
+    Map<String, dynamic> videoMap = {
+      'id': id,
+      'name': name,
+      'id_category': id_category,
+      'category': category,
+      'url': url,
+    };
+    videoFavorite.removeWhere((videoJson) {
+      final Map<String, dynamic> existingVideoMap = jsonDecode(videoJson);
+      return existingVideoMap['id'] == id;
+    });
+    videoFavorite.insert(0, jsonEncode(videoMap));
+    // while (videoFavorite.length > 5) {
+    //   videoFavorite.removeLast();
+    // }
+    await prefs.setStringList(_favKey, videoFavorite);
+  }
+
+  static Future<void> removeFav(int id) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> videoFavorite = prefs.getStringList(_favKey) ?? [];
+    videoFavorite.removeWhere((videoJson) {
+      final Map<String, dynamic> existingVideoMap = jsonDecode(videoJson);
+      return existingVideoMap['id'] == id;
+    });
+    await prefs.setStringList(_favKey, videoFavorite);
+  }
+
+  static Future<List<dynamic>> getFavs() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> videoHistory = prefs.getStringList(_favKey) ?? [];
+    return videoHistory.map((videoJson) => jsonDecode(videoJson)).toList();
+  }
+}
 
 class FavVideo extends StatefulWidget {
   const FavVideo({super.key});
@@ -9,222 +55,178 @@ class FavVideo extends StatefulWidget {
 }
 
 class _FavVideoState extends State<FavVideo> {
+  List<dynamic> _favoriteVideos = [];
+  List<Video> _allVideos = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavoriteVideos();
+  }
+
+  void _loadFavoriteVideos() async {
+    List<dynamic> favorites = await VideoFav.getFavs();
+    setState(() {
+      _favoriteVideos = favorites;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final containerWidth = MediaQuery.of(context).size.width;
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
+    return Scaffold(
+      backgroundColor: const Color(0xFF0D0443),
+      appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
+        title: Text(
+          "FAVORITE VIDEO",
+          style: tFOnt(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         backgroundColor: const Color(0xFF0D0443),
-        appBar: AppBar(
-          surfaceTintColor: Colors.transparent,
-          title: Text(
-            "FAVORITE VIDEO",
-            style: tFOnt(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: const Color(0xFF0D0443),
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 22.0),
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 22.0),
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            margin: const EdgeInsets.only(top: 12),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.only(top: 12),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
             ),
-            constraints: BoxConstraints(minHeight: screenHeight),
-            width: containerWidth,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 25,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          mColor,
-                          mColor.withOpacity(0.8),
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        stops: const [0.4, 1],
-                      ),
-                      borderRadius: BorderRadius.circular(12),
+          ),
+          constraints: BoxConstraints(minHeight: screenHeight),
+          width: containerWidth,
+          child: Column(
+            children: [
+              const SizedBox(height: 25),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [mColor, mColor.withOpacity(0.8)],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      stops: const [0.4, 1],
                     ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Let’s see your Favorite Video HoHoHo',
-                                style: tFOnt(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Image.asset(
-                            'assets/images/reading-book.png',
-                            width: 85,
-                            height: 80,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ],
-                    ),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                ),
-                const SizedBox(height: 20),
-                const TabBar(
-                  labelColor: Colors.black,
-                  indicatorColor: Colors.black,
-                  tabs: [
-                    Tab(
-                      text: 'Lesson',
-                    ),
-                    Tab(
-                      text: 'Grammar',
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: screenHeight,
-                  child: TabBarView(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 16),
-                        color: Colors.white,
-                        child: ListView.builder(
-                          itemCount: 3,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.all(12),
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              decoration: BoxDecoration(
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Let’s see your Favorite Video HoHoHo',
+                              style: tFOnt(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                border:
-                                    Border.all(color: Colors.black, width: 1),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Icon(Icons.favorite,
-                                          color: Colors.black),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child: Text(
-                                          'Video Lesson  ${index + 1}',
-                                          style: tFOnt(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ),
-                                    const Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Icon(Icons.arrow_forward_ios,
-                                          color: Colors.black),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
+                            ),
+                          ],
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 16),
-                        color: Colors.white,
-                        child: ListView.builder(
-                          itemCount: 3,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.all(12),
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                border:
-                                    Border.all(color: Colors.black, width: 1),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Icon(Icons.favorite,
-                                          color: Colors.black),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child: Text(
-                                          'Video Grammar  ${index + 1}',
-                                          style: tFOnt(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ),
-                                    const Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Icon(Icons.arrow_forward_ios,
-                                          color: Colors.black),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
+                      const SizedBox(height: 40),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Image.asset(
+                          'assets/images/reading-book.png',
+                          width: 85,
+                          height: 80,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 20),
+              if (_favoriteVideos.isEmpty)
+                Center(
+                  child: Text(
+                    'No Favorite Videos',
+                    style: tFOnt(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                )
+              else
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: _favoriteVideos.length,
+                  itemBuilder: (context, index) {
+                    final video = _favoriteVideos[index];
+
+                    _allVideos.add(Video(
+                        id: video['id'],
+                        name: video['name'],
+                        url: video['url']));
+
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VideoPage(
+                              id: video['id'],
+                              idCategory: video['id_category'],
+                              video:
+                                  _allVideos, // atau ganti dengan data video lain yang sesuai
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.white,
+                          border: Border.all(width: 1.0, color: Colors.black),
+                        ),
+                        child: ListTile(
+                            title: Text(
+                              video['name'],
+                              style: tFOnt(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            // subtitle: Text(
+                            //   video['category'],
+                            //   style: tFOnt(
+                            //       fontSize: 12, fontWeight: FontWeight.normal),
+                            // ),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.remove_circle,
+                                  color: Colors.red),
+                              onPressed: () {
+                                setState(() {
+                                  _favoriteVideos.removeAt(
+                                      index); // Hapus video dari daftar favorit secara lokal
+                                });
+                                VideoFav.removeFav(video[
+                                    'id']); // Hapus video dari daftar favorit di SharedPreferences
+                              },
+                            )),
+                      ),
+                    );
+                  },
+                ),
+            ],
           ),
         ),
       ),
