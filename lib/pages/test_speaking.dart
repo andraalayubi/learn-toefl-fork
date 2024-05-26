@@ -5,7 +5,7 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'package:speech_to_text/speech_to_text_provider.dart';
 
 class SpeakingTest extends StatefulWidget {
-  const SpeakingTest({super.key});
+  const SpeakingTest({super.key, required int questionGroupId});
 
   @override
   State<SpeakingTest> createState() => _SpeakingTestState();

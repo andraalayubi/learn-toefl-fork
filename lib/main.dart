@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/pages/admin/home/home.dart';
 import 'package:learn_toefl/pages/auth/login.dart';
-import 'package:learn_toefl/pages/auth/register.dart';
 import 'package:learn_toefl/widget/bottom_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

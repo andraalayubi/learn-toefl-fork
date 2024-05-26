@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/models/question.dart';
+import 'package:learn_toefl/pages/user/exercise/SpeakingPage.dart';
 import 'package:learn_toefl/pages/user/exercise/Reading&ListeningPage.dart';
 import 'package:learn_toefl/pages/user/exercise/WritingPage.dart';
 import 'package:learn_toefl/pages/user/exercise/SpeakingPage.dart';
@@ -20,6 +21,7 @@ class _Exercise extends State<Exercise> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
