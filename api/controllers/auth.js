@@ -51,12 +51,40 @@ exports.login = async (req, res) => {
         }
 
         const token = jwt.sign({ userId: user.id}, secretKey, { expiresIn: '1h' });
-        res.json({ token, isAdmin: user.is_admin });
+        res.json({ token, isAdmin: user.is_admin, user });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 };
+let loggedInUsers = {}; // Objek untuk menyimpan informasi pengguna yang sedang login
 
+// exports.login = async (req, res) => {
+//     console.log(email); // Cetak email pengguna ke konsol
+
+//     const { email, password } = req.body;
+//     try {
+//         const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+//         if (result.rows.length === 0) {
+//             return res.status(400).json({ error: 'User not found' });
+//         }
+
+//         const user = result.rows[0];
+//         const isMatch = await bcrypt.compare(password, user.password);
+
+//         if (!isMatch) {
+//             return res.status(400).json({ error: 'Invalid credentials' });
+//         }
+
+//         const token = jwt.sign({ userId: user.id}, secretKey, { expiresIn: '1h' });
+        
+//         // Simpan informasi pengguna yang sedang login ke objek loggedInUsers
+//         loggedInUsers = { token, isAdmin: user.is_admin, id: user.id };
+
+//         res.json({ token, isAdmin: user.is_admin });
+//     } catch (err) {
+//         res.status(500).json({ error: err.message });
+//     }
+// };
 exports.logout = (req, res) => {
     res.json({ message: 'Logout successful' });
 };
