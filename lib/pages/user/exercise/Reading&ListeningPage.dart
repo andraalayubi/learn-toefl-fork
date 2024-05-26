@@ -38,7 +38,18 @@ class _ReadingTestState extends State<ReadingTest> {
     _futureQuestionDetail = fetchPracticeDetail(widget.questionGroupId);
 
     setAudio();
+  }
 
+  void updateProgress() {
+    setState(() {
+      _currentQuestionIndex++;
+    });
+  }
+
+  Future setAudio() async {
+    // Load audio file from assets or remote URL
+    String audioUrl = 'audio/Level ${widget.questionGroupId}.mp3';
+    await audioPlayer.setSourceAsset(audioUrl);
     audioPlayer.onPlayerStateChanged.listen((state) {
       setState(() {
         isPlaying = state == PlayerState.playing;
@@ -56,18 +67,6 @@ class _ReadingTestState extends State<ReadingTest> {
         position = newPosition;
       });
     });
-  }
-
-  void updateProgress() {
-    setState(() {
-      _currentQuestionIndex++;
-    });
-  }
-
-  Future setAudio() async {
-    // Load audio file from assets or remote URL
-    String audioUrl = 'audio/Level ${widget.questionGroupId}.mp3';
-    await audioPlayer.setSourceAsset(audioUrl);
   }
 
   @override
@@ -163,7 +162,7 @@ class _ReadingTestState extends State<ReadingTest> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => Summary(
-                                questionId: detail.id,
+                                questionId: widget.questionGroupId,
                                 score: correct,
                                 correct: correct,
                                 incorrect: incorrect,

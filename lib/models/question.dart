@@ -1,9 +1,12 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:learn_toefl/ip.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<List<QuestionGroup>> fetchPracticeAll() async {
- final url = Uri.parse('$ip/practice/all');  // final url = Uri.parse('$ip/practice/all');
+  final prefs = await SharedPreferences.getInstance();
+  final id = prefs.getInt('id');
+  final url = Uri.parse('$ip/practice/all/$id');
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
@@ -66,7 +69,7 @@ class QuestionGroupData {
       id: json['id'],
       name: json['name'],
       jumlahQuestion: json['jumlah_question'],
-      nilaiUser: json['nilai_user'] ?? 0,
+      nilaiUser: json['nilai'] ?? 0,
     );
   }
 }
@@ -91,7 +94,7 @@ class QuestionDetail {
         (json['questions'] as List).map((e) => Question.fromJson(e)).toList();
 
     return QuestionDetail(
-      id: json['id'],
+      id: json['id'] ?? 0,
       name: json['name'],
       readingText: json['reading_text'] ?? '',
       questionCategory: json['question_category'],
