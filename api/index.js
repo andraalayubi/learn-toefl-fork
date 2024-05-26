@@ -69,7 +69,6 @@ app.get('/practice/:id', async (req, res) => {
       res.status(404).json({ error: 'Question group not found' });
     } else {
       const formattedData = {
-        id: result.rows[0].id, 
         name: result.rows[0].name,
         reading_text: result.rows[0].reading_text,
         question_category: result.rows[0].question_category,
