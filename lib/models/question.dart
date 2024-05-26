@@ -78,6 +78,7 @@ class QuestionDetail {
   final int id;
   final String name;
   final String readingText;
+  final String sampleAnswer;
   final String questionCategory;
   final List<Question> questions;
 
@@ -85,6 +86,7 @@ class QuestionDetail {
     required this.id,
     required this.name,
     required this.readingText,
+    required this.sampleAnswer,
     required this.questionCategory,
     required this.questions,
   });
@@ -97,6 +99,7 @@ class QuestionDetail {
       id: json['id'] ?? 0,
       name: json['name'],
       readingText: json['reading_text'] ?? '',
+      sampleAnswer: json['sample_answer'] ?? '',
       questionCategory: json['question_category'],
       questions: questions,
     );
