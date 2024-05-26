@@ -63,7 +63,7 @@ exports.update = async (req, res) => {
     console.log(username);
     console.log(email);
     try {
-        await pool.query('UPDATE users SET username = $2, email = $3 WHERE id = $1', [id. username, email])
+        await pool.query('UPDATE users SET username = $2, email = $3 WHERE id = $1', [id, username, email])
         res.json({ message: 'User updated successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
