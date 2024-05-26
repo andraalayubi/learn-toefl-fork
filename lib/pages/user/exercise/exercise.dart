@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:learn_toefl/models/question.dart';
+import 'package:learn_toefl/pages/test_reading.dart';
+import 'package:learn_toefl/pages/user/exercise/correct_incorrect%20copy.dart';
 import 'package:learn_toefl/pages/user/exercise/exercise_question_answer.dart';
 
 class Exercise extends StatefulWidget {
@@ -120,75 +123,70 @@ class _Exercise extends State<Exercise> {
   }
 
   Widget _buildExerciseMenu() {
-    return Column(
-      children: [
-        _buildMenuItem(
-          "Listening",
-          'assets/images/iconVideo_1.png',
-          [
-            "Level 1\n10 Questions",
-            "Level 2\n10 Questions",
-            "Level 3\n10 Questions",
-            "Level 4\n10 Questions",
-            "Level 5\n10 Questions",
-          ],
-          5,
-          10,
-        ),
-        const SizedBox(height: 10),
-        _buildMenuItem(
-          "Speaking",
-          'assets/images/iconVideo_2.png',
-          [
-            "Level 1\n10 Questions",
-            "Level 2\n10 Questions",
-            "Level 3\n10 Questions",
-            "Level 4\n10 Questions",
-            "Level 5\n10 Questions",
-          ],
-          3,
-          10,
-        ),
-        const SizedBox(height: 10),
-        _buildMenuItem(
-          "Reading",
-          'assets/images/iconVideo_3.png',
-          [
-            "Level 1\n10 Questions",
-            "Level 2\n10 Questions",
-            "Level 3\n10 Questions",
-            "Level 4\n10 Questions",
-            "Level 5\n10 Questions",
-          ],
-          8,
-          10,
-        ),
-        const SizedBox(height: 10),
-        _buildMenuItem(
-          "Writing",
-          'assets/images/iconVideo_4.png',
-          [
-            "Level 1\n10 Questions",
-            "Level 2\n10 Questions",
-            "Level 3\n10 Questions",
-            "Level 4\n10 Questions",
-            "Level 5\n10 Questions",
-          ],
-          4,
-          10,
-        ),
-      ],
+    return FutureBuilder<List<QuestionGroup>>(
+      future: fetchPracticeAll(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          final questionGroups = snapshot.data!;
+          print(questionGroups);
+          return Column(
+            children: [
+              _buildMenuItem(
+                "Listening",
+                'assets/images/iconVideo_1.png',
+                questionGroups
+                    .firstWhere(
+                      (group) => group.questionCategory == 'Listening',
+                      orElse: () =>
+                          QuestionGroup(questionCategory: 'Listening', data: []),
+                    )
+                    .data,
+              ),
+              // const SizedBox(height: 10),
+              // _buildMenuItem(
+              //   "Speaking",
+              //   'assets/images/iconVideo_2.png',
+              //   questionGroups
+              //       .firstWhere((group) => group.questionCategory == 'Speaking')
+              //       .data.map((item) => item.name)
+              //       .toList(),
+              // ),
+              // const SizedBox(height: 10),
+              // _buildMenuItem(
+              //   "Reading",
+              //   'assets/images/iconVideo_3.png',
+              //   questionGroups
+              //       .firstWhere((group) => group.questionCategory == 'Reading')
+              //       .data.map((item) => item.name)
+              //       .toList(),
+              // ),
+              // const SizedBox(height: 10),
+              // _buildMenuItem(
+              //   "Writing",
+              //   'assets/images/iconVideo_4.png',
+              //   questionGroups
+              //       .firstWhere((group) => group.questionCategory == 'Writing')
+              //       .data.map((item) => item.name)
+              //       .toList(),
+              // ),
+            ],
+          );
+        }
+      },
     );
   }
 
   Widget _buildMenuItem(
     String title,
     String imagePath,
-    List<String> levels,
-    int levelDone,
-    int totalLevels,
+    List<QuestionGroupData> levels,
+    // int levelDone,
+    // int totalLevels,
   ) {
-    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Card(
@@ -229,8 +227,7 @@ class _Exercise extends State<Exercise> {
                           ),
                           children: [
                             TextSpan(
-                                text: '$levelDone Level $totalLevels Done'),
-                            const TextSpan(
+                                text: '${levels.length} Levels',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -244,20 +241,19 @@ class _Exercise extends State<Exercise> {
               ],
             ),
             children: levels.map((level) {
-              final parts = level.split('\n');
               return ListTile(
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      parts[0], // "Level 1"
+                      level.name, // "Level 1"
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      parts[1], // "10 Questions"
+                      '${level.jumlahQuestion} Questions', // "10 Questions"
                       style: const TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
@@ -286,7 +282,7 @@ class _Exercise extends State<Exercise> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ExerciseQuestionAnswer(),
+                      builder: (context) => ReadingTest(questionGroupId: level.id),
                     ),
                   );
                 },
@@ -295,11 +291,6 @@ class _Exercise extends State<Exercise> {
           ),
         ),
       ),
-      
     );
-  }
-
-  Widget exerciseQuestionAnswerWidget() {
-    return const ExerciseQuestionAnswer(); // Pastikan ini benar
   }
 }

@@ -49,13 +49,15 @@ class CustomBox extends StatelessWidget {
 class QuestionBox extends StatelessWidget {
   final int questionNumber;
   final String question;
+  final String correctAnswer;
   final List<String> options;
-  final String? selectedOption;
+  final int? selectedOption;
   final Function(String) onSelect;
 
   const QuestionBox({
     required this.questionNumber,
     required this.question,
+    required this.correctAnswer,
     required this.options,
     this.selectedOption,
     required this.onSelect,
@@ -122,8 +124,56 @@ class QuestionBox extends StatelessWidget {
               );
             }).toList(),
           ),
+          if (selectedOption != null) ...[
+          const SizedBox(height: 16),
+          _buildCorrectIncorrectBox(
+              questionNumber, selectedOption!, correctAnswer),
+        ],
+        const SizedBox(height: 16),
         ],
       ),
+    );
+  }
+
+Widget _buildCorrectIncorrectBox(
+      int questionNumber, int selectedOption, String correctAnswer) {
+    final isCorrect = options[selectedOption] == correctAnswer;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 1),
+        Container(
+          decoration: BoxDecoration(
+            color: isCorrect ? Colors.green : Colors.red,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.all(12.0),
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: isCorrect ? 'Correct!' : 'Incorrect.',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                if (!isCorrect)
+                  TextSpan(
+                    text:
+                        ' The correct answer is: $correctAnswer',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

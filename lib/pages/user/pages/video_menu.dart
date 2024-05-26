@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/models/video.dart';
-import 'package:learn_toefl/pages/user/home/home_page.dart';
 import 'package:learn_toefl/pages/user/pages/video.dart';
 import 'package:learn_toefl/services/video_history.dart';
 
@@ -76,7 +75,7 @@ class _VideoListPageState extends State<VideoListPage> {
           child: IconButton(
               icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
               onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
+                Navigator.pop(context);
               }),
         ),
       ),

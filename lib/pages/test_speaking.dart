@@ -56,10 +56,9 @@ class _SpeakingTestState extends State<SpeakingTest> {
                 border: Border.all(width: 1.0, color: Colors.black),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                    'in todays interconnected world the significance of multiculturalism cannot be overstated as societies become increasingly diverse understanding and embracing cultural differences have become essential components of social cohesion and progress'),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(providedText),
               ),
             ),
             const SizedBox(

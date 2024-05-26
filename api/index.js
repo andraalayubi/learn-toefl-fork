@@ -14,79 +14,155 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+  res.send('Hello World!');
 });
-// Endpoint untuk mendapatkan data video berdasarkan ID
-app.get('/practice', async (req, res) => {
-    // const { id } = req.params;
-    try {
-        const { rows } = await pool.query("SELECT qc.name, qc.reading_text, json_agg( json_build_object('question', q.question_text, 'answers', ( SELECT json_agg( json_build_object('answer_text', a.answer_text, 'correct', (a.id = q.correct_answer_id))) FROM Answer a WHERE a.question_id = q.id ))) AS questions FROM Question_Category qc JOIN Question q ON qc.id = q.question_category_id GROUP BY qc.id, qc.name, qc.reading_text ORDER BY qc.name;"
-        );
-        res.json(rows);
-    } catch (error) {
-        console.error('Error executing query', error);
-        res.status(500).json({ error: 'Internal server error' });
+// Endpoint /practice/all
+app.get('/practice/all', async (req, res) => {
+  try {
+    const query = `
+      SELECT qg.question_category, qg.id, qg.name, COUNT(q.id) AS jumlah_question
+      FROM Question_Group qg
+      LEFT JOIN Question q ON qg.id = q.question_group_id
+      GROUP BY qg.question_category, qg.id, qg.name
+      ORDER BY qg.id ASC;;
+    `;
+    const result = await pool.query(query);
+
+    const formattedData = result.rows.reduce((acc, row) => {
+      const { question_category, id, name, jumlah_question } = row;
+      const groupIndex = acc.findIndex(group => group.question_category === question_category);
+
+      if (groupIndex === -1) {
+        acc.push({ question_category, data: [{ id, name, jumlah_question }] });
+      } else {
+        acc[groupIndex].data.push({ id, name, jumlah_question });
+      }
+
+      return acc;
+    }, []);
+
+    res.json(formattedData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Endpoint /practice/:id
+app.get('/practice/:id', async (req, res) => {
+  const questionGroupId = req.params.id;
+  try {
+    const query = `
+    SELECT qg.name, qg.reading_text, qg.question_category, q.id, q.question_text,
+    (SELECT ro.answer_text FROM ReadingOptions ro WHERE ro.question_id = q.id AND ro.is_correct = true) AS correct_answer,
+    array_agg(ro.answer_text) AS answer_options
+  FROM Question_Group qg
+  LEFT JOIN Question q ON qg.id = q.question_group_id
+  LEFT JOIN ReadingOptions ro ON q.id = ro.question_id
+  WHERE qg.id = $1
+  GROUP BY qg.name, qg.reading_text, qg.question_category, q.id, q.question_text;
+    `;
+    const result = await pool.query(query, [questionGroupId]);
+    console.log(result.rows);
+
+    if (result.rows.length === 0) {
+      res.status(404).json({ error: 'Question group not found' });
+    } else {
+      const formattedData = {
+        name: result.rows[0].name,
+        reading_text: result.rows[0].reading_text,
+        question_category: result.rows[0].question_category,
+        questions: result.rows.map(row => ({
+          id: row.id,
+          question_text: row.question_text,
+          correct_answer: row.correct_answer,
+          answer_options: row.answer_options
+        }))
+      };
+      res.json(formattedData);
     }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
+
+app.post('/nilai', async (req, res) => {
+  const { question_id, user_id, nilai } = req.body;
+
+  try {
+    const query = `
+      INSERT INTO Question_User (question_id, user_id, nilai)
+      VALUES ($1, $2, $3)
+      ON CONFLICT (question_id, user_id) DO UPDATE SET nilai = $3;
+    `;
+    await pool.query(query, [question_id, user_id, nilai]);
+    res.status(200).json({ message: 'Nilai berhasil disimpan' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 app.get('/video/all/:id', async (req, res) => {
-    const { id } = req.params;  
-    try {
-        const { rows } = await pool.query("SELECT VideoCategory.id AS vid, VideoCategory.name AS category_name, Video.id, Video.name, Video.url FROM SubCategory JOIN VideoCategory ON SubCategory.id = VideoCategory.subCategory_id JOIN Video ON VideoCategory.id = Video.video_category_id WHERE SubCategory.id = $1", [id]);
-        // console.log(rows);
+  const { id } = req.params;
+  try {
+    const { rows } = await pool.query("SELECT VideoCategory.id AS vid, VideoCategory.name AS category_name, Video.id, Video.name, Video.url FROM SubCategory JOIN VideoCategory ON SubCategory.id = VideoCategory.subCategory_id JOIN Video ON VideoCategory.id = Video.video_category_id WHERE SubCategory.id = $1", [id]);
+    // console.log(rows);
 
-        function transformData(data) {
-            const result = [];
-          
-            data.forEach(item => {
-              const existingCategory = result.find(category => category.vid === item.vid && category.category_name === item.category_name);
-          
-              if (existingCategory) {
-                existingCategory.videos.push({
-                  id: item.id,
-                  name: item.name,
-                  url: item.url
-                });
-              } else {
-                result.push({
-                  vid: item.vid,
-                  category_name: item.category_name,
-                  videos: [
-                    {
-                      id: item.id,
-                      name: item.name,
-                      url: item.url
-                    }
-                  ]
-                });
+    function transformData(data) {
+      const result = [];
+
+      data.forEach(item => {
+        const existingCategory = result.find(category => category.vid === item.vid && category.category_name === item.category_name);
+
+        if (existingCategory) {
+          existingCategory.videos.push({
+            id: item.id,
+            name: item.name,
+            url: item.url
+          });
+        } else {
+          result.push({
+            vid: item.vid,
+            category_name: item.category_name,
+            videos: [
+              {
+                id: item.id,
+                name: item.name,
+                url: item.url
               }
-            });
-          
-            return result;
-          }
+            ]
+          });
+        }
+      });
 
-        const result = transformData(rows);
-        // console.log(result);
-        res.json(result);
-    } catch (error) {
-        console.error('Error executing query', error);
-        res.status(500).json({ error: 'Internal server error' });
+      return result;
     }
+
+    const result = transformData(rows);
+    // console.log(result);
+    res.json(result);
+  } catch (error) {
+    console.error('Error executing query', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 app.get('/video/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const { rows } = await pool.query('SELECT * FROM Video WHERE id = $1', [id]);
-        res.json(rows[0]);
-    } catch (error) {
-        console.error('Error executing query', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
+  const { id } = req.params;
+  try {
+    const { rows } = await pool.query('SELECT * FROM Video WHERE id = $1', [id]);
+    res.json(rows[0]);
+  } catch (error) {
+    console.error('Error executing query', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 // Menjalankan server pada port tertentu
 app.listen(port, () => {
-    console.log(`Server berjalan di http://${ip}:${port}`);
+  console.log(`Server berjalan di http://${ip}:${port}`);
 });
 
 module.exports = app;
