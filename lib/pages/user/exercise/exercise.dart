@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learn_toefl/models/question.dart';
 import 'package:learn_toefl/pages/user/exercise/Reading&ListeningPage.dart';
 import 'package:learn_toefl/pages/user/exercise/WritingPage.dart';
+import 'package:learn_toefl/pages/user/exercise/SpeakingPage.dart';
 import 'package:learn_toefl/utilities.dart';
 
 class Exercise extends StatefulWidget {
@@ -149,20 +150,20 @@ class _Exercise extends State<Exercise> {
                 (int questionGroupId) =>
                     ReadingTest(questionGroupId: questionGroupId),
               ),
-              // const SizedBox(height: 10),
-              // _buildMenuItem(
-              //   "Speaking",
-              //   'assets/images/iconVideo_2.png',
-              //   questionGroups
-                    // .firstWhere(
-                    //   (group) => group.questionCategory == 'Speaking',
-                    //   orElse: () =>
-                    //       QuestionGroup(questionCategory: 'Speaking', data: []),
-                    // )
-                    // .data,
-                    // (int questionGroupId) =>
-                    // ReadingTest(questionGroupId: questionGroupId),
-              // ),
+              const SizedBox(height: 10),
+              _buildMenuItem(
+                "Speaking",
+                'assets/images/iconVideo_2.png',
+                questionGroups
+                    .firstWhere(
+                      (group) => group.questionCategory == 'Speaking',
+                      orElse: () =>
+                          QuestionGroup(questionCategory: 'Speaking', data: []),
+                    )
+                    .data,
+                (int questionGroupId) =>
+                    SpeakingTest(questionGroupId: questionGroupId),
+              ),
               const SizedBox(height: 10),
               _buildMenuItem(
                 "Reading",
