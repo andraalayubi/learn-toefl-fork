@@ -100,7 +100,7 @@ class _VideoListPageState extends State<VideoListPage> {
               child: Transform.translate(
                 offset: const Offset(0, -90),
                 child: Container(
-                  height: 235,
+                  height: 190,
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     color: Color(0xFF0D0443),
@@ -108,52 +108,52 @@ class _VideoListPageState extends State<VideoListPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: Container(
-                          height: 50,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 300,
-                                height: 40,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(12),
-                                    bottomLeft: Radius.circular(12),
-                                  ),
-                                ),
-                                child: TextField(
-                                  // onChanged: ,
-                                  decoration: InputDecoration(
-                                    hintText: "Search here",
-                                    hintStyle: tFOnt(),
-                                    border: InputBorder.none,
-                                    contentPadding: const EdgeInsets.only(
-                                        left: 12, bottom: 12),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 252, 232, 177),
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(12),
-                                    bottomRight: Radius.circular(12),
-                                  ),
-                                ),
-                                child: const Icon(
-                                  Icons.search,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // Expanded(
+                      // child: Container(
+                      //   height: 50,
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       Container(
+                      //         width: 300,
+                      //         height: 40,
+                      //         decoration: const BoxDecoration(
+                      //           color: Colors.white,
+                      //           borderRadius: BorderRadius.only(
+                      //             topLeft: Radius.circular(12),
+                      //             bottomLeft: Radius.circular(12),
+                      //           ),
+                      //         ),
+                      //         child: TextField(
+                      //           // onChanged: ,
+                      //           decoration: InputDecoration(
+                      //             hintText: "Search here",
+                      //             hintStyle: tFOnt(),
+                      //             border: InputBorder.none,
+                      //             contentPadding: const EdgeInsets.only(
+                      //                 left: 12, bottom: 12),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       Container(
+                      //         width: 40,
+                      //         height: 40,
+                      //         decoration: const BoxDecoration(
+                      //           color: Color.fromARGB(255, 252, 232, 177),
+                      //           borderRadius: BorderRadius.only(
+                      //             topRight: Radius.circular(12),
+                      //             bottomRight: Radius.circular(12),
+                      //           ),
+                      //         ),
+                      //         child: const Icon(
+                      //           Icons.search,
+                      //           color: Colors.black,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // ),
                     ],
                   ),
                 ),
@@ -277,7 +277,7 @@ class _VideoListPageState extends State<VideoListPage> {
                                         video.id,
                                         video.name,
                                         widget.id,
-                                        "Category Name", 
+                                        "Category Name",
                                         video.url,
                                       );
                                       ScaffoldMessenger.of(context)
@@ -317,10 +317,10 @@ class _VideoListPageState extends State<VideoListPage> {
                 },
               ),
             ),
-            ElevatedButton(
-              onPressed: _showFavorites,
-              child: Text('Show Favorites'),
-            ), // SizedBox(height: 200),
+            // ElevatedButton(
+            //   onPressed: _showFavorites,
+            //   child: Text('Show Favorites'),
+            // ), // SizedBox(height: 200),
           ],
         ),
       ),
