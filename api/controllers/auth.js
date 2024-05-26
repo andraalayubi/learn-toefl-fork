@@ -51,11 +51,12 @@ exports.login = async (req, res) => {
         }
 
         const token = jwt.sign({ userId: user.id}, secretKey, { expiresIn: '1h' });
-        res.json({ token, isAdmin: user.is_admin });
+        res.json({ token, isAdmin: user.is_admin, user });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 };
+let loggedInUsers = {}; // Objek untuk menyimpan informasi pengguna yang sedang login
 
 exports.logout = (req, res) => {
     res.json({ message: 'Logout successful' });
