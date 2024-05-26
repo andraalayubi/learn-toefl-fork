@@ -94,8 +94,6 @@ class QuestionBox extends StatelessWidget {
           const SizedBox(height: 4),
           Column(
             children: options.map((option) {
-              print(selectedOption);
-              print(option);
               final isSelected = selectedOption == option;
               return Padding(
                 padding: const EdgeInsets.only(bottom: 8), // Jarak antar opsi

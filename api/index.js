@@ -53,7 +53,7 @@ app.get('/practice/:id', async (req, res) => {
   const questionGroupId = req.params.id;
   try {
     const query = `
-    SELECT qg.name, qg.reading_text, qg.question_category, q.id, q.question_text,
+    SELECT qg.id, qg.name, qg.reading_text, qg.question_category, q.id, q.question_text,
     (SELECT ro.answer_text FROM ReadingOptions ro WHERE ro.question_id = q.id AND ro.is_correct = true) AS correct_answer,
     array_agg(ro.answer_text) AS answer_options
   FROM Question_Group qg
@@ -69,6 +69,7 @@ app.get('/practice/:id', async (req, res) => {
       res.status(404).json({ error: 'Question group not found' });
     } else {
       const formattedData = {
+        id: result.rows[0].id, 
         name: result.rows[0].name,
         reading_text: result.rows[0].reading_text,
         question_category: result.rows[0].question_category,

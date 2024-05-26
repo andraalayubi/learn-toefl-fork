@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:learn_toefl/services/input_nilai.dart';
 
 class Summary extends StatefulWidget {
+  final int questionId;
   final int score;
   final int correct;
   final int incorrect;
@@ -8,7 +10,7 @@ class Summary extends StatefulWidget {
   Summary({
     required this.score,
     required this.correct,
-    required this.incorrect,
+    required this.incorrect, required this.questionId,
   });
 
   @override
@@ -16,6 +18,13 @@ class Summary extends StatefulWidget {
 }
 
 class _SummaryState extends State<Summary> {
+
+  @override
+  void initState() {
+    super.initState();
+    insertNilai(widget.questionId, 1, widget.score);
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;

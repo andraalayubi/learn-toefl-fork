@@ -72,12 +72,14 @@ class QuestionGroupData {
 }
 
 class QuestionDetail {
+  final int id;
   final String name;
   final String readingText;
   final String questionCategory;
   final List<Question> questions;
 
   QuestionDetail({
+    required this.id,
     required this.name,
     required this.readingText,
     required this.questionCategory,
@@ -90,6 +92,7 @@ class QuestionDetail {
         .toList();
 
     return QuestionDetail(
+      id: json['id'],
       name: json['name'],
       readingText: json['reading_text'] ?? '',
       questionCategory: json['question_category'],
