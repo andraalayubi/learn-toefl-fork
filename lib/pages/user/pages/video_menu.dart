@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/models/video.dart';
 import 'package:learn_toefl/pages/user/pages/video.dart';
 import 'package:learn_toefl/services/video_history.dart';
+import 'package:learn_toefl/services/video_fav.dart';
 import 'package:learn_toefl/utilities.dart';
 
 class VideoListPage extends StatefulWidget {
@@ -25,6 +26,14 @@ class _VideoListPageState extends State<VideoListPage> {
 
   // ignore: unused_field
   late Future<List<dynamic>> _history;
+  void _showFavorites() async {
+    List<dynamic> favorites = await VideoFav.getFavs();
+    print(favorites);
+    favorites.forEach((video) {
+      print(
+          'ID: ${video['id']}, Name: ${video['name']}, Category: ${video['category']}, URL: ${video['url']}');
+    });
+  }
 
   @override
   void initState() {
@@ -262,23 +271,36 @@ class _VideoListPageState extends State<VideoListPage> {
                                     video.name,
                                     style: tFOnt(fontSize: 12),
                                   ),
-                                  trailing: Container(
-                                    width: 58,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 6),
-                                    decoration: BoxDecoration(
-                                      color:
-                                          const Color.fromARGB(255, 24, 11, 70),
-                                      borderRadius: BorderRadius.circular(14),
-                                    ),
-                                    child: Text(
-                                      'Done',
-                                      textAlign: TextAlign.center,
-                                      style: tFOnt(
-                                        fontSize: 9,
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                                  trailing: GestureDetector(
+                                    onTap: () async {
+                                      await VideoFav.addFav(
+                                        video.id,
+                                        video.name,
+                                        widget.id,
+                                        "Category Name", 
+                                        video.url,
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              '${video.name} ditambahkan ke favorit!'),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              255, 24, 11, 70),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: const Icon(
+                                          CupertinoIcons.heart_circle_fill,
+                                          color: Colors.white,
+                                        )),
                                   ),
                                 ),
                               );
@@ -295,7 +317,10 @@ class _VideoListPageState extends State<VideoListPage> {
                 },
               ),
             ),
-            // SizedBox(height: 200),
+            ElevatedButton(
+              onPressed: _showFavorites,
+              child: Text('Show Favorites'),
+            ), // SizedBox(height: 200),
           ],
         ),
       ),

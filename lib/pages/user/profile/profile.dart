@@ -110,7 +110,7 @@ class _ProfilPageState extends State<ProfilPage> {
               ),
               Text(
                 ' $_username',
-                style: tFOnt(fontSize: 16, fontWeight: FontWeight.w500),
+                style: tFOnt(fontSize: 14, fontWeight: FontWeight.w400),
               ),
               Text(
                 ' $_email ',

@@ -186,7 +186,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   onPressed: _updateProfile,
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromARGB(255, 26, 19, 67)),
+                        const Color.fromARGB(255, 26, 19, 67)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24),
@@ -198,7 +198,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           height: 25,
                           width: 25,
                           child: CircularProgressIndicator(
-                            color: mColor,
+                            color: Colors.white,
                             strokeWidth: 2.0,
                           ),
                         )
