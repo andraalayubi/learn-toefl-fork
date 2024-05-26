@@ -88,14 +88,14 @@ app.get('/practice/:id', async (req, res) => {
   const questionGroupId = req.params.id;
   try {
     const query = `
-    SELECT qg.name, qg.reading_text, qg.question_category, q.id, q.question_text,
+    SELECT qg.name, qg.text, qg.sample_answer, qg.question_category, q.id, q.question_text,
     (SELECT ro.answer_text FROM ReadingOptions ro WHERE ro.question_id = q.id AND ro.is_correct = true) AS correct_answer,
     array_agg(ro.answer_text) AS answer_options
   FROM Question_Group qg
   LEFT JOIN Question q ON qg.id = q.question_group_id
   LEFT JOIN ReadingOptions ro ON q.id = ro.question_id
-  WHERE qg.id = 1
-  GROUP BY qg.name, qg.reading_text, qg.question_category, q.id, q.question_text;
+  WHERE qg.id = $1
+  GROUP BY qg.name, qg.text, qg.sample_answer, qg.question_category, q.id, q.question_text;
     `;
     const result = await pool.query(query, [questionGroupId]);
     console.log(result.rows);
@@ -105,7 +105,8 @@ app.get('/practice/:id', async (req, res) => {
     } else {
       const formattedData = {
         name: result.rows[0].name,
-        reading_text: result.rows[0].reading_text,
+        reading_text: result.rows[0].text,
+        sample_answer: result.rows[0].sample_answer,
         question_category: result.rows[0].question_category,
         questions: result.rows.map(row => ({
           id: row.id,
