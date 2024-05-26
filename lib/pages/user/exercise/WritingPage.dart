@@ -17,11 +17,23 @@ class WritingTest extends StatefulWidget {
 class _WritingTestState extends State<WritingTest> {
   late Future<QuestionDetail> _futureQuestionDetail;
   String? userResponse;
+  int score = 0;
 
   @override
   void initState() {
     super.initState();
     _futureQuestionDetail = fetchPracticeDetail(widget.questionGroupId);
+  }
+
+  void _calculateWordCount(String response) {
+    // Split response into words
+    List<String> words = response.split(' ');
+    // Count words
+    int wordCount = words.length;
+    // Divide word count by 3
+    setState(() {
+      score = (wordCount / 3).floor(); // Using floor to get an integer result
+    });
   }
 
   @override
@@ -87,10 +99,10 @@ class _WritingTestState extends State<WritingTest> {
                           child: Container(
                             width: double.infinity,
                             child: ResponseBox(
-                              questionNumber: 1,
                               onSelect: (response) {
                                 setState(() {
                                   userResponse = response;
+                                  _calculateWordCount(response);
                                 });
                               },
                             ),
@@ -102,19 +114,14 @@ class _WritingTestState extends State<WritingTest> {
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
                               onPressed: () {
-                                // Logika untuk menilai jawaban dan navigasi ke halaman hasil
-                                final correct = userResponse ==
-                                    "expected answer"; // Ganti dengan logika yang sesuai
-                                final incorrect = !correct;
-
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => Summary(
                                       questionId: widget.questionGroupId,
-                                      score: correct ? 1 : 0,
-                                      correct: correct ? 1 : 0,
-                                      incorrect: incorrect ? 1 : 0,
+                                      score: score,
+                                      correct: 0,
+                                      incorrect: 0,
                                     ),
                                   ),
                                 );
@@ -161,18 +168,34 @@ class CustomAppBar extends CustomClipper<Path> {
   }
 }
 
-class ResponseBox extends StatelessWidget {
-  final int questionNumber;
+class ResponseBox extends StatefulWidget {
   final ValueChanged<String> onSelect;
 
-  const ResponseBox({
-    required this.questionNumber,
+  const ResponseBox({super.key, 
     required this.onSelect,
   });
 
   @override
+  State<ResponseBox> createState() => _ResponseBoxState();
+}
+
+class _ResponseBoxState extends State<ResponseBox> {
+  late TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController _controller = TextEditingController();
     return Card(
       elevation: 4,
       color: Colors.white,
@@ -185,18 +208,19 @@ class ResponseBox extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Your Response $questionNumber:',
+              'Your Response:',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
             TextField(
-              controller: _controller,
+              controller: controller,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Type Your Answer',
               ),
               onChanged: (value) {
-                onSelect(value);
+                print(value);
+                widget.onSelect(value);
               },
             ),
           ],
