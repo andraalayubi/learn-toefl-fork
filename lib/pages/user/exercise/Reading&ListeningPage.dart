@@ -6,13 +6,15 @@ import 'package:learn_toefl/widget/question_widgets.dart';
 
 class ReadingTest extends StatefulWidget {
   final int questionGroupId;
-  const ReadingTest({super.key, required this.questionGroupId});
+
+  ReadingTest({Key? key, required this.questionGroupId}) : super(key: key);
 
   @override
   _ReadingTestState createState() => _ReadingTestState();
 }
 
 class _ReadingTestState extends State<ReadingTest> {
+  late int _questionGroupId;
   final audioPlayer = AudioPlayer();
   bool isPlaying = false;
   Duration duration = Duration.zero;
@@ -35,7 +37,9 @@ class _ReadingTestState extends State<ReadingTest> {
   @override
   void initState() {
     super.initState();
-    _futureQuestionDetail = fetchPracticeDetail(widget.questionGroupId);
+    _questionGroupId = widget.questionGroupId;
+    print(_questionGroupId);
+    _futureQuestionDetail = fetchPracticeDetail(_questionGroupId);
 
     setAudio();
   }
@@ -88,7 +92,7 @@ class _ReadingTestState extends State<ReadingTest> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Test Page',
+                  'Test',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -162,7 +166,7 @@ class _ReadingTestState extends State<ReadingTest> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => Summary(
-                                questionId: widget.questionGroupId,
+                                questionId: _questionGroupId,
                                 score: correct,
                                 correct: correct,
                                 incorrect: incorrect,

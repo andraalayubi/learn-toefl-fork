@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/models/question.dart';
 import 'package:learn_toefl/pages/user/exercise/Reading&ListeningPage.dart';
+import 'package:learn_toefl/pages/user/exercise/WritingPage.dart';
 import 'package:learn_toefl/utilities.dart';
 
 class Exercise extends StatefulWidget {
@@ -145,15 +146,22 @@ class _Exercise extends State<Exercise> {
                           questionCategory: 'Listening', data: []),
                     )
                     .data,
+                (int questionGroupId) =>
+                    ReadingTest(questionGroupId: questionGroupId),
               ),
               // const SizedBox(height: 10),
               // _buildMenuItem(
               //   "Speaking",
               //   'assets/images/iconVideo_2.png',
               //   questionGroups
-              //       .firstWhere((group) => group.questionCategory == 'Speaking')
-              //       .data.map((item) => item.name)
-              //       .toList(),
+                    // .firstWhere(
+                    //   (group) => group.questionCategory == 'Speaking',
+                    //   orElse: () =>
+                    //       QuestionGroup(questionCategory: 'Speaking', data: []),
+                    // )
+                    // .data,
+                    // (int questionGroupId) =>
+                    // ReadingTest(questionGroupId: questionGroupId),
               // ),
               const SizedBox(height: 10),
               _buildMenuItem(
@@ -162,20 +170,27 @@ class _Exercise extends State<Exercise> {
                 questionGroups
                     .firstWhere(
                       (group) => group.questionCategory == 'Reading',
-                      orElse: () => QuestionGroup(
-                          questionCategory: 'Reading', data: []),
+                      orElse: () =>
+                          QuestionGroup(questionCategory: 'Reading', data: []),
                     )
                     .data,
+                (int questionGroupId) =>
+                    ReadingTest(questionGroupId: questionGroupId),
               ),
-              // const SizedBox(height: 10),
-              // _buildMenuItem(
-              //   "Writing",
-              //   'assets/images/iconVideo_4.png',
-              //   questionGroups
-              //       .firstWhere((group) => group.questionCategory == 'Writing')
-              //       .data.map((item) => item.name)
-              //       .toList(),
-              // ),
+              const SizedBox(height: 10),
+              _buildMenuItem(
+                "Writing",
+                'assets/images/iconVideo_4.png',
+                questionGroups
+                    .firstWhere(
+                      (group) => group.questionCategory == 'Writing',
+                      orElse: () =>
+                          QuestionGroup(questionCategory: 'Writing', data: []),
+                    )
+                    .data,
+                (int questionGroupId) =>
+                    WritingTest(questionGroupId: questionGroupId),
+              ),
             ],
           );
         }
@@ -184,12 +199,13 @@ class _Exercise extends State<Exercise> {
   }
 
   Widget _buildMenuItem(
-    String title,
-    String imagePath,
-    List<QuestionGroupData> levels,
-    // int levelDone,
-    // int totalLevels,
-  ) {
+      String title,
+      String imagePath,
+      List<QuestionGroupData> levels,
+      Widget Function(int questionGroupId) testPage
+      // int levelDone,
+      // int totalLevels,
+      ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Card(
@@ -285,8 +301,7 @@ class _Exercise extends State<Exercise> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          ReadingTest(questionGroupId: level.id),
+                      builder: (context) => testPage(level.id),
                     ),
                   );
                 },

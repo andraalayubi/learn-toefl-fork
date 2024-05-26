@@ -97,10 +97,10 @@ class QuestionDetail {
 
     return QuestionDetail(
       id: json['id'] ?? 0,
-      name: json['name'],
+      name: json['name'] ?? '',
       readingText: json['reading_text'] ?? '',
       sampleAnswer: json['sample_answer'] ?? '',
-      questionCategory: json['question_category'],
+      questionCategory: json['question_category'] ?? '',
       questions: questions,
     );
   }
@@ -125,8 +125,8 @@ class Question {
     final answerOptions = (json['answer_options'] as List).cast<String>();
 
     return Question(
-      id: json['id'],
-      questionText: json['question_text'],
+      id: json['id'] ?? 0,
+      questionText: json['question_text'] ?? '',
       correctAnswer: json['correct_answer'] ?? '',
       answerOptions: answerOptions,
     );

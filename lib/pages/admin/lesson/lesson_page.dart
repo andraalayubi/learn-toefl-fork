@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/pages/admin/lesson/view_lesson.dart';
+import 'package:learn_toefl/services/add_video.dart';
 import 'package:learn_toefl/utilities.dart';
 
 class LessonPage extends StatefulWidget {
@@ -12,7 +13,10 @@ class LessonPage extends StatefulWidget {
 }
 
 class _LessonPageState extends State<LessonPage> {
+  int? categoryId;
   String? selectedCourse;
+  final _titleController = TextEditingController();
+  final _urlController = TextEditingController();
   final List<String> courses = ['Listening', 'Speaking', 'Reading', 'Writing'];
   @override
   Widget build(BuildContext context) {
@@ -419,6 +423,9 @@ class _LessonPageState extends State<LessonPage> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedCourse = newValue;
+                                  final index = courses.indexOf(newValue!);
+                                  categoryId = index +
+                                      1; // Indeks dimulai dari 0, sehingga ditambah 1
                                 });
                               },
                             ),
@@ -437,6 +444,7 @@ class _LessonPageState extends State<LessonPage> {
                             ),
                             const SizedBox(height: 5),
                             TextField(
+                              controller: _titleController,
                               decoration: InputDecoration(
                                 hintText: 'Input title',
                                 hintStyle: tFOnt(
@@ -465,6 +473,7 @@ class _LessonPageState extends State<LessonPage> {
                             ),
                             const SizedBox(height: 5),
                             TextField(
+                              controller: _urlController,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Colors.white,
@@ -490,7 +499,11 @@ class _LessonPageState extends State<LessonPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       TextButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () {
+                          _titleController.clear();
+                          _urlController.clear();
+                          Navigator.pop(context);
+                        },
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.grey,
                           shape: RoundedRectangleBorder(
@@ -504,7 +517,15 @@ class _LessonPageState extends State<LessonPage> {
                       ),
                       const SizedBox(width: 10),
                       TextButton(
-                        onPressed: () async {},
+                        onPressed: () {
+                          print(_titleController.text);
+                          print(_urlController.text);
+                          addNewVideo(_titleController.text,
+                              _urlController.text, categoryId!);
+                              _titleController.clear();
+                              _urlController.clear();
+                          Navigator.pop(context);
+                        },
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.black,
                           shape: RoundedRectangleBorder(

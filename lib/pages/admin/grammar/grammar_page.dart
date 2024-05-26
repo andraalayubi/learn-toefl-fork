@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_toefl/services/add_video.dart';
 import 'package:learn_toefl/utilities.dart';
 
 class GrammarPage extends StatefulWidget {
@@ -9,8 +10,11 @@ class GrammarPage extends StatefulWidget {
 }
 
 class _GrammarPageState extends State<GrammarPage> {
+  int? categoryId;
   String? selectedCourse;
-  final List<String> courses = ['Nouns', 'Adjectives', 'Adverbs', 'Pronouns'];
+  final _titleController = TextEditingController();
+  final _urlController = TextEditingController();
+  final List<String> courses = ['Subject & Verb', 'Object', 'Tenses'];
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -156,6 +160,9 @@ class _GrammarPageState extends State<GrammarPage> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedCourse = newValue;
+                                  final index = courses.indexOf(newValue!);
+                                  categoryId = index +
+                                      5; // Indeks dimulai dari 0, sehingga ditambah 5
                                 });
                               },
                             ),
@@ -174,6 +181,7 @@ class _GrammarPageState extends State<GrammarPage> {
                             ),
                             const SizedBox(height: 5),
                             TextField(
+                              controller: _titleController,
                               decoration: InputDecoration(
                                 hintText: 'Input title',
                                 hintStyle: tFOnt(
@@ -202,6 +210,7 @@ class _GrammarPageState extends State<GrammarPage> {
                             ),
                             const SizedBox(height: 5),
                             TextField(
+                              controller: _urlController,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Colors.white,
@@ -227,7 +236,11 @@ class _GrammarPageState extends State<GrammarPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       TextButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () {
+                          _titleController.clear();
+                          _urlController.clear();
+                          Navigator.pop(context);
+                        },
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.grey,
                           shape: RoundedRectangleBorder(
@@ -241,7 +254,15 @@ class _GrammarPageState extends State<GrammarPage> {
                       ),
                       const SizedBox(width: 10),
                       TextButton(
-                        onPressed: () async {},
+                        onPressed: () {
+                          print(_titleController.text);
+                          print(_urlController.text);
+                          addNewVideo(_titleController.text,
+                              _urlController.text, categoryId!);
+                              _titleController.clear();
+                              _urlController.clear();
+                          Navigator.pop(context);
+                        },
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.black,
                           shape: RoundedRectangleBorder(
