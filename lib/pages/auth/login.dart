@@ -45,18 +45,53 @@ class _LoginScreenState extends State<LoginScreen> {
           MaterialPageRoute(builder: (context) => BottomNavigation()),
         );
       }
+
+      showCustomSnackbar(context, 'Login successful!', Colors.green);
     } catch (e) {
       print(e);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Login failed. Please check your credentials.'),
-        ),
-      );
+      showCustomSnackbar(
+          context, 'Login failed. Please check your credentials!', Colors.red);
     } finally {
       setState(() {
         _isLoading = false;
       });
     }
+  }
+
+  void showCustomSnackbar(
+      BuildContext context, String message, Color backgroundColor) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 10,
+        left: 10,
+        right: 10,
+        child: SafeArea(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                message,
+                style: tFOnt(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay?.insert(overlayEntry);
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
   }
 
   @override
@@ -142,7 +177,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   child: _isLoading
-                      ? const CircularProgressIndicator()
+                      ? const SizedBox(
+                          height: 25,
+                          width: 25,
+                          child: CircularProgressIndicator(
+                            color: mColor,
+                            strokeWidth: 2.0,
+                          ),
+                        )
                       : Text(
                           'Login',
                           style: tFOnt(

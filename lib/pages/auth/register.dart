@@ -26,21 +26,57 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _emailController.text,
         _passwordController.text,
       );
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Registration successful')));
+
+      showCustomSnackbar(context, 'Registration successful', Colors.green);
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => BottomNavigation()),
       );
     } catch (e) {
       print(e);
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Registration failed')));
+      showCustomSnackbar(context, 'Registration failed', Colors.red);
     } finally {
       setState(() {
         _isLoading = false;
       });
     }
+  }
+
+  void showCustomSnackbar(
+      BuildContext context, String message, Color backgroundColor) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 10,
+        left: 10,
+        right: 10,
+        child: SafeArea(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                message,
+                style: tFOnt(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay?.insert(overlayEntry);
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
   }
 
   @override
@@ -144,8 +180,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       borderRadius: BorderRadius.circular(26),
                     ),
                   ),
-                  child:_isLoading
-                      ? const CircularProgressIndicator()
+                  child: _isLoading
+                      ? const SizedBox(
+                          height: 25,
+                          width: 25,
+                          child: CircularProgressIndicator(
+                            color: mColor,
+                            strokeWidth: 2.0,
+                          ),
+                        )
                       : Text(
                           'Sign Up',
                           style: tFOnt(
