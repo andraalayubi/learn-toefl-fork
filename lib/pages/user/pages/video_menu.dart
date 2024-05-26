@@ -21,6 +21,8 @@ class _VideoListPageState extends State<VideoListPage> {
   late String description;
   late String urlCardImage;
   List<Video> allVideos = [];
+  late List<bool> _isExpandedList; // List untuk menyimpan status ekspansi
+
   // ignore: unused_field
   late Future<List<dynamic>> _history;
 
@@ -30,6 +32,8 @@ class _VideoListPageState extends State<VideoListPage> {
     _futureCategories =
         fetchVideos(widget.id); // Ganti 1 dengan vid yang diinginkan
     description = getDescription();
+    _isExpandedList = List<bool>.generate(
+        10, (index) => false); // Ganti 10 dengan jumlah kategori
   }
 
   void insertHistory(int id, String name, String url) async {
@@ -287,7 +291,7 @@ class _VideoListPageState extends State<VideoListPage> {
                   } else if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   }
-                  return const CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator());
                 },
               ),
             ),

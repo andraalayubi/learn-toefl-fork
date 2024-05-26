@@ -13,7 +13,7 @@ class SpeakingTest extends StatefulWidget {
 
 class _SpeakingTestState extends State<SpeakingTest> {
   String providedText =
-      'in todays interconnected world the significance of multiculturalism cannot be overstated as societies become increasingly diverse understanding and embracing cultural differences have become essential components of social cohesion and progress';
+      'The flower petals are very large in size and release odors such as the smell of carrion Flower buds that have medicinal properties resulting in the passage of this flower are often looted This plant is native habitat on the island of Sumatra especially in Bengkulu Jambi and South Sumatra';
   var textSpeech = 'Click on Mic to Record';
   SpeechToText speechToText = SpeechToText();
   var isListening = false;
@@ -140,16 +140,36 @@ class _SpeakingTestState extends State<SpeakingTest> {
   }
   //logika menghitung akurasi
 
-  double calculateAccuracy(String providedText, String textSpeech) {
-    int matchingCharacters = 0;
-    int totalCharacters = providedText.length;
+  // double calculateAccuracy(String providedText, String textSpeech) {
+  //   int matchingCharacters = 0;
+  //   int totalCharacters = providedText.length;
 
-    int minCharacters = totalCharacters < textSpeech.length
+  //   int minCharacters = totalCharacters < textSpeech.length
+  //       ? totalCharacters
+  //       : textSpeech.length;
+
+  //   for (int i = 0; i < minCharacters; i++) {
+  //     if (providedText[i] == textSpeech[i]) {
+  //       matchingCharacters++;
+  //     }
+  //   }
+
+  //   double accuracy = (matchingCharacters / totalCharacters) * 100;
+  //   return accuracy;
+  // }
+  double calculateAccuracy(String providedText, String textSpeech) {
+    String lowerProvidedText = providedText.toLowerCase();
+    String lowerTextSpeech = textSpeech.toLowerCase();
+
+    int matchingCharacters = 0;
+    int totalCharacters = lowerProvidedText.length;
+
+    int minCharacters = totalCharacters < lowerTextSpeech.length
         ? totalCharacters
-        : textSpeech.length;
+        : lowerTextSpeech.length;
 
     for (int i = 0; i < minCharacters; i++) {
-      if (providedText[i] == textSpeech[i]) {
+      if (lowerProvidedText[i] == lowerTextSpeech[i]) {
         matchingCharacters++;
       }
     }

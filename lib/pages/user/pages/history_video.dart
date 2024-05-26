@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/utilities.dart';
+import 'package:learn_toefl/services/video_history.dart';
+import 'package:learn_toefl/models/video.dart';
 
 class HistoryVideo extends StatefulWidget {
-  const HistoryVideo({super.key});
+  const HistoryVideo({Key? key}) : super(key: key);
 
   @override
   State<HistoryVideo> createState() => _HistoryVideoState();
 }
 
 class _HistoryVideoState extends State<HistoryVideo> {
+  late List<dynamic> _history = []; // Inisialisasi _history sebagai List<dynamic>
+  List<Video> allVideos = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchHistory();
+  }
+
+  void fetchHistory() async {
+    var videoHistory = await VideoHistory.getHistory();
+    print('videoHistory $videoHistory');
+    setState(() {
+      _history = videoHistory;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -118,212 +137,78 @@ class _HistoryVideoState extends State<HistoryVideo> {
               ),
               Column(
                 children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 26, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      // border: Border.all(color: Colors.black, width: 1),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 130,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.asset(
-                              'assets/images/video.png',
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.cover,
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _history.length,
+                    itemBuilder: (context, index) {
+                      final historyItem = _history[index];
+                      final String category = historyItem['category'] ?? '';
+                      final String videoName = historyItem['name'] ?? '';
+
+                      return Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 26, vertical: 12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 130,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                image: DecorationImage(
+                                  image: AssetImage('assets/images/video.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromRGBO(0xFF, 0x86, 0x5F, 1),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 4, horizontal: 12),
-                                child: Text(
-                                  'Lesson',
-                                  style: tFOnt(
-                                    fontSize: 8,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromRGBO(
+                                          0xFF, 0x86, 0x5F, 1),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4, horizontal: 12),
+                                    child: Text(
+                                      category,
+                                      style: TextStyle(
+                                        fontSize: 8,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  const SizedBox(height: 6),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    videoName,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(height: 6),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Listening 1  - 100 idiom in Listening Skill',
-                                style: tFOnt(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 26, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      // border: Border.all(color: Colors.black, width: 1),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 130,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.asset(
-                              'assets/images/video.png',
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.cover,
                             ),
-                          ),
+                          ],
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 255, 250, 148),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 4, horizontal: 12),
-                                child: Text(
-                                  'Grammar',
-                                  style: tFOnt(
-                                    fontSize: 8,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 6),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Nouns - Subjects, Objects, and Complements',
-                                style: tFOnt(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 26, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      // border: Border.all(color: Colors.black, width: 1),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 130,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.asset(
-                              'assets/images/video.png',
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromRGBO(0xFF, 0x86, 0x5F, 1),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 4, horizontal: 12),
-                                child: Text(
-                                  'Lesson',
-                                  style: tFOnt(
-                                    fontSize: 8,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 6),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Speaking - 400 Idioms in Speaking Skill',
-                                style: tFOnt(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   )
                 ],
               )
