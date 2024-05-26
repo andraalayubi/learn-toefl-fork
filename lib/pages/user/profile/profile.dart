@@ -55,6 +55,24 @@ class _ProfilPageState extends State<ProfilPage> {
     );
   }
 
+  Future<void> _navigateToUpdateProfile() async {
+    final updatedUserInfo = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const UpdateProfile()),
+    );
+
+    if (updatedUserInfo != null) {
+      setState(() {
+        _username = updatedUserInfo['username'];
+        _email = updatedUserInfo['email'];
+      });
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('username', _username);
+      await prefs.setString('email', _email);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,12 +123,7 @@ class _ProfilPageState extends State<ProfilPage> {
                 width: 140,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const UpdateProfile()));
-                  },
+                  onPressed: _navigateToUpdateProfile,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0D0443),
                   ),

@@ -12,6 +12,7 @@ class UpdateProfile extends StatefulWidget {
 }
 
 class _UpdateProfileState extends State<UpdateProfile> {
+  bool _isLoading = false;
   final AuthService _authService = AuthService();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -22,7 +23,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
     _getUserInfo();
   }
 
-  // Fungsi untuk mendapatkan informasi pengguna yang sedang login
   void _getUserInfo() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -42,18 +42,25 @@ class _UpdateProfileState extends State<UpdateProfile> {
   }
 
   void _updateProfile() async {
+    setState(() {
+      _isLoading = true;
+    });
     try {
       await _authService.updateUser(
           _usernameController.text, _emailController.text);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Profile updated successfully')),
-      );
+      showCustomSnackbar(context, 'Updated successfully!', Colors.green);
+
+      Navigator.pop(context, {
+        'username': _usernameController.text,
+        'email': _emailController.text,
+      });
     } catch (e) {
       print('Error while updating profile: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to update profile')),
-      );
+      showCustomSnackbar(context, 'Update failed!', Colors.red);
     }
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -61,6 +68,42 @@ class _UpdateProfileState extends State<UpdateProfile> {
     _usernameController.dispose();
     _emailController.dispose();
     super.dispose();
+  }
+
+  void showCustomSnackbar(
+      BuildContext context, String message, Color backgroundColor) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 10,
+        left: 10,
+        right: 10,
+        child: SafeArea(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                message,
+                style: tFOnt(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay?.insert(overlayEntry);
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
   }
 
   @override
@@ -143,17 +186,29 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   onPressed: _updateProfile,
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xFF0D0443)),
+                        Color.fromARGB(255, 26, 19, 67)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24),
                       ),
                     ),
                   ),
-                  child: Text(
-                    'Update Profile',
-                    style: tFOnt(color: Colors.white),
-                  ),
+                  child: _isLoading
+                      ? const SizedBox(
+                          height: 25,
+                          width: 25,
+                          child: CircularProgressIndicator(
+                            color: mColor,
+                            strokeWidth: 2.0,
+                          ),
+                        )
+                      : Text(
+                          'Update Profile',
+                          style: tFOnt(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
               ),
             ],
