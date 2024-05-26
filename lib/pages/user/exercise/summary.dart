@@ -31,7 +31,8 @@ class _SummaryState extends State<Summary> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final id = prefs.getInt('id');
-      insertNilai(widget.questionId, id!, widget.score * 10);
+
+      insertNilai(widget.questionId, id!, widget.score);
       print(id);
     } catch (e) {
       print('Error while getting user info: $e');

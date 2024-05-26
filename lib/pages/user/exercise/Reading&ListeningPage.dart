@@ -167,7 +167,7 @@ class _ReadingTestState extends State<ReadingTest> {
                             MaterialPageRoute(
                               builder: (context) => Summary(
                                 questionId: _questionGroupId,
-                                score: correct,
+                                score: correct * 10,
                                 correct: correct,
                                 incorrect: incorrect,
                               ),

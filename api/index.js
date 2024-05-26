@@ -124,15 +124,15 @@ app.get('/practice/:id', async (req, res) => {
 });
 
 app.post('/nilai', async (req, res) => {
-  const { question_id, user_id, nilai } = req.body;
+  const { question_group_id, user_id, nilai } = req.body;
 
   try {
     const query = `
-      INSERT INTO Question_User (question_id, user_id, nilai)
+      INSERT INTO Question_User (question_group_id, user_id, nilai)
       VALUES ($1, $2, $3)
-      ON CONFLICT (question_id, user_id) DO UPDATE SET nilai = $3;
+      ON CONFLICT (question_group_id, user_id) DO UPDATE SET nilai = $3;
     `;
-    await pool.query(query, [question_id, user_id, nilai]);
+    await pool.query(query, [question_group_id, user_id, nilai]);
     res.status(200).json({ message: 'Nilai berhasil disimpan' });
   } catch (err) {
     console.error(err);

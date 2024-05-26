@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:learn_toefl/ip.dart';
 
 Future<void> insertNilai(int questionId, int userId, int nilai) async {
+  print(questionId);
+  print(userId);
+  print(nilai);
   final url = Uri.parse('$ip/nilai'); // Ganti dengan URL server yang sesuai
   try {
     final response = await http.post(
@@ -46,8 +49,7 @@ Future<void> insertNilai(int questionId, int userId, int nilai) async {
         final data = jsonDecode(response.body);
         print(data['message']); // Mencetak pesan sukses
       } else {
-        print(redirectedResponse.statusCode);
-        throw Exception('Failed to login after redirect');
+        throw Exception('Failed to input nilai after redirect ${response.statusCode}');
       }
     } else if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
