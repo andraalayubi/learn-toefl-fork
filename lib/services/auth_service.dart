@@ -113,6 +113,75 @@ class AuthService {
     }
   }
 
+  Future<void> updateUser(String username, String email) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token != null) {
+      final response = await http.put(
+        Uri.parse('$ip/api/auth/update'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(<String, String>{
+          'username': username,
+          'email': email,
+        }),
+      );
+
+      if (response.statusCode == 308) {
+        print('Redirect detected with status code 308');
+        final redirectLocation = response.headers['location'];
+
+        // Check if the redirect location is relative
+        final redirectUri = Uri.parse(redirectLocation!);
+        Uri newUri;
+
+        if (redirectUri.hasScheme) {
+          // Absolute URI
+          newUri = redirectUri;
+        } else {
+          // Relative URI, construct the absolute URI
+          final originalUri = Uri.parse('$ip/api/auth/update');
+          newUri = originalUri.resolveUri(redirectUri);
+        }
+
+        print('Redirect location: $newUri');
+
+        final redirectedResponse = await http.put(
+        newUri,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(<String, String>{
+          'username': username,
+          'email': email,
+        }),
+      );
+
+        if (redirectedResponse.statusCode == 200) {
+          final data = jsonDecode(response.body);
+          await prefs.setString('username', data['username']);
+          await prefs.setString('email', data['email']);
+        } else {
+          print(redirectedResponse.statusCode);
+          throw Exception('Failed to update after redirect');
+        }
+      } else if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        await prefs.setString('username', data['username']);
+        await prefs.setString('email', data['email']);
+      } else {
+        print(response.statusCode);
+        throw Exception('Failed to update user info');
+      }
+    } else {
+      throw Exception('Token not found');
+    }
+  }
+
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');

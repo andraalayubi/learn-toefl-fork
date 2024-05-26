@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:learn_toefl/utilities.dart';
+import 'package:learn_toefl/services/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UpdateProfile extends StatefulWidget {
   const UpdateProfile({super.key});
@@ -9,6 +12,57 @@ class UpdateProfile extends StatefulWidget {
 }
 
 class _UpdateProfileState extends State<UpdateProfile> {
+  final AuthService _authService = AuthService();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserInfo();
+  }
+
+  // Fungsi untuk mendapatkan informasi pengguna yang sedang login
+  void _getUserInfo() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final username = prefs.getString('username');
+      final email = prefs.getString('email');
+      if (username != null && email != null) {
+        setState(() {
+          _usernameController.text = username;
+          _emailController.text = email;
+        });
+      } else {
+        throw Exception('Username or email not found in SharedPreferences');
+      }
+    } catch (e) {
+      print('Error while getting user info: $e');
+    }
+  }
+
+  void _updateProfile() async {
+    try {
+      await _authService.updateUser(
+          _usernameController.text, _emailController.text);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Profile updated successfully')),
+      );
+    } catch (e) {
+      print('Error while updating profile: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to update profile')),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +71,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -26,13 +80,13 @@ class _UpdateProfileState extends State<UpdateProfile> {
           padding: const EdgeInsets.only(left: 70.0),
           child: Text(
             'Edit Profile',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: tFOnt(fontWeight: FontWeight.bold),
           ),
         ),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(25),
+          padding: const EdgeInsets.all(25),
           child: Column(
             children: [
               SizedBox(
@@ -50,50 +104,43 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   ),
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               TextField(
+                controller: _usernameController,
                 decoration: InputDecoration(
-                  labelText: 'Full Name',
-                  prefixIcon: Icon(Icons.person),
+                  labelText: 'Username',
+                  labelStyle: tFOnt(),
+                  prefixIcon: const Icon(Icons.person),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
                   ),
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
+                controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  prefixIcon: Icon(Icons.email),
+                  labelStyle: tFOnt(),
+                  prefixIcon: const Icon(Icons.email),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
                   ),
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
                 ),
               ),
-              SizedBox(height: 10),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  prefixIcon: Icon(Icons.fingerprint),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
-                ),
-              ),
-              SizedBox(
+              const SizedBox(height: 10),
+              const SizedBox(
                 height: 70,
               ),
               SizedBox(
                 width: double.infinity,
                 height: 60,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _updateProfile,
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
                         const Color(0xFF0D0443)),
@@ -105,10 +152,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   ),
                   child: Text(
                     'Update Profile',
-                    style: TextStyle(color: Colors.white),
+                    style: tFOnt(color: Colors.white),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
