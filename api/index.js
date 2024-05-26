@@ -59,8 +59,8 @@ app.get('/practice/:id', async (req, res) => {
   FROM Question_Group qg
   LEFT JOIN Question q ON qg.id = q.question_group_id
   LEFT JOIN ReadingOptions ro ON q.id = ro.question_id
-  WHERE qg.id = $1
-  GROUP BY qg.name, qg.reading_text, qg.question_category, q.id, q.question_text;
+  WHERE qg.id = 1
+  GROUP BY qg.id, q.id, q.question_text;
     `;
     const result = await pool.query(query, [questionGroupId]);
     console.log(result.rows);
