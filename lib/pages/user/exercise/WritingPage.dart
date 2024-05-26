@@ -1,8 +1,9 @@
-//UNCOMMENT tapi gurung kesambung soko exercise 
+//UNCOMMENT tapi gurung kesambung soko exercise
 
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/models/question.dart';
 import 'package:learn_toefl/pages/user/exercise/summary.dart';
+import 'package:learn_toefl/utilities.dart';
 import 'package:learn_toefl/widget/question_widgets.dart';
 
 class WritingTest extends StatefulWidget {
@@ -44,12 +45,12 @@ class _WritingTestState extends State<WritingTest> {
         child: ClipPath(
           clipper: CustomAppBar(),
           child: AppBar(
-            title: const Column(
+            title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Writing Test',
-                  style: TextStyle(
+                  style: tFOnt(
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
@@ -90,6 +91,7 @@ class _WritingTestState extends State<WritingTest> {
                               width: double.infinity,
                               child: CustomBox(
                                 title: 'Instruction',
+                                
                                 content: detail.readingText,
                               ),
                             ),
@@ -171,7 +173,8 @@ class CustomAppBar extends CustomClipper<Path> {
 class ResponseBox extends StatefulWidget {
   final ValueChanged<String> onSelect;
 
-  const ResponseBox({super.key, 
+  const ResponseBox({
+    super.key,
     required this.onSelect,
   });
 

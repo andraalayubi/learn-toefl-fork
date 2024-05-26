@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:learn_toefl/utilities.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:speech_to_text/speech_to_text_provider.dart';
 
@@ -44,12 +45,12 @@ class _SpeakingTestState extends State<SpeakingTest> {
         child: ClipPath(
           clipper: CustomAppBar(),
           child: AppBar(
-            title: const Column(
+            title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Speaking Test',
-                  style: TextStyle(
+                  style: tFOnt(
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
@@ -69,14 +70,26 @@ class _SpeakingTestState extends State<SpeakingTest> {
           children: [
             Container(
               margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-              height: 290,
+              height: 220,
               decoration: BoxDecoration(
                 border: Border.all(width: 1.0, color: Colors.black),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
+                color: Color(0xFFC0D6E8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.4),
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    offset: Offset(0, 2),
+                  ),
+                ],
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(providedText),
+                child: Text(
+                  providedText,
+                  style: tFOnt(),
+                ),
               ),
             ),
             const SizedBox(
@@ -91,7 +104,10 @@ class _SpeakingTestState extends State<SpeakingTest> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(textSpeech),
+                child: Text(
+                  textSpeech,
+                  style: tFOnt(),
+                ),
               ),
             ),
             const SizedBox(
@@ -108,7 +124,7 @@ class _SpeakingTestState extends State<SpeakingTest> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   'Accuracy: ${accuracy.toStringAsFixed(2)}%',
-                  style: const TextStyle(
+                  style: tFOnt(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -146,9 +162,16 @@ class _SpeakingTestState extends State<SpeakingTest> {
                 }
               },
               child: CircleAvatar(
+                backgroundColor: mColor,
                 child: isListening
-                    ? const Icon(Icons.record_voice_over)
-                    : const Icon(Icons.mic),
+                    ? const Icon(
+                        Icons.record_voice_over,
+                        color: Colors.white,
+                      )
+                    : const Icon(
+                        Icons.mic,
+                        color: Colors.white,
+                      ),
               ),
             ),
             const SizedBox(height: 20),

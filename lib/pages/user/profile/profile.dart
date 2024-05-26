@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/pages/auth/login.dart';
+import 'package:learn_toefl/pages/user/exercise/SpeakingPage.dart';
 import 'package:learn_toefl/pages/user/pages/history_video.dart';
 import 'package:learn_toefl/pages/user/profile/update_profile.dart';
 import 'package:learn_toefl/pages/user/pages/fav_video.dart';
@@ -213,38 +214,38 @@ class _ProfilPageState extends State<ProfilPage> {
                   ),
                 ),
               ),
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //             builder: (context) => const SpeakingTest()));
-              //   },
-              //   child: ListTile(
-              //     leading: Container(
-              //       width: 40,
-              //       height: 40,
-              //       decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(100),
-              //         color: Colors.grey[100],
-              //       ),
-              //       child: const Icon(
-              //         Icons.mic,
-              //         color: Color(0xFF0D0443),
-              //       ),
-              //     ),
-              //     title: const Text('Speaking'),
-              //     trailing: Container(
-              //       width: 30,
-              //       height: 30,
-              //       decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(100),
-              //         color: Colors.grey[50],
-              //       ),
-              //       child: const Icon(Icons.arrow_forward_ios_sharp),
-              //     ),
-              //   ),
-              // ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SpeakingTest()));
+                },
+                child: ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.grey[100],
+                    ),
+                    child: const Icon(
+                      Icons.mic,
+                      color: Color(0xFF0D0443),
+                    ),
+                  ),
+                  title: const Text('Speaking'),
+                  trailing: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.grey[50],
+                    ),
+                    child: const Icon(Icons.arrow_forward_ios_sharp),
+                  ),
+                ),
+              ),
               const SizedBox(
                 height: 90,
               ),
