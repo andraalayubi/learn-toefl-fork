@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:learn_toefl/models/question.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-import 'package:speech_to_text/speech_to_text_provider.dart';
 
 class SpeakingTest extends StatefulWidget {
-  const SpeakingTest({super.key});
+  final int questionGroupId;
+  const SpeakingTest({Key? key, required this.questionGroupId}) : super(key: key);
 
   @override
   State<SpeakingTest> createState() => _SpeakingTestState();
 }
 
 class _SpeakingTestState extends State<SpeakingTest> {
-  String providedText =
-      'The flower petals are very large in size and release odors such as the smell of carrion Flower buds that have medicinal properties resulting in the passage of this flower are often looted This plant is native habitat on the island of Sumatra especially in Bengkulu Jambi and South Sumatra';
+  late Future<QuestionDetail> futureQuestionDetail;
+  String instruction = '';
+  String providedText = '';
   var textSpeech = 'Click on Mic to Record';
   SpeechToText speechToText = SpeechToText();
   var isListening = false;
@@ -32,6 +34,15 @@ class _SpeakingTestState extends State<SpeakingTest> {
   void initState() {
     super.initState();
     checkMic();
+    futureQuestionDetail = fetchPracticeDetail(widget.questionGroupId);
+    futureQuestionDetail.then((questionDetail) {
+      setState(() {
+        instruction = questionDetail.readingText;
+        providedText = questionDetail.sampleAnswer;
+      });
+    }).catchError((error) {
+      print('Failed to fetch practice detail: $error');
+    });
   }
 
   @override
@@ -45,95 +56,121 @@ class _SpeakingTestState extends State<SpeakingTest> {
             },
             child: const Icon(Icons.arrow_back_ios)),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-              height: 290,
-              decoration: BoxDecoration(
-                border: Border.all(width: 1.0, color: Colors.black),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(providedText),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-              height: 290,
-              decoration: BoxDecoration(
-                border: Border.all(width: 1.0, color: Colors.black),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(textSpeech),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-              height: 50,
-              decoration: BoxDecoration(
-                border: Border.all(width: 1.0, color: Colors.black),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Accuracy: ${accuracy.toStringAsFixed(2)}%',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+      body: FutureBuilder<QuestionDetail>(
+        future: futureQuestionDetail,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Failed to load data'));
+          } else if (snapshot.hasData) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
+                    height: 290,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1.0, color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(instruction),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
-            GestureDetector(
-              onTap: () async {
-                if (!isListening) {
-                  bool micAvailable = await speechToText.initialize();
-                  if (micAvailable) {
-                    setState(() {
-                      isListening = true;
-                    });
-
-                    speechToText.listen(
-                        listenFor: const Duration(seconds: 120),
-                        onResult: (result) {
+                  Container(
+                    margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
+                    height: 290,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1.0, color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(providedText),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
+                    height: 290,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1.0, color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(textSpeech),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1.0, color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Accuracy: ${accuracy.toStringAsFixed(2)}%',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  GestureDetector(
+                    onTap: () async {
+                      if (!isListening) {
+                        bool micAvailable = await speechToText.initialize();
+                        if (micAvailable) {
                           setState(() {
-                            textSpeech = result.recognizedWords;
-                            accuracy =
-                                calculateAccuracy(providedText, textSpeech);
-                            print("Provided Text: $providedText");
-                            print("Speech Text: $textSpeech");
-                            print("Accuracy: ${accuracy.toStringAsFixed(2)}%");
+                            isListening = true;
                           });
+
+                          speechToText.listen(
+                              listenFor: const Duration(seconds: 120),
+                              onResult: (result) {
+                                setState(() {
+                                  textSpeech = result.recognizedWords;
+                                  accuracy = calculateAccuracy(
+                                      providedText, textSpeech);
+                                  print("Provided Text: $providedText");
+                                  print("Speech Text: $textSpeech");
+                                  print(
+                                      "Accuracy: ${accuracy.toStringAsFixed(2)}%");
+                                });
+                              });
+                        }
+                      } else {
+                        setState(() {
+                          isListening = false;
+                          speechToText.stop();
                         });
-                  }
-                } else {
-                  setState(() {
-                    isListening = false;
-                    speechToText.stop();
-                  });
-                }
-              },
-              child: CircleAvatar(
-                child: isListening
-                    ? const Icon(Icons.record_voice_over)
-                    : const Icon(Icons.mic),
+                      }
+                    },
+                    child: CircleAvatar(
+                      child: isListening
+                          ? const Icon(Icons.record_voice_over)
+                          : const Icon(Icons.mic),
+                    ),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
+            );
+          } else {
+            return Center(child: Text('No data available'));
+          }
+        },
       ),
     );
   }
