@@ -6,9 +6,9 @@ import 'package:learn_toefl/pages/user/pages/history_video.dart';
 import 'package:learn_toefl/pages/user/profile/update_profile.dart';
 import 'package:learn_toefl/pages/test_speaking.dart';
 import 'package:learn_toefl/pages/user/pages/fav_video.dart';
-import 'package:learn_toefl/pages/user/pages/history_video.dart';
 import 'package:learn_toefl/services/auth_service.dart';
 import 'package:learn_toefl/utilities.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
@@ -19,6 +19,48 @@ class ProfilPage extends StatefulWidget {
 
 class _ProfilPageState extends State<ProfilPage> {
   final AuthService _authService = AuthService();
+  late String _username = '';
+  late String _email = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserInfo();
+    _printAllSharedPreferencesData();
+  }
+
+  // Fungsi untuk mendapatkan informasi pengguna yang sedang login
+  void _getUserInfo() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final username = prefs.getString('username');
+      final email = prefs.getString('email');
+      if (username != null && email != null) {
+        setState(() {
+          _username = username;
+          _email = email;
+        });
+      } else {
+        throw Exception('Username or email not found in SharedPreferences');
+      }
+    } catch (e) {
+      print('Error while getting user info: $e');
+    }
+  }
+
+  void _printAllSharedPreferencesData() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final allData = prefs.getKeys();
+      print('All SharedPreferences Data:');
+      allData.forEach((key) {
+        final value = prefs.get(key);
+        print('$key: $value');
+      });
+    } catch (e) {
+      print('Error while printing SharedPreferences data: $e');
+    }
+  }
 
   void _logout(BuildContext context) async {
     await _authService.logout();
@@ -64,12 +106,12 @@ class _ProfilPageState extends State<ProfilPage> {
                 height: 10,
               ),
               Text(
-                'Jia JNE',
-                style: tFOnt(fontSize: 20, fontWeight: FontWeight.bold),
+                ' $_username',
+                style: tFOnt(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Text(
-                'jiaracing@gmail.com',
-                style: tFOnt(fontSize: 14, fontWeight: FontWeight.normal),
+                ' $_email ',
+                style: tFOnt(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 height: 20,

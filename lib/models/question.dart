@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:learn_toefl/ip.dart';
 
 Future<List<QuestionGroup>> fetchPracticeAll() async {
-  final url = Uri.parse('$ip/practice/all');
+ final url = Uri.parse('$ip/practice/all');  // final url = Uri.parse('$ip/practice/all');
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
@@ -87,9 +87,8 @@ class QuestionDetail {
   });
 
   factory QuestionDetail.fromJson(Map<String, dynamic> json) {
-    final questions = (json['questions'] as List)
-        .map((e) => Question.fromJson(e))
-        .toList();
+    final questions =
+        (json['questions'] as List).map((e) => Question.fromJson(e)).toList();
 
     return QuestionDetail(
       id: json['id'],
