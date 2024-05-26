@@ -115,7 +115,7 @@ class _ReadingTestState extends State<ReadingTest> {
                         final correct = detail.questions
                             .where((question) =>
                                 question.userAnswer != null &&
-                                question.answerOptions[question.userAnswer!] ==
+                                question.userAnswer! ==
                                     question.correctAnswer)
                             .length;
                         final incorrect = detail.questions.length - correct;
@@ -157,8 +157,8 @@ class _ReadingTestState extends State<ReadingTest> {
                                     options: entry.value.answerOptions,
                                     selectedOption: entry.value.userAnswer,
                                     onSelect: (option) {
+                                      entry.value.userAnswer = option;
                                       setState(() {
-                                        entry.value.userAnswer = option as int?;
                                         switch (entry.key) {
                                           case 0:
                                             selectedOption1 = option;
