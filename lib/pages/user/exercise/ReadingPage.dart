@@ -115,7 +115,7 @@ class _ReadingTestState extends State<ReadingTest> {
                         final correct = detail.questions
                             .where((question) =>
                                 question.userAnswer != null &&
-                                question.answerOptions[question.userAnswer!] ==
+                                question.userAnswer! ==
                                     question.correctAnswer)
                             .length;
                         final incorrect = detail.questions.length - correct;
@@ -145,7 +145,8 @@ class _ReadingTestState extends State<ReadingTest> {
                                 child: CustomBox(
                                   // Menggunakan CustomBox untuk bacaan
                                   title: 'Instruction',
-                                  content: detail.readingText,
+                                  content:
+                                      detail.readingText,
                                 ),
                               ),
                             ...detail.questions.asMap().entries.map(
@@ -156,27 +157,23 @@ class _ReadingTestState extends State<ReadingTest> {
                                     options: entry.value.answerOptions,
                                     selectedOption: entry.value.userAnswer,
                                     onSelect: (option) {
+                                      entry.value.userAnswer = option;
                                       setState(() {
-                                        int? userAnswer = int.tryParse(option);
-                                        if (userAnswer != null) {
-                                          entry.value.userAnswer = userAnswer;
-                                          switch (entry.key) {
-                                            case 0:
-                                              selectedOption1 = option;
-                                              break;
-                                            case 1:
-                                              selectedOption2 = option;
-                                              break;
-                                            case 2:
-                                              selectedOption3 = option;
-                                              break;
-                                            case 3:
-                                              selectedOption4 = option;
-                                              break;
-                                          }
+                                        switch (entry.key) {
+                                          case 0:
+                                            selectedOption1 = option;
+                                            break;
+                                          case 1:
+                                            selectedOption2 = option;
+                                            break;
+                                          case 2:
+                                            selectedOption3 = option;
+                                            break;
+                                          case 3:
+                                            selectedOption4 = option;
+                                            break;
                                         }
                                       });
-
                                       updateProgress();
                                     },
                                   ),
@@ -191,6 +188,7 @@ class _ReadingTestState extends State<ReadingTest> {
     );
   }
 }
+
 
 class CustomAppBar extends CustomClipper<Path> {
   @override

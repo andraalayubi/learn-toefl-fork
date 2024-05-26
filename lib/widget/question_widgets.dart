@@ -51,7 +51,7 @@ class QuestionBox extends StatelessWidget {
   final String question;
   final String correctAnswer;
   final List<String> options;
-  final int? selectedOption;
+  final String? selectedOption;
   final Function(String) onSelect;
 
   const QuestionBox({
@@ -94,6 +94,8 @@ class QuestionBox extends StatelessWidget {
           const SizedBox(height: 4),
           Column(
             children: options.map((option) {
+              print(selectedOption);
+              print(option);
               final isSelected = selectedOption == option;
               return Padding(
                 padding: const EdgeInsets.only(bottom: 8), // Jarak antar opsi
@@ -136,8 +138,8 @@ class QuestionBox extends StatelessWidget {
   }
 
 Widget _buildCorrectIncorrectBox(
-      int questionNumber, int selectedOption, String correctAnswer) {
-    final isCorrect = options[selectedOption] == correctAnswer;
+      int questionNumber, String selectedOption, String correctAnswer) {
+    final isCorrect = selectedOption == correctAnswer;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

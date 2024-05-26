@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/models/question.dart';
-import 'package:learn_toefl/pages/test_reading.dart';
-import 'package:learn_toefl/pages/user/exercise/correct_incorrect%20copy.dart';
-import 'package:learn_toefl/pages/user/exercise/exercise_question_answer.dart';
+import 'package:learn_toefl/pages/user/exercise/ReadingPage.dart';
 import 'package:learn_toefl/utilities.dart';
 
 class Exercise extends StatefulWidget {
@@ -143,8 +141,8 @@ class _Exercise extends State<Exercise> {
                 questionGroups
                     .firstWhere(
                       (group) => group.questionCategory == 'Listening',
-                      orElse: () =>
-                          QuestionGroup(questionCategory: 'Listening', data: []),
+                      orElse: () => QuestionGroup(
+                          questionCategory: 'Listening', data: []),
                     )
                     .data,
               ),
@@ -157,15 +155,18 @@ class _Exercise extends State<Exercise> {
               //       .data.map((item) => item.name)
               //       .toList(),
               // ),
-              // const SizedBox(height: 10),
-              // _buildMenuItem(
-              //   "Reading",
-              //   'assets/images/iconVideo_3.png',
-              //   questionGroups
-              //       .firstWhere((group) => group.questionCategory == 'Reading')
-              //       .data.map((item) => item.name)
-              //       .toList(),
-              // ),
+              const SizedBox(height: 10),
+              _buildMenuItem(
+                "Reading",
+                'assets/images/iconVideo_3.png',
+                questionGroups
+                    .firstWhere(
+                      (group) => group.questionCategory == 'Reading',
+                      orElse: () => QuestionGroup(
+                          questionCategory: 'Reading', data: []),
+                    )
+                    .data,
+              ),
               // const SizedBox(height: 10),
               // _buildMenuItem(
               //   "Writing",
@@ -229,7 +230,7 @@ class _Exercise extends State<Exercise> {
                           ),
                           children: [
                             TextSpan(
-                                text: '${levels.length} Levels',
+                              text: '${levels.length} Levels',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -272,7 +273,7 @@ class _Exercise extends State<Exercise> {
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: Text(
-                    '0%', // Skor contoh
+                    '${level.nilaiUser}', // Skor contoh
                     textAlign: TextAlign.center,
                     style: tFOnt(
                       fontSize: 9,
@@ -284,7 +285,8 @@ class _Exercise extends State<Exercise> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ReadingTest(questionGroupId: level.id),
+                      builder: (context) =>
+                          ReadingTest(questionGroupId: level.id),
                     ),
                   );
                 },
