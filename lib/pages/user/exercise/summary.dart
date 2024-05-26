@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/services/input_nilai.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Summary extends StatefulWidget {
   final int questionId;
@@ -10,7 +11,8 @@ class Summary extends StatefulWidget {
   Summary({
     required this.score,
     required this.correct,
-    required this.incorrect, required this.questionId,
+    required this.incorrect,
+    required this.questionId,
   });
 
   @override
@@ -22,7 +24,18 @@ class _SummaryState extends State<Summary> {
   @override
   void initState() {
     super.initState();
-    insertNilai(widget.questionId, 1, widget.score);
+    _insertToDb();
+  }
+
+  void _insertToDb() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final id = prefs.getInt('id');
+      insertNilai(widget.questionId, id!, widget.score * 10);
+      print(id);
+    } catch (e) {
+      print('Error while getting user info: $e');
+    }
   }
 
   @override

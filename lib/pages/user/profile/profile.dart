@@ -26,7 +26,6 @@ class _ProfilPageState extends State<ProfilPage> {
   void initState() {
     super.initState();
     _getUserInfo();
-    _printAllSharedPreferencesData();
   }
 
   // Fungsi untuk mendapatkan informasi pengguna yang sedang login
@@ -45,20 +44,6 @@ class _ProfilPageState extends State<ProfilPage> {
       }
     } catch (e) {
       print('Error while getting user info: $e');
-    }
-  }
-
-  void _printAllSharedPreferencesData() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final allData = prefs.getKeys();
-      print('All SharedPreferences Data:');
-      allData.forEach((key) {
-        final value = prefs.get(key);
-        print('$key: $value');
-      });
-    } catch (e) {
-      print('Error while printing SharedPreferences data: $e');
     }
   }
 

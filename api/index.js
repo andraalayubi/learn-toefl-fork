@@ -16,6 +16,41 @@ app.use('/api/auth', authRoutes);
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
+app.get('/practice/all/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const query = `
+    SELECT qg.question_category, qg.id, qg.name, qu.nilai, COUNT(q.id) AS jumlah_question
+    FROM Question_Group qg
+    LEFT JOIN Question q ON qg.id = q.question_group_id
+    LEFT JOIN Question_User qu ON qu.question_group_id = qg.id
+    AND qu.user_id = $1
+    GROUP BY qg.question_category, qg.id, qg.name, qu.nilai
+    ORDER BY qg.id ASC;
+    `;
+    const result = await pool.query(query, [id]);
+
+    const formattedData = result.rows.reduce((acc, row) => {
+      const { question_category, id, name, jumlah_question, nilai } = row;
+      const groupIndex = acc.findIndex(group => group.question_category === question_category);
+
+      if (groupIndex === -1) {
+        acc.push({ question_category, data: [{ id, name, jumlah_question, nilai }] });
+      } else {
+        acc[groupIndex].data.push({ id, name, jumlah_question, nilai });
+      }
+
+      return acc;
+    }, []);
+
+    res.json(formattedData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 // Endpoint /practice/all
 app.get('/practice/all', async (req, res) => {
   try {
