@@ -4,7 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class VideoHistory {
   static const String _historyKey = 'video_history';
 
-  static Future<void> addHistory(int id, String name, int id_category, String category, String url) async {
+  static Future<void> addHistory(
+      int id, String name, int id_category, String category, String url) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> videoHistory = prefs.getStringList(_historyKey) ?? [];
 
@@ -27,9 +28,9 @@ class VideoHistory {
     videoHistory.insert(0, videoJson);
 
     // Limit the history to 5 videos
-    while (videoHistory.length > 5) {
-      videoHistory.removeLast();
-    }
+    // while (videoHistory.length > 5) {
+    //   videoHistory.removeLast();
+    // }
 
     await prefs.setStringList(_historyKey, videoHistory);
   }

@@ -11,7 +11,8 @@ class HistoryVideo extends StatefulWidget {
 }
 
 class _HistoryVideoState extends State<HistoryVideo> {
-  late List<dynamic> _history = []; // Inisialisasi _history sebagai List<dynamic>
+  late List<dynamic> _history =
+      []; // Inisialisasi _history sebagai List<dynamic>
   List<Video> allVideos = [];
 
   @override
@@ -34,7 +35,7 @@ class _HistoryVideoState extends State<HistoryVideo> {
     final containerWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0443),
+      backgroundColor: mColor,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         title: Text(
@@ -52,167 +53,169 @@ class _HistoryVideoState extends State<HistoryVideo> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.only(top: 12),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-          ),
-          constraints: BoxConstraints(minHeight: screenHeight),
-          width: containerWidth,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 25,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Container(
-                  padding: const EdgeInsets.only(
-                      top: 20, left: 20, right: 20, bottom: 10),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        mColor,
-                        mColor.withOpacity(0.8),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: const [0.4, 1],
-                    ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Take a look back at your viewed videos.',
-                              style: tFOnt(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 40),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Image.asset(
-                          'assets/images/watching.png',
-                          width: 155,
-                          height: 120,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ],
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverToBoxAdapter(
+              child: Container(
+                margin: const EdgeInsets.only(top: 12),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(left: 26.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Column(
                   children: [
-                    Text(
-                      'All History',
-                      style: tFOnt(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Column(
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: _history.length,
-                    itemBuilder: (context, index) {
-                      final historyItem = _history[index];
-                      final String category = historyItem['category'] ?? '';
-                      final String videoName = historyItem['name'] ?? '';
-
-                      return Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 26, vertical: 12),
+                    const SizedBox(height: 25),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            top: 20, left: 20, right: 20, bottom: 10),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          gradient: LinearGradient(
+                            colors: [
+                              mColor,
+                              mColor.withOpacity(0.8),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            stops: const [0.4, 1],
+                          ),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              width: 130,
-                              height: 80,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                image: DecorationImage(
-                                  image: AssetImage('assets/images/video.png'),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 16),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromRGBO(
-                                          0xFF, 0x86, 0x5F, 1),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 4, horizontal: 12),
-                                    child: Text(
-                                      category,
-                                      style: TextStyle(
-                                        fontSize: 8,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 6),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
                                   Text(
-                                    videoName,
-                                    style: TextStyle(
+                                    'Take a look back at your viewed videos.',
+                                    style: tFOnt(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
+                            const SizedBox(height: 40),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Image.asset(
+                                'assets/images/watching.png',
+                                width: 155,
+                                height: 120,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ],
                         ),
-                      );
-                    },
-                  )
-                ],
-              )
-            ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 26.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'All History',
+                            style: tFOnt(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ];
+        },
+        body: Container(
+          color: Colors.white,
+          child: ListView.builder(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 26),
+            itemCount: _history.length,
+            itemBuilder: (context, index) {
+              final historyItem = _history[index];
+              final String category = historyItem['category'] ?? '';
+              final String videoName = historyItem['name'] ?? '';
+
+              return Container(
+                margin: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 130,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(width: 1.0, color: Colors.black),
+                        image: const DecorationImage(
+                          image: AssetImage('assets/images/video.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: category == 'LESSON'
+                                  ? const Color.fromARGB(255, 252, 163, 133)
+                                  : Color.fromARGB(255, 254, 242, 136),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 12),
+                            child: Text(
+                              category,
+                              style: const TextStyle(
+                                fontSize: 8,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            videoName,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ),
       ),

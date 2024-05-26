@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/pages/user/pages/fav_video.dart';
+import 'package:learn_toefl/pages/user/pages/history_video.dart';
 import 'package:learn_toefl/services/video_history.dart';
 import 'package:learn_toefl/models/article_model.dart';
 import 'package:learn_toefl/pages/user/pages/translate.dart';
@@ -396,163 +398,171 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           ),
 
                           // HISTORY Section
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'History',
-                                style: tFOnt(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 18,
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'History',
+                                  style: tFOnt(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 18,
+                                  ),
+                                  textAlign: TextAlign.left,
                                 ),
-                                textAlign: TextAlign.left,
-                              ),
-                            ],
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const HistoryVideo()));
+                                  },
+                                  child: Text(
+                                    'View All',
+                                    style: tFOnt(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
                           SingleChildScrollView(
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             clipBehavior: Clip.none,
                             scrollDirection: Axis.horizontal,
-                            padding: EdgeInsets.only(right: 20),
+                            padding: const EdgeInsets.only(right: 20),
                             child: SizedBox(
                               width: MediaQuery.of(context).size.width,
                               height: 160,
-                              child: Expanded(
-                                child: FutureBuilder<List<dynamic>>(
-                                    future: _history,
-                                    builder: (context, snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.waiting) {
-                                        return const Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                      } else if (snapshot.hasError) {
-                                        return Center(
-                                          child:
-                                              Text('Error: ${snapshot.error}'),
-                                        );
-                                      } else if (snapshot.data!.isEmpty) {
-                                        return const Text(
-                                            'You haven`t started studying yet');
-                                      } else {
-                                        print(snapshot.data);
-                                        for (var video in snapshot.data!) {
-                                          allVideos.add(Video(
-                                              id: video['id'],
-                                              name: video['name'],
-                                              url: video['url']));
-                                        }
-                                        // return Text('Berhasil');
-                                        return ListView.builder(
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: snapshot.data!.length,
-                                          itemBuilder: (context, index) {
-                                            final video = snapshot.data![index];
-                                            print(video);
-                                            return GestureDetector(
-                                              onTap: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            VideoPage(
-                                                                id: video['id'],
-                                                                idCategory: video[
-                                                                    'id_category'],
-                                                                video:
-                                                                    allVideos)));
-                                              },
-                                              child: Container(
-                                                margin: const EdgeInsets.only(
-                                                    right: 10, bottom: 10),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  boxShadow: const [
-                                                    BoxShadow(
-                                                      color: Color.fromARGB(
-                                                          255, 197, 196, 196),
-                                                      offset: Offset(2, 4),
-                                                      blurRadius: 5,
-                                                      spreadRadius: 0,
-                                                    )
-                                                  ],
+                              child: FutureBuilder<List<dynamic>>(
+                                future: _history,
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Center(
+                                      child: Text('Error: ${snapshot.error}'),
+                                    );
+                                  } else if (!snapshot.hasData ||
+                                      snapshot.data!.isEmpty) {
+                                    return const Center(
+                                      child: Text(
+                                          'You haven\'t started studying yet'),
+                                    );
+                                  } else {
+                                    List<dynamic> videoList = snapshot.data!
+                                        .take(4)
+                                        .toList(); // Limit to 4 items
+                                    for (var video in videoList) {
+                                      allVideos.add(Video(
+                                        id: video['id'],
+                                        name: video['name'],
+                                        url: video['url'],
+                                      ));
+                                    }
+                                    return ListView.builder(
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: videoList.length,
+                                      itemBuilder: (context, index) {
+                                        final video = videoList[index];
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => VideoPage(
+                                                  id: video['id'],
+                                                  idCategory:
+                                                      video['id_category'],
+                                                  video: allVideos,
                                                 ),
-                                                child: SizedBox(
-                                                  width: 159.2,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Column(
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.only(
+                                                right: 10, bottom: 10),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: Color.fromARGB(
+                                                      255, 197, 196, 196),
+                                                  offset: Offset(2, 4),
+                                                  blurRadius: 5,
+                                                  spreadRadius: 0,
+                                                ),
+                                              ],
+                                            ),
+                                            child: SizedBox(
+                                              width: 159.2,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      child: Image.asset(
+                                                        'assets/images/video.png',
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 4),
+                                                    Column(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
-                                                          child: Image.asset(
-                                                            'assets/images/video.png', // Ganti dengan path gambar Anda
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            height:
-                                                                4), // Tambahkan widget SizedBox untuk memberi jarakhist
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Container(
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: const Color
+                                                        Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: video[
+                                                                        'category'] ==
+                                                                    'LESSON'
+                                                                ? Color
                                                                     .fromARGB(
-                                                                    255,
-                                                                    255,
-                                                                    174,
-                                                                    148),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5),
-                                                              ),
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .all(
-                                                                        3.0),
-                                                                child: Text(
-                                                                  video[
-                                                                      'category'],
-                                                                  style: tFOnt(
-                                                                    fontSize:
-                                                                        12,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w700,
-                                                                    color: Colors
-                                                                        .black,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                                height:
-                                                                    2), // Tambahkan widget SizedBox untuk memberi jarak
-                                                            Text(
-                                                              video['name'],
-                                                              maxLines: 1,
+                                                                        255,
+                                                                        252,
+                                                                        163,
+                                                                        133)
+                                                                : Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        254,
+                                                                        242,
+                                                                        136),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(3.0),
+                                                            child: Text(
+                                                              video['category'],
                                                               style: tFOnt(
-                                                                fontSize: 14,
+                                                                fontSize: 12,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w700,
@@ -560,21 +570,36 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                                                     .black,
                                                               ),
                                                             ),
-                                                          ],
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 2),
+                                                        Text(
+                                                          video['name'],
+                                                          maxLines: 1,
+                                                          style: tFOnt(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: Colors.black,
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
-                                                  ),
+                                                  ],
                                                 ),
                                               ),
-                                            );
-                                          },
+                                            ),
+                                          ),
                                         );
-                                      }
-                                    }),
+                                      },
+                                    );
+                                  }
+                                },
                               ),
                             ),
                           ),
+
                           const SizedBox(
                             height: 10,
                           ),

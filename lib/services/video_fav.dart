@@ -3,6 +3,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class VideoFav {
   static const String _favKey = 'video_fav';
+  static Future<bool> isFavorite(int videoId) async {
+    try {
+      List<dynamic> favorites = await getFavs();
+      return favorites.any((video) => video['id'] == videoId);
+    } catch (e) {
+      print('Error checking favorite status: $e');
+      return false;
+    }
+  }
 
   static Future<void> addFav(
       int id, String name, int id_category, String category, String url) async {

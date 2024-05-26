@@ -194,7 +194,6 @@ class _SpeakingTestState extends State<SpeakingTest> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Text('Question Group ID: ${widget.questionGroupId}'),
                     ],
                   ),
                 );

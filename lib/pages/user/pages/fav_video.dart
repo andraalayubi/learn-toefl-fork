@@ -71,6 +71,42 @@ class _FavVideoState extends State<FavVideo> {
     });
   }
 
+  void showCustomSnackbar(
+      BuildContext context, String message, Color backgroundColor) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 10,
+        left: 10,
+        right: 10,
+        child: SafeArea(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                message,
+                style: tFOnt(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay?.insert(overlayEntry);
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -211,17 +247,20 @@ class _FavVideoState extends State<FavVideo> {
                             //       fontSize: 12, fontWeight: FontWeight.normal),
                             // ),
                             trailing: IconButton(
-                              icon: const Icon(Icons.remove_circle,
-                                  color: Colors.red),
-                              onPressed: () {
-                                setState(() {
-                                  _favoriteVideos.removeAt(
-                                      index); // Hapus video dari daftar favorit secara lokal
-                                });
-                                VideoFav.removeFav(video[
-                                    'id']); // Hapus video dari daftar favorit di SharedPreferences
-                              },
-                            )),
+                                icon: const Icon(Icons.remove_circle,
+                                    color: Colors.red),
+                                onPressed: () {
+                                  setState(() {
+                                    _favoriteVideos.removeAt(
+                                        index); // Hapus video dari daftar favorit secara lokal
+                                  });
+                                  VideoFav.removeFav(video['id']);
+                                  showCustomSnackbar(
+                                    context,
+                                    '${video['name']} Deleted From Favorites!',
+                                    Colors.green,
+                                  );
+                                })),
                       ),
                     );
                   },

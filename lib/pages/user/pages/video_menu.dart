@@ -73,6 +73,42 @@ class _VideoListPageState extends State<VideoListPage> {
     return videoHistory;
   }
 
+  void showCustomSnackbar(
+      BuildContext context, String message, Color backgroundColor) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 10,
+        left: 10,
+        right: 10,
+        child: SafeArea(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                message,
+                style: tFOnt(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay?.insert(overlayEntry);
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -277,20 +313,40 @@ class _VideoListPageState extends State<VideoListPage> {
                                   ),
                                   trailing: GestureDetector(
                                     onTap: () async {
-                                      await VideoFav.addFav(
-                                        video.id,
-                                        video.name,
-                                        widget.id,
-                                        "Category Name",
-                                        video.url,
-                                      );
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              '${video.name} ditambahkan ke favorit!'),
-                                        ),
-                                      );
+                                      try {
+                                        // Check if the video is already a favorite
+                                        bool isFavorite =
+                                            await VideoFav.isFavorite(video.id);
+
+                                        if (isFavorite) {
+                                          // Show a snackbar indicating that the video is already a favorite
+                                          showCustomSnackbar(
+                                              context,
+                                              'Already exist in favorites',
+                                              Colors.orange);
+                                        } else {
+                                          // If not already a favorite, add it to favorites
+                                          await VideoFav.addFav(
+                                            video.id,
+                                            video.name,
+                                            widget.id,
+                                            "Category Name",
+                                            video.url,
+                                          );
+
+                                          // Show a snackbar indicating that the video has been added to favorites
+                                          showCustomSnackbar(
+                                              context,
+                                              '${video.name} Added to favorites!',
+                                              Colors.green);
+                                        }
+                                      } catch (e) {
+                                        // Handle any potential errors if adding to favorites fails
+                                        showCustomSnackbar(
+                                            context,
+                                            'Failed to add to favorites',
+                                            Colors.red);
+                                      }
                                     },
                                     child: Container(
                                         padding: const EdgeInsets.symmetric(
