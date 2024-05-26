@@ -164,17 +164,15 @@ class AuthService {
         );
 
         if (redirectedResponse.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          await prefs.setString('username', data['username']);
-          await prefs.setString('email', data['email']);
+          await prefs.setString('username', username);
+          await prefs.setString('email', email);
         } else {
           print(redirectedResponse.statusCode);
           throw Exception('Failed to update after redirect');
         }
       } else if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        await prefs.setString('username', data['username']);
-        await prefs.setString('email', data['email']);
+        await prefs.setString('username', username);
+        await prefs.setString('email', email);
       } else {
         print(response.statusCode);
         throw Exception('Failed to update user info');
