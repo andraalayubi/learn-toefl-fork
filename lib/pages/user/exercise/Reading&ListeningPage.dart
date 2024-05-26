@@ -4,7 +4,7 @@ import 'package:learn_toefl/models/question.dart';
 import 'package:learn_toefl/pages/user/exercise/summary.dart';
 import 'package:learn_toefl/widget/question_widgets.dart';
 
-class ReadingTest extends StatefulWidget {
+class ReadingTest extends StatefulWidget { 
   final int questionGroupId;
   const ReadingTest({super.key, required this.questionGroupId});
 
@@ -38,18 +38,7 @@ class _ReadingTestState extends State<ReadingTest> {
     _futureQuestionDetail = fetchPracticeDetail(widget.questionGroupId);
 
     setAudio();
-  }
 
-  void updateProgress() {
-    setState(() {
-      _currentQuestionIndex++;
-    });
-  }
-
-  Future setAudio() async {
-    // Load audio file from assets or remote URL
-    String audioUrl = 'audio/Level ${widget.questionGroupId}.mp3';
-    await audioPlayer.setSourceAsset(audioUrl);
     audioPlayer.onPlayerStateChanged.listen((state) {
       setState(() {
         isPlaying = state == PlayerState.playing;
@@ -67,6 +56,18 @@ class _ReadingTestState extends State<ReadingTest> {
         position = newPosition;
       });
     });
+  }
+
+  void updateProgress() {
+    setState(() {
+      _currentQuestionIndex++;
+    });
+  }
+
+  Future setAudio() async {
+    // Load audio file from assets or remote URL
+    String audioUrl = 'audio/Level ${widget.questionGroupId}.mp3';
+    await audioPlayer.setSourceAsset(audioUrl);
   }
 
   @override
@@ -111,29 +112,28 @@ class _ReadingTestState extends State<ReadingTest> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Padding(
-          //   padding:
-          //       const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          //   child: Row(
-          //     children: [
-          //       Text(
-          //         '$_currentQuestionIndex/$_totalQuestions',
-          //         style: TextStyle(color: Colors.black, fontSize: 14),
-          //       ),
-          //       SizedBox(width: 10),
-          //       Expanded(
-          //         child: LinearProgressIndicator(
-          //           borderRadius: BorderRadius.circular(50),
-          //           value: _currentQuestionIndex / _totalQuestions,
-          //           backgroundColor: Colors.grey[300],
-          //           valueColor: AlwaysStoppedAnimation<Color>(
-          //             Color(0xFF0D0443),
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: LinearProgressIndicator(
+                    borderRadius: BorderRadius.circular(50),
+                    value: _totalQuestions == 0 ? 0 : _currentQuestionIndex / _totalQuestions,
+                    backgroundColor: Colors.grey[300],
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(Color(0xFF0D0443)),
+                  ),
+                ),
+                SizedBox(width: 16),
+                Text(
+                  '$_currentQuestionIndex/$_totalQuestions',
+                  style: TextStyle(color: Colors.black, fontSize: 14),
+                ),
+              ],
+            ),
+          ),
           Expanded(
               child: FutureBuilder<QuestionDetail>(
                   future: _futureQuestionDetail,
@@ -162,7 +162,7 @@ class _ReadingTestState extends State<ReadingTest> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => Summary(
-                                questionId: widget.questionGroupId,
+                                questionId: detail.id,
                                 score: correct,
                                 correct: correct,
                                 incorrect: incorrect,
@@ -208,7 +208,8 @@ class _ReadingTestState extends State<ReadingTest> {
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 8.0),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         IconButton(
                                           icon: Icon(isPlaying
@@ -225,36 +226,42 @@ class _ReadingTestState extends State<ReadingTest> {
                                       ],
                                     ),
                                   ),
-                                  // Tambahkan pertanyaan dan jawaban di sini
                                 ],
                               ),
                             ...detail.questions.asMap().entries.map(
-                                  (entry) => QuestionBox(
-                                    questionNumber: entry.key + 1,
-                                    question: entry.value.questionText,
-                                    correctAnswer: entry.value.correctAnswer,
-                                    options: entry.value.answerOptions,
-                                    selectedOption: entry.value.userAnswer,
-                                    onSelect: (option) {
-                                      entry.value.userAnswer = option;
-                                      setState(() {
-                                        switch (entry.key) {
-                                          case 0:
-                                            selectedOption1 = option;
-                                            break;
-                                          case 1:
-                                            selectedOption2 = option;
-                                            break;
-                                          case 2:
-                                            selectedOption3 = option;
-                                            break;
-                                          case 3:
-                                            selectedOption4 = option;
-                                            break;
+                                  (entry) => Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom:
+                                            16.0), // Menambahkan jarak antar QuestionBox
+                                    child: QuestionBox(
+                                      questionNumber: entry.key + 1,
+                                      question: entry.value.questionText,
+                                      correctAnswer: entry.value.correctAnswer,
+                                      options: entry.value.answerOptions,
+                                      selectedOption: entry.value.userAnswer,
+                                      onSelect: (option) {
+                                        if (entry.value.userAnswer == null) {
+                                          entry.value.userAnswer = option;
+                                          setState(() {
+                                            switch (entry.key) {
+                                              case 0:
+                                                selectedOption1 = option;
+                                                break;
+                                              case 1:
+                                                selectedOption2 = option;
+                                                break;
+                                              case 2:
+                                                selectedOption3 = option;
+                                                break;
+                                              case 3:
+                                                selectedOption4 = option;
+                                                break;
+                                            }
+                                          });
+                                          updateProgress();
                                         }
-                                      });
-                                      updateProgress();
-                                    },
+                                      },
+                                    ),
                                   ),
                                 ),
                           ],
