@@ -4,8 +4,8 @@ import 'package:learn_toefl/ip.dart';
 
 Future<void> addNewVideo(
     String title, String url, int categoryId) async {
-  final uri = Uri.parse('http://localhost:3000/video/add');
-  // final uri = Uri.parse('$ip/video/add');
+  // final uri = Uri.parse('http://localhost:3000/video/add');
+  final uri = Uri.parse('$ip/video/add');
   final response = await http.post(
     uri,
     headers: <String, String>{
