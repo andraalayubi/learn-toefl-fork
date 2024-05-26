@@ -47,12 +47,6 @@ class MyApp extends StatelessWidget {
           }
         },
       ),
-      routes: {
-        '/login': (context) => LoginScreen(),
-        '/register': (context) => RegisterScreen(),
-        '/home': (context) => BottomNavigation(),
-        '/admin_home': (context) => AdminHomeScreen(),
-      },
     );
   }
 }
