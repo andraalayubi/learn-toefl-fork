@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:learn_toefl/utilities.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:speech_to_text/speech_to_text_provider.dart';
 
 class SpeakingTest extends StatefulWidget {
-  const SpeakingTest({super.key});
+  final int questionGroupId;
+
+  const SpeakingTest({super.key, required this.questionGroupId});
 
   @override
   State<SpeakingTest> createState() => _SpeakingTestState();
@@ -148,7 +150,7 @@ class _SpeakingTestState extends State<SpeakingTest> {
                                 calculateAccuracy(providedText, textSpeech);
                             print("Provided Text: $providedText");
                             print("Speech Text: $textSpeech");
-                            print("Accuracy: ${accuracy.toStringAsFixed(2)}%");
+                            print("Akurasi: ${accuracy.toStringAsFixed(2)}%");
                           });
                         });
                   }
@@ -171,7 +173,9 @@ class _SpeakingTestState extends State<SpeakingTest> {
                         color: Colors.white,
                       ),
               ),
-            )
+            ),
+            const SizedBox(height: 20),
+            Text('Question Group ID: ${widget.questionGroupId}'),
           ],
         ),
       ),

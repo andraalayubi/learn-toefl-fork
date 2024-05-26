@@ -6,6 +6,7 @@ import 'package:learn_toefl/pages/user/pages/video.dart';
 import 'package:learn_toefl/services/video_history.dart';
 import 'package:learn_toefl/services/video_fav.dart';
 import 'package:learn_toefl/utilities.dart';
+import 'package:learn_toefl/widget/bottom_navigation.dart';
 
 class VideoListPage extends StatefulWidget {
   final String title;
@@ -88,7 +89,10 @@ class _VideoListPageState extends State<VideoListPage> {
           child: IconButton(
               icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const BottomNavigation()));
               }),
         ),
       ),
