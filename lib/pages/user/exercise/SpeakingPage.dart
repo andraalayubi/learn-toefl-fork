@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:learn_toefl/models/question.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:speech_to_text/speech_to_text_provider.dart';
 
 class SpeakingTest extends StatefulWidget {
   final int questionGroupId;
-  const SpeakingTest({Key? key, required this.questionGroupId}) : super(key: key);
+
+  const SpeakingTest({super.key, required this.questionGroupId});
 
   @override
   State<SpeakingTest> createState() => _SpeakingTestState();
 }
 
 class _SpeakingTestState extends State<SpeakingTest> {
-  late Future<QuestionDetail> futureQuestionDetail;
-  String instruction = '';
-  String providedText = '';
+  String providedText =
+      'The flower petals are very large in size and release odors such as the smell of carrion Flower buds that have medicinal properties resulting in the passage of this flower are often looted This plant is native habitat on the island of Sumatra especially in Bengkulu Jambi and South Sumatra';
   var textSpeech = 'Click on Mic to Record';
   SpeechToText speechToText = SpeechToText();
   var isListening = false;
@@ -34,143 +34,127 @@ class _SpeakingTestState extends State<SpeakingTest> {
   void initState() {
     super.initState();
     checkMic();
-    futureQuestionDetail = fetchPracticeDetail(widget.questionGroupId);
-    futureQuestionDetail.then((questionDetail) {
-      setState(() {
-        instruction = questionDetail.readingText;
-        providedText = questionDetail.sampleAnswer;
-      });
-    }).catchError((error) {
-      print('Failed to fetch practice detail: $error');
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Speaking Test'),
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(Icons.arrow_back_ios)),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(100),
+        child: ClipPath(
+          clipper: CustomAppBar(),
+          child: AppBar(
+            title: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Speaking Test',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            backgroundColor: const Color(0xFF0D0443),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+        ),
       ),
-      body: FutureBuilder<QuestionDetail>(
-        future: futureQuestionDetail,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Failed to load data'));
-          } else if (snapshot.hasData) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-                    height: 290,
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1.0, color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(instruction),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-                    height: 290,
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1.0, color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(providedText),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-                    height: 290,
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1.0, color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(textSpeech),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-                    height: 50,
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1.0, color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Accuracy: ${accuracy.toStringAsFixed(2)}%',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  GestureDetector(
-                    onTap: () async {
-                      if (!isListening) {
-                        bool micAvailable = await speechToText.initialize();
-                        if (micAvailable) {
-                          setState(() {
-                            isListening = true;
-                          });
-
-                          speechToText.listen(
-                              listenFor: const Duration(seconds: 120),
-                              onResult: (result) {
-                                setState(() {
-                                  textSpeech = result.recognizedWords;
-                                  accuracy = calculateAccuracy(
-                                      providedText, textSpeech);
-                                  print("Provided Text: $providedText");
-                                  print("Speech Text: $textSpeech");
-                                  print(
-                                      "Accuracy: ${accuracy.toStringAsFixed(2)}%");
-                                });
-                              });
-                        }
-                      } else {
-                        setState(() {
-                          isListening = false;
-                          speechToText.stop();
-                        });
-                      }
-                    },
-                    child: CircleAvatar(
-                      child: isListening
-                          ? const Icon(Icons.record_voice_over)
-                          : const Icon(Icons.mic),
-                    ),
-                  )
-                ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
+              height: 290,
+              decoration: BoxDecoration(
+                border: Border.all(width: 1.0, color: Colors.black),
+                borderRadius: BorderRadius.circular(12),
               ),
-            );
-          } else {
-            return Center(child: Text('No data available'));
-          }
-        },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(providedText),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
+              height: 290,
+              decoration: BoxDecoration(
+                border: Border.all(width: 1.0, color: Colors.black),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(textSpeech),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
+              height: 50,
+              decoration: BoxDecoration(
+                border: Border.all(width: 1.0, color: Colors.black),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Accuracy: ${accuracy.toStringAsFixed(2)}%',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 40),
+            GestureDetector(
+              onTap: () async {
+                if (!isListening) {
+                  bool micAvailable = await speechToText.initialize();
+                  if (micAvailable) {
+                    setState(() {
+                      isListening = true;
+                    });
+
+                    speechToText.listen(
+                        listenFor: const Duration(seconds: 120),
+                        onResult: (result) {
+                          setState(() {
+                            textSpeech = result.recognizedWords;
+                            accuracy =
+                                calculateAccuracy(providedText, textSpeech);
+                            print("Provided Text: $providedText");
+                            print("Speech Text: $textSpeech");
+                            print("Akurasi: ${accuracy.toStringAsFixed(2)}%");
+                          });
+                        });
+                  }
+                } else {
+                  setState(() {
+                    isListening = false;
+                    speechToText.stop();
+                  });
+                }
+              },
+              child: CircleAvatar(
+                child: isListening
+                    ? const Icon(Icons.record_voice_over)
+                    : const Icon(Icons.mic),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text('Question Group ID: ${widget.questionGroupId}'),
+          ],
+        ),
       ),
     );
   }
@@ -194,5 +178,24 @@ class _SpeakingTestState extends State<SpeakingTest> {
 
     double accuracy = (matchingCharacters / totalCharacters) * 100;
     return accuracy;
+  }
+}
+
+class CustomAppBar extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height);
+    path.quadraticBezierTo(
+        size.width / 4, size.height - 40, size.width / 2, size.height - 20);
+    path.quadraticBezierTo(
+        3 / 4 * size.width, size.height, size.width, size.height - 20);
+    path.lineTo(size.width, 0);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
   }
 }
