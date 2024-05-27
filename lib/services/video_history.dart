@@ -17,6 +17,10 @@ class VideoHistory {
       'category': category,
       'url': url,
     };
+    videoHistory.removeWhere((videoJson) {
+      final Map<String, dynamic> existingVideoMap = jsonDecode(videoJson);
+      return existingVideoMap['id'] == id;
+    });
 
     // Convert the map to a JSON string
     String videoJson = jsonEncode(videoMap);

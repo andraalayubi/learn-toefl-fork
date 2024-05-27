@@ -219,8 +219,7 @@ class _FavVideoState extends State<FavVideo> {
                             builder: (context) => VideoPage(
                               id: video['id'],
                               idCategory: video['id_category'],
-                              video:
-                                  _allVideos, 
+                              video: _allVideos,
                             ),
                           ),
                         );
@@ -245,16 +244,8 @@ class _FavVideoState extends State<FavVideo> {
                                 icon: const Icon(Icons.remove_circle,
                                     color: Colors.red),
                                 onPressed: () {
-                                  setState(() {
-                                    _favoriteVideos.removeAt(
-                                        index); // Hapus video dari daftar favorit secara lokal
-                                  });
-                                  VideoFav.removeFav(video['id']);
-                                  showCustomSnackbar(
-                                    context,
-                                    '${video['name']} Deleted From Favorites!',
-                                    Colors.green,
-                                  );
+                                  _showConfirmationDialog(
+                                      context, index, video);
                                 })),
                       ),
                     );
@@ -264,6 +255,62 @@ class _FavVideoState extends State<FavVideo> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showConfirmationDialog(
+      BuildContext context, int index, Map<String, dynamic> video) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text(
+            'Are you sure you want to delete this video from your favorites?',
+            style: tFOnt(fontSize: 17, fontWeight: FontWeight.bold),
+          ),
+          actions: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.white,
+                  border: Border.all(width: 1.0, color: Colors.black)),
+              child: TextButton(
+                child: Text(
+                  'Batal',
+                  style: tFOnt(color: Colors.black),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: const Color.fromARGB(255, 171, 52, 44),
+                  border: Border.all(width: 1.0, color: Colors.black)),
+              child: TextButton(
+                child: Text(
+                  'Delete',
+                  style: tFOnt(color: Colors.white),
+                ),
+                onPressed: () {
+                  setState(() {
+                    _favoriteVideos.removeAt(index);
+                  });
+                  VideoFav.removeFav(video['id']);
+                  showCustomSnackbar(
+                    context,
+                    '${video['name']} Deleted From Favorites!',
+                    Colors.green,
+                  );
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
