@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_toefl/pages/user/pages/video.dart';
 import 'package:learn_toefl/utilities.dart';
 import 'package:learn_toefl/services/video_history.dart';
 import 'package:learn_toefl/models/video.dart';
@@ -23,9 +24,15 @@ class _HistoryVideoState extends State<HistoryVideo> {
 
   void fetchHistory() async {
     var videoHistory = await VideoHistory.getHistory();
-    print('videoHistory $videoHistory');
     setState(() {
       _history = videoHistory;
+      for (var video in _history) {
+        allVideos.add(Video(
+          id: video['id'],
+          name: video['name'],
+          url: video['url'],
+        ));
+      }
     });
   }
 
@@ -157,62 +164,76 @@ class _HistoryVideoState extends State<HistoryVideo> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 130,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(width: 1.0, color: Colors.black),
-                        image: const DecorationImage(
-                          image: AssetImage('assets/images/video.png'),
-                          fit: BoxFit.cover,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VideoPage(
+                          id: historyItem['id'],
+                          idCategory: historyItem['id_category'],
+                          video: allVideos,
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: category == 'LESSON'
-                                  ? const Color.fromARGB(255, 252, 163, 133)
-                                  : Color.fromARGB(255, 254, 242, 136),
-                              borderRadius: BorderRadius.circular(8),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 130,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(width: 1.0, color: Colors.black),
+                          image: const DecorationImage(
+                            image: AssetImage('assets/images/video.png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: category == 'LESSON'
+                                    ? const Color.fromARGB(255, 252, 163, 133)
+                                    : const Color.fromARGB(255, 254, 242, 136),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 4, horizontal: 12),
+                              child: Text(
+                                category,
+                                style: const TextStyle(
+                                  fontSize: 8,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
                             ),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 4, horizontal: 12),
-                            child: Text(
-                              category,
+                            const SizedBox(height: 6),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              videoName,
                               style: const TextStyle(
-                                fontSize: 8,
+                                fontSize: 12,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 6),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            videoName,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
