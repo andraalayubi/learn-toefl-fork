@@ -220,7 +220,7 @@ class _FavVideoState extends State<FavVideo> {
                               id: video['id'],
                               idCategory: video['id_category'],
                               video:
-                                  _allVideos, // atau ganti dengan data video lain yang sesuai
+                                  _allVideos, 
                             ),
                           ),
                         );
@@ -241,11 +241,6 @@ class _FavVideoState extends State<FavVideo> {
                               style: tFOnt(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             ),
-                            // subtitle: Text(
-                            //   video['category'],
-                            //   style: tFOnt(
-                            //       fontSize: 12, fontWeight: FontWeight.normal),
-                            // ),
                             trailing: IconButton(
                                 icon: const Icon(Icons.remove_circle,
                                     color: Colors.red),

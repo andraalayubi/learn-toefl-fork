@@ -2,9 +2,10 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/models/question.dart';
 import 'package:learn_toefl/pages/user/exercise/summary.dart';
+import 'package:learn_toefl/utilities.dart';
 import 'package:learn_toefl/widget/question_widgets.dart';
 
-class ReadingTest extends StatefulWidget { 
+class ReadingTest extends StatefulWidget {
   final int questionGroupId;
 
   ReadingTest({Key? key, required this.questionGroupId}) : super(key: key);
@@ -69,7 +70,6 @@ class _ReadingTestState extends State<ReadingTest> {
   }
 
   Future setAudio() async {
-    // Load audio file from assets or remote URL
     String audioUrl = 'audio/Level ${widget.questionGroupId}.mp3';
     await audioPlayer.setSourceAsset(audioUrl);
   }
@@ -124,16 +124,18 @@ class _ReadingTestState extends State<ReadingTest> {
                 Expanded(
                   child: LinearProgressIndicator(
                     borderRadius: BorderRadius.circular(50),
-                    value: _totalQuestions == 0 ? 0 : _currentQuestionIndex / _totalQuestions,
+                    value: _totalQuestions == 0
+                        ? 0
+                        : _currentQuestionIndex / _totalQuestions,
                     backgroundColor: Colors.grey[300],
                     valueColor:
-                        AlwaysStoppedAnimation<Color>(Color(0xFF0D0443)),
+                        const AlwaysStoppedAnimation<Color>(Color(0xFF0D0443)),
                   ),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Text(
                   '$_currentQuestionIndex/$_totalQuestions',
-                  style: TextStyle(color: Colors.black, fontSize: 14),
+                  style: tFOnt(color: Colors.black, fontSize: 14),
                 ),
               ],
             ),

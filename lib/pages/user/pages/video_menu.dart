@@ -314,18 +314,15 @@ class _VideoListPageState extends State<VideoListPage> {
                                   trailing: GestureDetector(
                                     onTap: () async {
                                       try {
-                                        // Check if the video is already a favorite
                                         bool isFavorite =
                                             await VideoFav.isFavorite(video.id);
 
                                         if (isFavorite) {
-                                          // Show a snackbar indicating that the video is already a favorite
                                           showCustomSnackbar(
                                               context,
                                               'Already exist in favorites',
                                               Colors.orange);
                                         } else {
-                                          // If not already a favorite, add it to favorites
                                           await VideoFav.addFav(
                                             video.id,
                                             video.name,
@@ -334,14 +331,12 @@ class _VideoListPageState extends State<VideoListPage> {
                                             video.url,
                                           );
 
-                                          // Show a snackbar indicating that the video has been added to favorites
                                           showCustomSnackbar(
                                               context,
                                               '${video.name} Added to favorites!',
                                               Colors.green);
                                         }
                                       } catch (e) {
-                                        // Handle any potential errors if adding to favorites fails
                                         showCustomSnackbar(
                                             context,
                                             'Failed to add to favorites',
