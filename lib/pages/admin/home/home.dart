@@ -50,22 +50,6 @@ class AdminHomeScreen extends StatelessWidget {
             ],
           ),
         ),
-        // actions: [
-        //   Padding(
-        //     padding: const EdgeInsets.only(right: 18.0),
-        //     child: Container(
-        //       decoration:
-        //           const BoxDecoration(color: mColor, shape: BoxShape.circle),
-        //       child: IconButton(
-        //         icon: const Icon(
-        //           Icons.logout,
-        //           color: Colors.white,
-        //         ),
-        //         onPressed: () => _logout(context),
-        //       ),
-        //     ),
-        //   ),
-        // ],
       ),
       body: SingleChildScrollView(
         child: Column(
