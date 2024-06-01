@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/models/question.dart';
-import 'package:learn_toefl/pages/user/exercise/SpeakingPage.dart';
 import 'package:learn_toefl/pages/user/exercise/Reading&ListeningPage.dart';
+import 'package:learn_toefl/pages/user/exercise/SpeakingPage.dart';
 import 'package:learn_toefl/pages/user/exercise/WritingPage.dart';
 import 'package:learn_toefl/utilities.dart';
 
@@ -283,7 +283,7 @@ class _Exercise extends State<Exercise> {
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: Text(
-                    '${level.nilaiUser}', // Skor contoh
+                    '${level.nilaiUser}',
                     textAlign: TextAlign.center,
                     style: tFOnt(
                       fontSize: 9,
@@ -292,18 +292,76 @@ class _Exercise extends State<Exercise> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => testPage(level.id),
-                    ),
-                  );
+                  _showStartExerciseDialog(context, level.id, testPage);
                 },
               );
             }).toList(),
           ),
         ),
       ),
+    );
+  }
+  void _showStartExerciseDialog(BuildContext context, int questionGroupId, Widget Function(int questionGroupId) testPage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                'assets/images/window.png',
+                width: 170,
+                height: 170,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Do you want to start this exercise?',
+                style: tFOnt(fontSize: 19, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.white,
+                border: Border.all(width: 1.0, color: Colors.black),
+              ),
+              child: TextButton(
+                child: Text(
+                  'No',
+                  style: tFOnt(color: Colors.black),
+                   ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.green,
+                border: Border.all(width: 1.0, color: Colors.black),
+              ),
+              child: TextButton(
+                child: Text(
+                  'Yes',
+                  style: tFOnt(color: Colors.white),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => testPage(questionGroupId),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
