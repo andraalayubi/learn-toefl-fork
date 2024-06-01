@@ -91,14 +91,14 @@ class _Exercise extends State<Exercise> {
                   ),
                   children: [
                     TextSpan(
-                      text: "Exercise",
+                      text: "Vocabulary",
                       style: tFOnt(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     TextSpan(
                       text:
-                          " significantly enhances language proficiency, critical thinking, and time management skills, providing a substantial advantage for academic and professional communication in English-speaking environments.",
+                          " is the cornerstone of communication, shaping our thoughts into articulate expressions.",
                       style: tFOnt(),
                     ),
                   ],
@@ -122,7 +122,7 @@ class _Exercise extends State<Exercise> {
       future: fetchPracticeAll(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
@@ -241,7 +241,7 @@ class _Exercise extends State<Exercise> {
                           children: [
                             TextSpan(
                               text: '${levels.length} Levels',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
