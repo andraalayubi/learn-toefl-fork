@@ -3,7 +3,6 @@ import 'package:learn_toefl/models/question.dart';
 import 'package:learn_toefl/pages/user/exercise/SpeakingPage.dart';
 import 'package:learn_toefl/pages/user/exercise/Reading&ListeningPage.dart';
 import 'package:learn_toefl/pages/user/exercise/WritingPage.dart';
-import 'package:learn_toefl/pages/user/exercise/SpeakingPage.dart';
 import 'package:learn_toefl/utilities.dart';
 
 class Exercise extends StatefulWidget {
@@ -79,14 +78,6 @@ class _Exercise extends State<Exercise> {
         decoration: BoxDecoration(
           color: const Color(0xFF0D0443),
           borderRadius: BorderRadius.circular(10),
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.black.withOpacity(0.8),
-          //     spreadRadius: 2,
-          //     blurRadius: 10,
-          //     offset: const Offset(0, 3),
-          //   ),
-          // ],
         ),
         padding: const EdgeInsets.all(15),
         child: Row(
@@ -100,14 +91,14 @@ class _Exercise extends State<Exercise> {
                   ),
                   children: [
                     TextSpan(
-                      text: "Vocabulary",
+                      text: "Exercise",
                       style: tFOnt(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     TextSpan(
                       text:
-                          " is the cornerstone of communication, shaping our thoughts into articulate expressions.",
+                          " significantly enhances language proficiency, critical thinking, and time management skills, providing a substantial advantage for academic and professional communication in English-speaking environments.",
                       style: tFOnt(),
                     ),
                   ],

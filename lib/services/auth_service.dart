@@ -6,8 +6,10 @@ import 'package:learn_toefl/ip.dart';
 
 class AuthService {
   Future<User?> register(String username, String email, String password) async {
+    print('register berjalan');
+    final uri = Uri.parse('$ip/api/auth/register');
     final response = await http.post(
-      Uri.parse('$ip/api/auth/register'),
+      uri,
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -18,9 +20,44 @@ class AuthService {
       }),
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 308) {
+      print('Redirect detected with status code 308');
+      final redirectLocation = response.headers['location'];
+
+      // Check if the redirect location is relative
+      final redirectUri = Uri.parse(redirectLocation!);
+      Uri newUri;
+
+      if (redirectUri.hasScheme) {
+        // Absolute URI
+        newUri = redirectUri;
+      } else {
+        newUri = uri.resolveUri(redirectUri);
+      }
+
+      print('Redirect location: $newUri');
+
+      final redirectedResponse = await http.post(
+        newUri,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(<String, String>{
+          'username': username,
+          'email': email,
+          'password': password,
+        }),
+      );
+
+      if (redirectedResponse.statusCode == 201) {
+        return User.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception('Failed to register after redirect');
+      }
+    } else if (response.statusCode == 201) {
       return User.fromJson(jsonDecode(response.body));
     } else {
+      print(response.statusCode);
       throw Exception('Failed to register');
     }
   }

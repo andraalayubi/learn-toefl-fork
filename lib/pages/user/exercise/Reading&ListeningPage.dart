@@ -141,140 +141,140 @@ class _ReadingTestState extends State<ReadingTest> {
             ),
           ),
           Expanded(
-              child: FutureBuilder<QuestionDetail>(
-                  future: _futureQuestionDetail,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else {
-                      final detail = snapshot.data!;
-                      _totalQuestions = detail.questions.length;
-                      final allQuestionsAnswered =
-                          _currentQuestionIndex == _totalQuestions;
+            child: FutureBuilder<QuestionDetail>(
+              future: _futureQuestionDetail,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else {
+                  final detail = snapshot.data!;
+                  _totalQuestions = detail.questions.length;
 
-                      if (allQuestionsAnswered) {
-                        final correct = detail.questions
-                            .where((question) =>
-                                question.userAnswer != null &&
-                                question.userAnswer! == question.correctAnswer)
-                            .length;
-                        final incorrect = detail.questions.length - correct;
+                  final correct = detail.questions
+                      .where((question) =>
+                          question.userAnswer != null &&
+                          question.userAnswer! == question.correctAnswer)
+                      .length;
+                  final incorrect = detail.questions.length - correct;
 
-                        // Navigasi ke halaman hasil
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Summary(
-                                questionId: _questionGroupId,
-                                score: correct * 10,
-                                correct: correct,
-                                incorrect: incorrect,
-                              ),
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (detail.readingText.isNotEmpty &&
+                            detail.questionCategory != 'Listening')
+                          Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: CustomBox(
+                              // Menggunakan CustomBox untuk bacaan
+                              title: 'Passage',
+                              content: detail.readingText,
                             ),
-                          );
-                        });
-                      }
-                      return SingleChildScrollView(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (detail.readingText.isNotEmpty &&
-                                detail.questionCategory != 'Listening')
+                          ),
+                        if (detail.questionCategory == 'Listening')
+                          Column(
+                            children: [
                               Padding(
                                 padding: EdgeInsets.all(16.0),
                                 child: CustomBox(
                                   // Menggunakan CustomBox untuk bacaan
-                                  title: 'Passage',
+                                  title: 'Instruction',
                                   content: detail.readingText,
                                 ),
                               ),
-                            if (detail.questionCategory == 'Listening')
-                              Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: CustomBox(
-                                      // Menggunakan CustomBox untuk bacaan
-                                      title: 'Instruction',
-                                      content: detail.readingText,
-                                    ),
-                                  ),
-                                  Slider(
-                                    value: position.inSeconds.toDouble(),
-                                    max: duration.inSeconds.toDouble(),
-                                    onChanged: (value) {
-                                      audioPlayer.seek(
-                                          Duration(seconds: value.toInt()));
-                                    },
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        IconButton(
-                                          icon: Icon(isPlaying
-                                              ? Icons.pause
-                                              : Icons.play_arrow),
-                                          onPressed: () {
-                                            if (isPlaying) {
-                                              audioPlayer.pause();
-                                            } else {
-                                              audioPlayer.resume();
-                                            }
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                              Slider(
+                                value: position.inSeconds.toDouble(),
+                                max: duration.inSeconds.toDouble(),
+                                onChanged: (value) {
+                                  audioPlayer
+                                      .seek(Duration(seconds: value.toInt()));
+                                },
                               ),
-                            ...detail.questions.asMap().entries.map(
-                                  (entry) => Padding(
-                                    padding: const EdgeInsets.only(
-                                        bottom:
-                                            16.0), // Menambahkan jarak antar QuestionBox
-                                    child: QuestionBox(
-                                      questionNumber: entry.key + 1,
-                                      question: entry.value.questionText,
-                                      correctAnswer: entry.value.correctAnswer,
-                                      options: entry.value.answerOptions,
-                                      selectedOption: entry.value.userAnswer,
-                                      onSelect: (option) {
-                                        if (entry.value.userAnswer == null) {
-                                          entry.value.userAnswer = option;
-                                          setState(() {
-                                            switch (entry.key) {
-                                              case 0:
-                                                selectedOption1 = option;
-                                                break;
-                                              case 1:
-                                                selectedOption2 = option;
-                                                break;
-                                              case 2:
-                                                selectedOption3 = option;
-                                                break;
-                                              case 3:
-                                                selectedOption4 = option;
-                                                break;
-                                            }
-                                          });
-                                          updateProgress();
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(isPlaying
+                                          ? Icons.pause
+                                          : Icons.play_arrow),
+                                      onPressed: () {
+                                        if (isPlaying) {
+                                          audioPlayer.pause();
+                                        } else {
+                                          audioPlayer.resume();
                                         }
                                       },
                                     ),
-                                  ),
+                                  ],
                                 ),
-                          ],
+                              ),
+                            ],
+                          ),
+                        ...detail.questions.asMap().entries.map(
+                              (entry) => Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom:
+                                        16.0), // Menambahkan jarak antar QuestionBox
+                                child: QuestionBox(
+                                  questionNumber: entry.key + 1,
+                                  question: entry.value.questionText,
+                                  correctAnswer: entry.value.correctAnswer,
+                                  options: entry.value.answerOptions,
+                                  selectedOption: entry.value.userAnswer,
+                                  onSelect: (option) {
+                                    if (entry.value.userAnswer == null) {
+                                      entry.value.userAnswer = option;
+                                      setState(() {
+                                        switch (entry.key) {
+                                          case 0:
+                                            selectedOption1 = option;
+                                            break;
+                                          case 1:
+                                            selectedOption2 = option;
+                                            break;
+                                          case 2:
+                                            selectedOption3 = option;
+                                            break;
+                                          case 3:
+                                            selectedOption4 = option;
+                                            break;
+                                        }
+                                      });
+                                      updateProgress();
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Summary(
+                                  questionId: _questionGroupId,
+                                  score: correct * 10,
+                                  correct: correct,
+                                  incorrect: incorrect,
+                                  detail: detail, // melemparkan detail
+                                ),
+                              ),
+                            );
+                          },
+                          child: Text('Submit'),
                         ),
-                      );
-                    }
-                  })),
+                      ],
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
         ],
       ),
     );

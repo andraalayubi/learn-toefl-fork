@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/models/question.dart';
+import 'package:learn_toefl/pages/user/exercise/summary.dart';
 import 'package:learn_toefl/utilities.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -150,48 +151,80 @@ class _SpeakingTestState extends State<SpeakingTest> {
                         ),
                       ),
                       const SizedBox(height: 40),
-                      GestureDetector(
-                        onTap: () async {
-                          if (!isListening) {
-                            bool micAvailable = await speechToText.initialize();
-                            if (micAvailable) {
-                              setState(() {
-                                isListening = true;
-                              });
-
-                              speechToText.listen(
-                                  listenFor: const Duration(seconds: 120),
-                                  onResult: (result) {
-                                    setState(() {
-                                      textSpeech = result.recognizedWords;
-                                      accuracy = calculateAccuracy(
-                                          providedText, textSpeech);
-                                      print("Provided Text: $providedText");
-                                      print("Speech Text: $textSpeech");
-                                      print(
-                                          "Akurasi: ${accuracy.toStringAsFixed(2)}%");
-                                    });
+                      Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () async {
+                              if (!isListening) {
+                                bool micAvailable = await speechToText.initialize();
+                                if (micAvailable) {
+                                  setState(() {
+                                    isListening = true;
                                   });
-                            }
-                          } else {
-                            setState(() {
-                              isListening = false;
-                              speechToText.stop();
-                            });
-                          }
-                        },
-                        child: CircleAvatar(
-                          backgroundColor: mColor,
-                          child: isListening
-                              ? const Icon(
-                                  Icons.record_voice_over,
-                                  color: Colors.white,
-                                )
-                              : const Icon(
-                                  Icons.mic,
-                                  color: Colors.white,
-                                ),
+                          
+                                  speechToText.listen(
+                                      listenFor: const Duration(seconds: 120),
+                                      onResult: (result) {
+                                        setState(() {
+                                          textSpeech = result.recognizedWords;
+                                          accuracy = calculateAccuracy(
+                                              providedText, textSpeech);
+                                          print("Provided Text: $providedText");
+                                          print("Speech Text: $textSpeech");
+                                          print(
+                                              "Akurasi: ${accuracy.toStringAsFixed(2)}%");
+                                        });
+                                      });
+                                }
+                              } else {
+                                setState(() {
+                                  isListening = false;
+                                  speechToText.stop();
+                                });
+                              }
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: mColor,
+                              child: isListening
+                                  ? const Icon(
+                                      Icons.record_voice_over,
+                                      color: Colors.white,
+                                    )
+                                  : const Icon(
+                                      Icons.mic,
+                                      color: Colors.white,
+                                    ),
+                            ),
+                          ),
+                          Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Summary(
+                                      questionId: widget.questionGroupId,
+                                      score: accuracy.toInt(),
+                                      correct: 0,
+                                      incorrect: 0,
+                                    ),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF0D0443),
+                              ),
+                              child: const Text(
+                                'Submit',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
                         ),
+                        ],
                       ),
                       const SizedBox(height: 20),
                     ],

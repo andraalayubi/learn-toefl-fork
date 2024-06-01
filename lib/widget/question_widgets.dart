@@ -53,6 +53,7 @@ class QuestionBox extends StatelessWidget {
   final List<String> options;
   final String? selectedOption;
   final Function(String) onSelect;
+  final bool? isSummary;
 
   const QuestionBox({
     required this.questionNumber,
@@ -61,6 +62,7 @@ class QuestionBox extends StatelessWidget {
     required this.options,
     this.selectedOption,
     required this.onSelect,
+    this.isSummary,
   });
 
   @override
@@ -124,7 +126,7 @@ class QuestionBox extends StatelessWidget {
               );
             }).toList(),
           ),
-          if (selectedOption != null) ...[
+          if (selectedOption != null && isSummary != null) ...[
           const SizedBox(height: 16),
           _buildCorrectIncorrectBox(
               questionNumber, selectedOption!, correctAnswer),
