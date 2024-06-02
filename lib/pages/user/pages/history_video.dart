@@ -37,6 +37,16 @@ class _HistoryVideoState extends State<HistoryVideo> {
     });
   }
 
+  void _deleteHistoryItem(int index) async {
+    final int videoId = _history[index]['id'];
+    await VideoHistory.removeHistory(videoId);
+
+    setState(() {
+      _history.removeAt(index);
+      allVideos.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -151,96 +161,212 @@ class _HistoryVideoState extends State<HistoryVideo> {
         },
         body: Container(
           color: Colors.white,
-          child: ListView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 26),
-            itemCount: _history.length,
-            itemBuilder: (context, index) {
-              final historyItem = _history[index];
-              final String category = historyItem['category'] ?? '';
-              final String videoName = historyItem['name'] ?? '';
+          child: _history.isEmpty
+              ? Center(
+                  child: Text(
+                    'No History Available',
+                    style: tFOnt(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                )
+              : ListView.builder(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 26),
+                  itemCount: _history.length,
+                  itemBuilder: (context, index) {
+                    final historyItem = _history[index];
+                    final String category = historyItem['category'] ?? '';
+                    final String videoName = historyItem['name'] ?? '';
 
-              return Container(
-                margin: const EdgeInsets.symmetric(vertical: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VideoPage(
-                          id: historyItem['id'],
-                          idCategory: historyItem['id_category'],
-                          video: allVideos,
-                        ),
+                    return Container(
+                      margin: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 130,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(width: 1.0, color: Colors.black),
-                          image: const DecorationImage(
-                            image: AssetImage('assets/images/video.png'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VideoPage(
+                                id: historyItem['id'],
+                                idCategory: historyItem['id_category'],
+                                video: allVideos,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Row(
                           children: [
                             Container(
+                              width: 130,
+                              height: 80,
                               decoration: BoxDecoration(
-                                color: category == 'LESSON'
-                                    ? const Color.fromARGB(255, 252, 163, 133)
-                                    : const Color.fromARGB(255, 254, 242, 136),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 12),
-                              child: Text(
-                                category,
-                                style: const TextStyle(
-                                  fontSize: 8,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                                borderRadius: BorderRadius.circular(12),
+                                border:
+                                    Border.all(width: 1.0, color: Colors.black),
+                                image: const DecorationImage(
+                                  image: AssetImage('assets/images/pidios.png'),
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 6),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: category == 'LESSON'
+                                          ? const Color.fromARGB(
+                                              255, 252, 163, 133)
+                                          : const Color.fromARGB(
+                                              255, 254, 242, 136),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4, horizontal: 12),
+                                    child: Text(
+                                      category,
+                                      style: const TextStyle(
+                                        fontSize: 8,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    videoName,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            const SizedBox(height: 8),
-                            Text(
-                              videoName,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
+                            IconButton(
+                              icon: Icon(Icons.delete, color: Colors.red),
+                              onPressed: () {
+                                _showConfirmationDialog(
+                                    context, index, historyItem);
+                              },
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
-              );
-            },
+        ),
+      ),
+    );
+  }
+
+  void _showConfirmationDialog(
+      BuildContext context, int index, Map<String, dynamic> video) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12), // Ubah sesuai kebutuhan
+          ),
+          surfaceTintColor: Colors.transparent,
+          backgroundColor: Colors.white,
+          content: Text(
+            'Are you sure you want to delete this video from history?',
+            style: tFOnt(fontSize: 17, fontWeight: FontWeight.bold),
+          ),
+          actions: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.white,
+                  border: Border.all(width: 1.0, color: Colors.black)),
+              child: TextButton(
+                child: Text(
+                  'Cancel',
+                  style: tFOnt(color: Colors.black),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: const Color.fromARGB(255, 171, 52, 44),
+                  border: Border.all(width: 1.0, color: Colors.black)),
+              child: TextButton(
+                child: Text(
+                  'Delete',
+                  style: tFOnt(color: Colors.white),
+                ),
+                onPressed: () {
+                  _deleteHistoryItem(index);
+                  Navigator.of(context).pop();
+                  showCustomSnackbar(
+                    context,
+                    '${video['name']} Deleted From History!',
+                    Colors.green,
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showCustomSnackbar(
+      BuildContext context, String message, Color backgroundColor) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 10,
+        left: 10,
+        right: 10,
+        child: SafeArea(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                message,
+                style: tFOnt(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
           ),
         ),
       ),
     );
+
+    overlay?.insert(overlayEntry);
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
   }
 }

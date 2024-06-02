@@ -156,12 +156,13 @@ class _SpeakingTestState extends State<SpeakingTest> {
                           GestureDetector(
                             onTap: () async {
                               if (!isListening) {
-                                bool micAvailable = await speechToText.initialize();
+                                bool micAvailable =
+                                    await speechToText.initialize();
                                 if (micAvailable) {
                                   setState(() {
                                     isListening = true;
                                   });
-                          
+
                                   speechToText.listen(
                                       listenFor: const Duration(seconds: 120),
                                       onResult: (result) {
@@ -197,33 +198,33 @@ class _SpeakingTestState extends State<SpeakingTest> {
                             ),
                           ),
                           Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Summary(
-                                      questionId: widget.questionGroupId,
-                                      score: accuracy.toInt(),
-                                      correct: 0,
-                                      incorrect: 0,
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Summary(
+                                        questionId: widget.questionGroupId,
+                                        score: accuracy.toInt(),
+                                        correct: 0,
+                                        incorrect: 0,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF0D0443),
-                              ),
-                              child: const Text(
-                                'Submit',
-                                style: TextStyle(color: Colors.white),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF0D0443),
+                                ),
+                                child: Text(
+                                  'Submit',
+                                  style: tFOnt(color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
-                        ),
                         ],
                       ),
                       const SizedBox(height: 20),

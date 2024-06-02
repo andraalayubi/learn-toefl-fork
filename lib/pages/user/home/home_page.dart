@@ -40,6 +40,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
@@ -456,9 +457,15 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                     );
                                   } else if (!snapshot.hasData ||
                                       snapshot.data!.isEmpty) {
-                                    return const Center(
-                                      child: Text(
-                                          'You haven\'t started studying yet'),
+                                    return Center(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 50.0),
+                                        child: Text(
+                                          'You haven\'t started studying yet',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
                                     );
                                   } else {
                                     List<dynamic> videoList = snapshot.data!
@@ -520,9 +527,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                                     ClipRRect(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              5),
+                                                        5,
+                                                      ),
                                                       child: Image.asset(
-                                                        'assets/images/video.png',
+                                                        'assets/images/pidios.png',
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),

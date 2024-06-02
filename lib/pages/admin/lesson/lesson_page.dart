@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/pages/admin/lesson/view_lesson.dart';
-import 'package:learn_toefl/services/add_video.dart';
+import 'package:learn_toefl/services/video_service.dart';
 import 'package:learn_toefl/utilities.dart';
 
 class LessonPage extends StatefulWidget {
@@ -92,7 +92,7 @@ class _LessonPageState extends State<LessonPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ListViewVideo()));
+                              builder: (context) => const ListViewVideo(category: 'Listening', subCategory: 1)));
                     },
                     child: Container(
                       width: 170,
@@ -154,64 +154,72 @@ class _LessonPageState extends State<LessonPage> {
                       ),
                     ),
                   ),
-                  Container(
-                    width: 170,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(width: 1.0, color: Colors.grey),
-                      gradient: const LinearGradient(
-                        colors: [
-                          Colors.white,
-                          Color.fromARGB(255, 249, 246, 242),
-                          Color.fromARGB(255, 245, 218, 206),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ListViewVideo(category: 'Speaking', subCategory: 1)));
+                    },
+                    child: Container(
+                      width: 170,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(width: 1.0, color: Colors.grey),
+                        gradient: const LinearGradient(
+                          colors: [
+                            Colors.white,
+                            Color.fromARGB(255, 249, 246, 242),
+                            Color.fromARGB(255, 245, 218, 206),
+                          ],
+                          stops: [0, 0.5, 1],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: const Offset(3, 3),
+                          ),
                         ],
-                        stops: [0, 0.5, 1],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: const Offset(3, 3),
-                        ),
-                      ],
-                    ),
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 18.0, vertical: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Speaking',
-                                style: tFOnt(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                  color: mColor,
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 18.0, vertical: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Speaking',
+                                  style: tFOnt(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: mColor,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                            ],
+                                const SizedBox(
+                                  height: 6,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Positioned(
-                          bottom: 10,
-                          right: 18,
-                          child: Image.asset(
-                            'assets/images/iconVideo_2.png',
-                            width: 90,
-                            height: 90,
-                            fit: BoxFit.cover,
+                          Positioned(
+                            bottom: 10,
+                            right: 18,
+                            child: Image.asset(
+                              'assets/images/iconVideo_2.png',
+                              width: 90,
+                              height: 90,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -222,124 +230,140 @@ class _LessonPageState extends State<LessonPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    width: 170,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(width: 1.0, color: Colors.grey),
-                      gradient: const LinearGradient(
-                        colors: [
-                          Colors.white,
-                          Color.fromARGB(255, 252, 252, 246),
-                          Color.fromARGB(255, 243, 251, 167),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ListViewVideo(category: 'Reading', subCategory: 1)));
+                    },
+                    child: Container(
+                      width: 170,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(width: 1.0, color: Colors.grey),
+                        gradient: const LinearGradient(
+                          colors: [
+                            Colors.white,
+                            Color.fromARGB(255, 252, 252, 246),
+                            Color.fromARGB(255, 243, 251, 167),
+                          ],
+                          stops: [0, 0.5, 1],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: const Offset(3, 3),
+                          ),
                         ],
-                        stops: [0, 0.5, 1],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: const Offset(3, 3),
-                        ),
-                      ],
-                    ),
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 18.0, vertical: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Reading',
-                                style: tFOnt(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                  color: mColor,
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 18.0, vertical: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Reading',
+                                  style: tFOnt(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: mColor,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                            ],
+                                const SizedBox(
+                                  height: 6,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Positioned(
-                          bottom: 10,
-                          right: 18,
-                          child: Image.asset(
-                            'assets/images/iconVideo_3.png',
-                            width: 90,
-                            height: 90,
-                            fit: BoxFit.cover,
+                          Positioned(
+                            bottom: 10,
+                            right: 18,
+                            child: Image.asset(
+                              'assets/images/iconVideo_3.png',
+                              width: 90,
+                              height: 90,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                  Container(
-                    width: 170,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(width: 1.0, color: Colors.grey),
-                      gradient: const LinearGradient(
-                        colors: [
-                          Colors.white,
-                          Color.fromARGB(255, 247, 243, 243),
-                          Color.fromARGB(255, 227, 195, 247),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ListViewVideo(category: 'Writing', subCategory: 1)));
+                    },
+                    child: Container(
+                      width: 170,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(width: 1.0, color: Colors.grey),
+                        gradient: const LinearGradient(
+                          colors: [
+                            Colors.white,
+                            Color.fromARGB(255, 247, 243, 243),
+                            Color.fromARGB(255, 227, 195, 247),
+                          ],
+                          stops: [0, 0.5, 1],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: const Offset(3, 3),
+                          ),
                         ],
-                        stops: [0, 0.5, 1],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: const Offset(3, 3),
-                        ),
-                      ],
-                    ),
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 18.0, vertical: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Writing',
-                                style: tFOnt(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 18.0, vertical: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Writing',
+                                  style: tFOnt(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                            ],
+                                const SizedBox(
+                                  height: 6,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Positioned(
-                          bottom: 10,
-                          right: 18,
-                          child: Image.asset(
-                            'assets/images/iconVideo_4.png',
-                            width: 90,
-                            height: 90,
-                            fit: BoxFit.cover,
+                          Positioned(
+                            bottom: 10,
+                            right: 18,
+                            child: Image.asset(
+                              'assets/images/iconVideo_4.png',
+                              width: 90,
+                              height: 90,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
