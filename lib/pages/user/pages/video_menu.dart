@@ -203,9 +203,18 @@ class _VideoListPageState extends State<VideoListPage> {
               offset: const Offset(0, -110),
               child: Container(
                 width: 360,
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.only(
+                    top: 20, left: 20, right: 20, bottom: 2),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF0D0443),
+                  gradient: LinearGradient(
+                    colors: [
+                      mColor,
+                      mColor.withOpacity(0.7),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: const [0.4, 1],
+                  ),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(

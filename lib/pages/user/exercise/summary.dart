@@ -46,162 +46,155 @@ class _SummaryState extends State<Summary> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Summary',
-            style: tFOnt(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          backgroundColor: const Color(0xFF0D0443),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-            onPressed: () => Navigator.pop(context),
+      appBar: AppBar(
+        title: Text(
+          'Summary',
+          style: tFOnt(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        body: SingleChildScrollView(
-            child: Column(
+        backgroundColor: const Color(0xFF0D0443),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
           children: [
-            Stack(children: [
-              Container(
-                color: Colors.white,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 1.7,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/sparkle.png"),
-                    fit: BoxFit.cover,
+            Stack(
+              children: [
+                Container(
+                  color: Colors.white,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height / 1.7,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/sparkle.png"),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: SingleChildScrollView(
-                    child: Column(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 50),
+                      Text(
+                        'Congratulations!\nYou have completed all questions.',
+                        textAlign: TextAlign.center,
+                        style: tFOnt(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Your score is:',
+                        style: tFOnt(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 50),
-                          Text(
-                            'Congratulations!\nYou have completed all questions.',
-                            textAlign: TextAlign.center,
-                            style: tFOnt(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
                               color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            'Your score is:',
-                            style: tFOnt(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(16),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: const Offset(0, 3),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Text(
-                                    '${widget.score}',
-                                    style: tFOnt(
-                                      fontSize: 73,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: const Offset(0, 3),
                                 ),
-                                const SizedBox(width: 20),
-                                Column(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 16, horizontal: 20),
-                                      decoration: BoxDecoration(
-                                        color: Colors.green[100],
-                                        borderRadius: BorderRadius.circular(16),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 5,
-                                            blurRadius: 7,
-                                            offset: const Offset(0, 3),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Text(
-                                        '${widget.correct} Correct',
-                                        style: tFOnt(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.green[700],
-                                        ),
-                                      ),
+                              ],
+                            ),
+                            child: Text(
+                              '${widget.score}',
+                              style: tFOnt(
+                                fontSize: 73,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 16, horizontal: 20),
+                                decoration: BoxDecoration(
+                                  color: Colors.green[100],
+                                  borderRadius: BorderRadius.circular(16),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: const Offset(0, 3),
                                     ),
-                                    const SizedBox(height: 10),
-                                    Container(
-                                      padding: const EdgeInsets.all(16),
-                                      decoration: BoxDecoration(
-                                        color: Colors.red[100],
-                                        borderRadius: BorderRadius.circular(16),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 5,
-                                            blurRadius: 7,
-                                            offset: const Offset(0, 3),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Text(
-                                        '${widget.incorrect} Incorrect',
-                                        style: tFOnt(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.red[700],
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20),
                                   ],
                                 ),
-                              ]),
-                        ]),
-                    // Positioned(
-                    //   bottom: 0,
-                    //   right: 0,
-                    //   child: Image.asset(
-                    //     "assets/images/writing.png",
-                    //     width: 250,
-                    //     height: 250,
-                    //     alignment: Alignment.bottomRight,
-                    //   ),
-                    // ),
-                  ))
-            ]),
+                                child: Text(
+                                  '${widget.correct} Correct',
+                                  style: tFOnt(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green[700],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.red[100],
+                                  borderRadius: BorderRadius.circular(16),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: const Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Text(
+                                  '${widget.incorrect} Incorrect',
+                                  style: tFOnt(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red[700],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
             const SizedBox(height: 20),
             ListView.builder(
               shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: widget.detail?.questions.length ?? 0,
               itemBuilder: (context, index) {
                 final question = widget.detail?.questions[index];
@@ -227,12 +220,13 @@ class _SummaryState extends State<Summary> {
                     ),
                   );
                 } else {
-                  return const SizedBox
-                      .shrink(); // Mengembalikan widget kosong jika question adalah null
+                  return const SizedBox.shrink(); // Mengembalikan widget kosong jika question adalah null
                 }
               },
             ),
           ],
-        )));
+        ),
+      ),
+    );
   }
 }

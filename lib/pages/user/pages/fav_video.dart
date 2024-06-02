@@ -264,6 +264,11 @@ class _FavVideoState extends State<FavVideo> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12), // Ubah sesuai kebutuhan
+          ),
+          surfaceTintColor: Colors.transparent,
+          backgroundColor: Colors.white,
           content: Text(
             'Are you sure you want to delete this video from your favorites?',
             style: tFOnt(fontSize: 17, fontWeight: FontWeight.bold),
@@ -276,7 +281,7 @@ class _FavVideoState extends State<FavVideo> {
                   border: Border.all(width: 1.0, color: Colors.black)),
               child: TextButton(
                 child: Text(
-                  'Batal',
+                  'Cancel',
                   style: tFOnt(color: Colors.black),
                 ),
                 onPressed: () {

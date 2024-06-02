@@ -76,7 +76,15 @@ class _Exercise extends State<Exercise> {
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFF0D0443),
+          gradient: LinearGradient(
+            colors: [
+              mColor,
+              mColor.withOpacity(0.7),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: const [0.4, 1],
+          ),
           borderRadius: BorderRadius.circular(10),
         ),
         padding: const EdgeInsets.all(15),
@@ -308,17 +316,22 @@ class _Exercise extends State<Exercise> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          surfaceTintColor: Colors.transparent,
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
-                'assets/images/window.png',
+                'assets/images/writing.png',
                 width: 170,
                 height: 170,
               ),
               const SizedBox(height: 16),
               Text(
-                'Do you want to start this exercise?',
+                'Are you sure you want to start this exercise?',
                 style: tFOnt(fontSize: 19, fontWeight: FontWeight.bold),
               ),
             ],
@@ -332,7 +345,7 @@ class _Exercise extends State<Exercise> {
               ),
               child: TextButton(
                 child: Text(
-                  'No',
+                  'Cancel',
                   style: tFOnt(color: Colors.black),
                 ),
                 onPressed: () {
@@ -343,12 +356,12 @@ class _Exercise extends State<Exercise> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: Colors.green,
+                color: mColor,
                 border: Border.all(width: 1.0, color: Colors.black),
               ),
               child: TextButton(
                 child: Text(
-                  'Yes',
+                  'Start',
                   style: tFOnt(color: Colors.white),
                 ),
                 onPressed: () {

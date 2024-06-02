@@ -520,9 +520,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                                     ClipRRect(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              5),
+                                                        5,
+                                                      ),
                                                       child: Image.asset(
-                                                        'assets/images/video.png',
+                                                        'assets/images/pidios.png',
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
