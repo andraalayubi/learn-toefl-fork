@@ -6,12 +6,14 @@ const port = 3000;
 // const ip = '192.168.100.6';
 const ip = 'localhost';
 const authRoutes = require('./auth');
+const videoRoutes = require('./controllers/admin');
 
 // Middleware untuk parsing body permintaan
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', videoRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -190,31 +192,6 @@ app.get('/video/:id', async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT * FROM Video WHERE id = $1', [id]);
     res.json(rows[0]);
-  } catch (error) {
-    console.error('Error executing query', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-app.post('/video/add', async (req, res) => {
-  const { name, url, categoryId } = req.body;
-
-  try {
-    // Memeriksa apakah kategori video ada
-    const categoryQuery = 'SELECT id FROM VideoCategory WHERE id = $1';
-    const categoryValues = [categoryId];
-    const categoryResult = await pool.query(categoryQuery, categoryValues);
-
-    if (categoryResult.rows.length === 0) {
-      return res.status(400).json({ error: 'Invalid video category' });
-    }
-
-    // Memasukkan video baru ke database
-    const insertQuery = 'INSERT INTO Video (name, url, video_category_id) VALUES ($1, $2, $3)';
-    const insertValues = [name, url, categoryId];
-    const insertResult = await pool.query(insertQuery, insertValues);
-
-    res.status(200).json(insertResult.rows[0]);
   } catch (error) {
     console.error('Error executing query', error);
     res.status(500).json({ error: 'Internal server error' });
