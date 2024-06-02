@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(Duration(seconds: 2)); // Simulate a delay
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? hasSeenOnboarding = prefs.getBool('hasSeenOnboarding');
-
+    
     if (hasSeenOnboarding == true) {
       hasSeenOnboarding = prefs.getBool('hasSeenOnboarding');
       Navigator.pushReplacement(
