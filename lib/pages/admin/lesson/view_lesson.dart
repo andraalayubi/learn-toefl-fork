@@ -8,28 +8,28 @@ class ListViewVideo extends StatefulWidget {
   final int subCategory;
   final String category;
   const ListViewVideo(
-      {super.key, required this.category, required this.subCategory});
+      {Key? key, required this.category, required this.subCategory})
+      : super(key: key);
 
   @override
   State<ListViewVideo> createState() => _ListViewVideoState();
 }
 
 class _ListViewVideoState extends State<ListViewVideo> {
+  late Future<List<VideoCategory>> _videoCategories;
+
+  @override
+  void initState() {
+    super.initState();
+    _videoCategories =
+        fetchVideosByCategory(widget.category, widget.subCategory);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        // toolbarHeight: 150,
-        // elevation: 0.0,
-        // flexibleSpace: ClipPath(
-        //   clipper: AppBarCustomClipper(),
-        //   child: Container(
-        //     height: 200,
-        //     width: MediaQuery.of(context).size.width,
-        //     decoration: const BoxDecoration(color: mColor),
-        //   ),
-        // ),
         surfaceTintColor: Colors.transparent,
         backgroundColor: mColor,
         centerTitle: true,
@@ -37,7 +37,6 @@ class _ListViewVideoState extends State<ListViewVideo> {
           widget.category,
           style: tFOnt(fontWeight: FontWeight.bold, color: Colors.white),
         ),
-
         leading: Padding(
           padding: const EdgeInsets.only(left: 22.0),
           child: IconButton(
@@ -77,8 +76,6 @@ class _ListViewVideoState extends State<ListViewVideo> {
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
-
-          // By default, show a loading spinner.
           return const Center(child: CircularProgressIndicator());
         },
       ),
@@ -136,9 +133,8 @@ class _ListViewVideoState extends State<ListViewVideo> {
                         CupertinoIcons.delete,
                         color: Colors.red,
                       ),
-                      onPressed: () async {
-                        await deleteVideo(video.id);
-                        setState(() {});
+                      onPressed: () {
+                        _showConfirmationDialog(context, video);
                       },
                     ),
                   ],
@@ -149,7 +145,101 @@ class _ListViewVideoState extends State<ListViewVideo> {
   }
 }
 
-_showUpdateDialog(BuildContext context, int id, String category,
+void _showConfirmationDialog(BuildContext context, Video video) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.white,
+        content: Text(
+          'Are you sure you want to delete this video?',
+          style: tFOnt(fontSize: 17, fontWeight: FontWeight.bold),
+        ),
+        actions: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.white,
+                border: Border.all(width: 1.0, color: Colors.black)),
+            child: TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Cancel',
+                style: tFOnt(color: Colors.black),
+              ),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: const Color.fromARGB(255, 171, 52, 44),
+                border: Border.all(width: 1.0, color: Colors.black)),
+            child: TextButton(
+              onPressed: () async {
+                await deleteVideo(video.id);
+
+                showCustomSnackbar(
+                  context,
+                  '${video.name} Deleted From Favorites!',
+                  Colors.green,
+                );
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Delete',
+                style: tFOnt(color: Colors.white),
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void showCustomSnackbar(
+    BuildContext context, String message, Color backgroundColor) {
+  final overlay = Overlay.of(context);
+  final overlayEntry = OverlayEntry(
+    builder: (context) => Positioned(
+      top: 10,
+      left: 10,
+      right: 10,
+      child: SafeArea(
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              message,
+              style: tFOnt(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  overlay?.insert(overlayEntry);
+  Future.delayed(const Duration(seconds: 3), () {
+    overlayEntry.remove();
+  });
+}
+
+void _showUpdateDialog(BuildContext context, int id, String category,
     String originalTitle, String originalUrl) {
   final titleController = TextEditingController(text: originalTitle);
   final urlController = TextEditingController(text: originalUrl);
@@ -160,15 +250,15 @@ _showUpdateDialog(BuildContext context, int id, String category,
       return Dialog(
         backgroundColor: mColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25.0),
-          side: const BorderSide(color: Colors.black, width: 1.0),
+          borderRadius: BorderRadius.circular(25),
+          side: const BorderSide(color: Colors.black, width: 1),
         ),
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 12),
           width: MediaQuery.of(context).size.width * 0.8,
           height: MediaQuery.of(context).size.height * 0.6,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -186,17 +276,9 @@ _showUpdateDialog(BuildContext context, int id, String category,
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: <Widget>[
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                        ],
-                      ),
                       const SizedBox(height: 15),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,7 +303,7 @@ _showUpdateDialog(BuildContext context, int id, String category,
                               fillColor:
                                   const Color.fromARGB(255, 214, 214, 214),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                                borderRadius: BorderRadius.circular(10),
                               ),
                             ),
                           ),
@@ -251,7 +333,7 @@ _showUpdateDialog(BuildContext context, int id, String category,
                                   fontWeight: FontWeight.w400,
                                   fontStyle: FontStyle.italic),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                                borderRadius: BorderRadius.circular(10),
                               ),
                             ),
                           ),
@@ -262,7 +344,7 @@ _showUpdateDialog(BuildContext context, int id, String category,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
@@ -271,7 +353,7 @@ _showUpdateDialog(BuildContext context, int id, String category,
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.grey,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                       child: Text(
@@ -282,18 +364,76 @@ _showUpdateDialog(BuildContext context, int id, String category,
                     const SizedBox(width: 10),
                     TextButton(
                       onPressed: () async {
-                        await updateVideo(
-                          id,
-                          titleController.text,
-                          urlController.text,
-                          categoryId,
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    12), 
+                              ),
+                              backgroundColor: Colors.white,
+                              surfaceTintColor: Colors.white,
+                              content: Text(
+                                'Are you sure you want to add this video?',
+                                style: tFOnt(
+                                    fontSize: 17, fontWeight: FontWeight.bold),
+                              ),
+                              actions: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          width: 1.0, color: Colors.black)),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); 
+                                    },
+                                    child: Text(
+                                      'Cancel',
+                                      style: tFOnt(color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: mColor,
+                                      border: Border.all(
+                                          width: 1.0, color: Colors.black)),
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      await updateVideo(
+                                        id,
+                                        titleController.text,
+                                        urlController.text,
+                                        categoryId,
+                                      );
+                                      Navigator.of(context)
+                                          .pop(); 
+                                      Navigator.of(context).pop();
+                                      showCustomSnackbar(
+                                          context,
+                                          'Video Updated Successfully',
+                                          Colors.green);
+                                    },
+                                    child: Text(
+                                      'Confirm',
+                                      style: tFOnt(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
                         );
-                        Navigator.pop(context);
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.black,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                       child: Text("Update", style: tFOnt(color: Colors.white)),

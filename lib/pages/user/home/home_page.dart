@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           gradient: LinearGradient(
                             colors: [
                               mColor,
-                              mColor.withOpacity(0.7),
+                              mColor.withOpacity(0.8),
                             ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,

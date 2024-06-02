@@ -40,12 +40,11 @@ class AdminHomeScreen extends StatelessWidget {
                 decoration:
                     const BoxDecoration(color: mColor, shape: BoxShape.circle),
                 child: IconButton(
-                  icon: const Icon(
-                    Icons.logout,
-                    color: Colors.white,
-                  ),
-                  onPressed: () => _logout(context),
-                ),
+                    icon: const Icon(
+                      Icons.logout,
+                      color: Colors.white,
+                    ),
+                    onPressed: () => _showLogoutConfirmationDialog(context)),
               ),
             ],
           ),
@@ -400,5 +399,109 @@ class AdminHomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _showLogoutConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          surfaceTintColor: Colors.white,
+          backgroundColor: Colors.white,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Image.asset(
+                'assets/images/window.png',
+                width: 170,
+                height: 170,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Are you sure want to logout?',
+                style: tFOnt(fontSize: 17, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.white,
+                  border: Border.all(width: 1.0, color: Colors.black)),
+              child: TextButton(
+                child: Text(
+                  'Cancel',
+                  style: tFOnt(color: Colors.black),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: const Color.fromARGB(255, 171, 52, 44),
+                  border: Border.all(width: 1.0, color: Colors.black)),
+              child: TextButton(
+                child: Text(
+                  'Logout',
+                  style: tFOnt(color: Colors.white),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _logout(context);
+                  showCustomSnackbar(
+                    context,
+                    'Logout Successful',
+                    Colors.green,
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showCustomSnackbar(
+      BuildContext context, String message, Color backgroundColor) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 10,
+        left: 10,
+        right: 10,
+        child: SafeArea(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                message,
+                style: tFOnt(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay?.insert(overlayEntry);
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
   }
 }
