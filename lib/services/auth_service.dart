@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:learn_toefl/models/user.dart';
 import 'package:learn_toefl/ip.dart';
 
 class AuthService {
-  Future<User?> register(String username, String email, String password) async {
+  Future<Void?> register(String username, String email, String password) async {
     print('register berjalan');
     final uri = Uri.parse('$ip/api/auth/register');
     final response = await http.post(
@@ -50,13 +51,42 @@ class AuthService {
       );
 
       if (redirectedResponse.statusCode == 201) {
-        return User.fromJson(jsonDecode(response.body));
+        final data = jsonDecode(redirectedResponse.body);
+        print('Response Data: $data');
+
+        if (data.containsKey('token') && data.containsKey('user')) {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('token', data['token']);
+          await prefs.setBool('isAdmin', data['user']['is_admin']);
+          await prefs.setInt('id', data['user']['id']);
+          await prefs.setString('username', data['user']['username']);
+          await prefs.setString('email', data['user']['email']);
+          return null;
+        } else {
+          throw Exception('Invalid response structure');
+        }
       } else {
+        print('gagal');
+        print(redirectedResponse.statusCode);
         throw Exception('Failed to register after redirect');
       }
     } else if (response.statusCode == 201) {
-      return User.fromJson(jsonDecode(response.body));
+      final data = jsonDecode(response.body);
+      print('Response Data: $data');
+
+      if (data.containsKey('token') && data.containsKey('user')) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', data['token']);
+        await prefs.setBool('isAdmin', data['user']['is_admin']);
+        await prefs.setInt('id', data['user']['id']);
+        await prefs.setString('username', data['user']['username']);
+        await prefs.setString('email', data['user']['email']);
+        return null;
+      } else {
+        throw Exception('Invalid response structure');
+      }
     } else {
+      print('gagal');
       print(response.statusCode);
       throw Exception('Failed to register');
     }
@@ -110,10 +140,10 @@ class AuthService {
           final data = jsonDecode(redirectedResponse.body);
           print('Response Data: $data');
 
-          if (data.containsKey('token') && data.containsKey('isAdmin')) {
+          if (data.containsKey('token') && data.containsKey('user')) {
             final prefs = await SharedPreferences.getInstance();
             await prefs.setString('token', data['token']);
-            await prefs.setBool('isAdmin', data['isAdmin']);
+            await prefs.setBool('isAdmin', data['user']['is_admin']);
             await prefs.setInt('id', data['user']['id']);
             await prefs.setString('username', data['user']['username']);
             await prefs.setString('email', data['user']['email']);
@@ -128,10 +158,10 @@ class AuthService {
         final data = jsonDecode(response.body);
         print('Response Data: $data');
 
-        if (data.containsKey('token') && data.containsKey('isAdmin')) {
+        if (data.containsKey('token') && data.containsKey('user')) {
           final prefs = await SharedPreferences.getInstance();
           await prefs.setString('token', data['token']);
-          await prefs.setBool('isAdmin', data['isAdmin']);
+          await prefs.setBool('isAdmin', data['user']['is_admin']);
           await prefs.setInt('id', data['user']['id']);
           await prefs.setString('username', data['user']['username']);
           await prefs.setString('email', data['user']['email']);

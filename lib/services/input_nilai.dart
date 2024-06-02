@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'package:learn_toefl/ip.dart';
 
 Future<void> insertNilai(int questionId, int userId, int nilai) async {
-  print(questionId);
-  print(userId);
-  print(nilai);
   final url = Uri.parse('$ip/nilai'); // Ganti dengan URL server yang sesuai
   try {
     final response = await http.post(

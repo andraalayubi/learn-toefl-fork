@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:learn_toefl/models/question.dart';
 import 'package:learn_toefl/pages/user/exercise/summary.dart';
 import 'package:learn_toefl/utilities.dart';
+import 'package:learn_toefl/widget/audio_widget.dart';
 import 'package:learn_toefl/widget/question_widgets.dart';
 
 class ReadingTest extends StatefulWidget {
@@ -42,33 +43,6 @@ class _ReadingTestState extends State<ReadingTest> {
     _questionGroupId = widget.questionGroupId;
     print(_questionGroupId);
     _futureQuestionDetail = fetchPracticeDetail(_questionGroupId);
-
-    setAudio();
-
-    audioPlayer.onPlayerStateChanged.listen((state) {
-      setState(() {
-        isPlaying = state == PlayerState.playing;
-      });
-    });
-
-    audioPlayer.onDurationChanged.listen((newDuration) {
-      setState(() {
-        duration = newDuration;
-      });
-    });
-
-    audioPlayer.onPositionChanged.listen((newPosition) {
-      setState(() {
-        position = newPosition;
-      });
-    });
-
-    _futureQuestionDetail.then((detail) {
-      setState(() {
-        _totalQuestions = detail.questions.length;
-        questionAnswered = List.filled(_totalQuestions, false);
-      });
-    });
   }
 
   void updateProgress() {
@@ -77,44 +51,24 @@ class _ReadingTestState extends State<ReadingTest> {
     });
   }
 
-  Future setAudio() async {
-    String audioUrl = 'audio/Level ${widget.questionGroupId}.mp3';
-    await audioPlayer.setSourceAsset(audioUrl);
-  }
-
-  @override
-  void dispose() {
-    audioPlayer.resume();
-    audioPlayer.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(100),
-        child: ClipPath(
-          clipper: CustomAppBar(),
-          child: AppBar(
-            title: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Test',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            backgroundColor: const Color(0xFF0D0443),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ),
+        child: FutureBuilder<QuestionDetail>(
+          future: _futureQuestionDetail,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CustomAppBarWidget(questionCategory: '');
+            } else if (snapshot.hasError) {
+              return CustomAppBarWidget(questionCategory: 'Error');
+            } else {
+              final detail = snapshot.data!;
+              final questionCategory = detail.questionCategory;
+              return CustomAppBarWidget(questionCategory: questionCategory);
+            }
+          },
         ),
       ),
       body: Column(
@@ -177,42 +131,7 @@ class _ReadingTestState extends State<ReadingTest> {
                             ),
                           ),
                         if (detail.questionCategory == 'Listening')
-                          Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: CustomBox(
-                                  title: 'Instruction',
-                                  content: detail.readingText,
-                                ),
-                              ),
-                              Slider(
-                                value: position.inSeconds.toDouble(),
-                                max: duration.inSeconds.toDouble(),
-                                onChanged: (value) {
-                                  audioPlayer.seek(Duration(seconds: value.toInt()));
-                                },
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
-                                      onPressed: () {
-                                        if (isPlaying) {
-                                          audioPlayer.pause();
-                                        } else {
-                                          audioPlayer.resume();
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                          AudioWidget(questionGroupId: _questionGroupId, audioPlayer: audioPlayer, text: detail.readingText ),
                         ...detail.questions.asMap().entries.map(
                               (entry) => Padding(
                                 padding: const EdgeInsets.only(bottom: 16.0),
@@ -292,5 +211,41 @@ class CustomAppBar extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
     return false;
+  }
+}
+
+class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
+  final String questionCategory;
+
+  CustomAppBarWidget({required this.questionCategory});
+
+  @override
+  Size get preferredSize => Size.fromHeight(100);
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipPath(
+      clipper: CustomAppBar(),
+      child: AppBar(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              questionCategory + ' Test',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: const Color(0xFF0D0443),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+    );
   }
 }
