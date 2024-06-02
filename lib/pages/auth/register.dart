@@ -15,6 +15,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _authService = AuthService();
+  bool _obscureText = true;
 
   void _register() async {
     setState(() {
@@ -150,9 +151,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 20),
               TextField(
                 controller: _passwordController,
-                obscureText: true,
+                obscureText:
+                    _obscureText, 
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _obscureText =
+                            !_obscureText; 
+                      });
+                    },
+                    icon: Icon(_obscureText
+                        ? Icons.visibility
+                        : Icons
+                            .visibility_off), 
+                  ),
                   hintText: 'Password',
                   hintStyle: tFOnt(
                     fontSize: 15,
@@ -185,7 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           height: 25,
                           width: 25,
                           child: CircularProgressIndicator(
-                            color: mColor,
+                            color: Colors.white,
                             strokeWidth: 2.0,
                           ),
                         )
@@ -212,7 +226,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LoginScreen(),
+                          builder: (context) => const LoginScreen(),
                         ),
                       );
                     },
