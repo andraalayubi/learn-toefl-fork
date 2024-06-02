@@ -8,7 +8,7 @@ import 'package:learn_toefl/widget/question_widgets.dart';
 class ReadingTest extends StatefulWidget {
   final int questionGroupId;
 
-  ReadingTest({Key? key, required this.questionGroupId}) : super(key: key);
+  const ReadingTest({Key? key, required this.questionGroupId}) : super(key: key);
 
   @override
   _ReadingTestState createState() => _ReadingTestState();
@@ -34,6 +34,7 @@ class _ReadingTestState extends State<ReadingTest> {
   String? selectedOption8;
   String? selectedOption9;
   String? selectedOption10;
+  late List<bool> questionAnswered;
 
   @override
   void initState() {
@@ -61,11 +62,18 @@ class _ReadingTestState extends State<ReadingTest> {
         position = newPosition;
       });
     });
+
+    _futureQuestionDetail.then((detail) {
+      setState(() {
+        _totalQuestions = detail.questions.length;
+        questionAnswered = List.filled(_totalQuestions, false);
+      });
+    });
   }
 
   void updateProgress() {
     setState(() {
-      _currentQuestionIndex++;
+      _currentQuestionIndex = questionAnswered.where((answered) => answered).length;
     });
   }
 
@@ -99,10 +107,6 @@ class _ReadingTestState extends State<ReadingTest> {
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
-                // Text(
-                //   '$currentQuestion/$totalQuestions Questions',
-                //   style: TextStyle(color: Colors.white, fontSize: 14),
-                // ),
               ],
             ),
             backgroundColor: const Color(0xFF0D0443),
@@ -117,8 +121,7 @@ class _ReadingTestState extends State<ReadingTest> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Row(
               children: [
                 Expanded(
@@ -135,7 +138,7 @@ class _ReadingTestState extends State<ReadingTest> {
                 const SizedBox(width: 16),
                 Text(
                   '$_currentQuestionIndex/$_totalQuestions',
-                  style: tFOnt(color: Colors.black, fontSize: 14),
+                  style: const TextStyle(color: Colors.black, fontSize: 14),
                 ),
               ],
             ),
@@ -167,9 +170,8 @@ class _ReadingTestState extends State<ReadingTest> {
                         if (detail.readingText.isNotEmpty &&
                             detail.questionCategory != 'Listening')
                           Padding(
-                            padding: EdgeInsets.all(16.0),
+                            padding: const EdgeInsets.all(16.0),
                             child: CustomBox(
-                              // Menggunakan CustomBox untuk bacaan
                               title: 'Passage',
                               content: detail.readingText,
                             ),
@@ -178,9 +180,8 @@ class _ReadingTestState extends State<ReadingTest> {
                           Column(
                             children: [
                               Padding(
-                                padding: EdgeInsets.all(16.0),
+                                padding: const EdgeInsets.all(16.0),
                                 child: CustomBox(
-                                  // Menggunakan CustomBox untuk bacaan
                                   title: 'Instruction',
                                   content: detail.readingText,
                                 ),
@@ -189,8 +190,7 @@ class _ReadingTestState extends State<ReadingTest> {
                                 value: position.inSeconds.toDouble(),
                                 max: duration.inSeconds.toDouble(),
                                 onChanged: (value) {
-                                  audioPlayer
-                                      .seek(Duration(seconds: value.toInt()));
+                                  audioPlayer.seek(Duration(seconds: value.toInt()));
                                 },
                               ),
                               Padding(
@@ -199,9 +199,7 @@ class _ReadingTestState extends State<ReadingTest> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     IconButton(
-                                      icon: Icon(isPlaying
-                                          ? Icons.pause
-                                          : Icons.play_arrow),
+                                      icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
                                       onPressed: () {
                                         if (isPlaying) {
                                           audioPlayer.pause();
@@ -217,9 +215,7 @@ class _ReadingTestState extends State<ReadingTest> {
                           ),
                         ...detail.questions.asMap().entries.map(
                               (entry) => Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom:
-                                        16.0), // Menambahkan jarak antar QuestionBox
+                                padding: const EdgeInsets.only(bottom: 16.0),
                                 child: QuestionBox(
                                   questionNumber: entry.key + 1,
                                   question: entry.value.questionText,
@@ -227,46 +223,45 @@ class _ReadingTestState extends State<ReadingTest> {
                                   options: entry.value.answerOptions,
                                   selectedOption: entry.value.userAnswer,
                                   onSelect: (option) {
-                                    if (entry.value.userAnswer == null) {
+                                    setState(() {
                                       entry.value.userAnswer = option;
-                                      setState(() {
-                                        switch (entry.key) {
-                                          case 0:
-                                            selectedOption1 = option;
-                                            break;
-                                          case 1:
-                                            selectedOption2 = option;
-                                            break;
-                                          case 2:
-                                            selectedOption3 = option;
-                                            break;
-                                          case 3:
-                                            selectedOption4 = option;
-                                            break;
-                                        }
-                                      });
+                                      questionAnswered[entry.key] = true;
                                       updateProgress();
-                                    }
+                                    });
                                   },
                                 ),
                               ),
                             ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Summary(
-                                  questionId: _questionGroupId,
-                                  score: correct * 10,
-                                  correct: correct,
-                                  incorrect: incorrect,
-                                  detail: detail, // melemparkan detail
+                        Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Summary(
+                                        questionId: _questionGroupId,
+                                        score: correct * 10,
+                                        correct: correct,
+                                        incorrect: incorrect,
+                                        detail: detail,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF0D0443),
+                                ),
+                                child: const Text(
+                                  'Submit',
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
-                            );
-                          },
-                          child: Text('Submit'),
+                            ],
+                          ),
                         ),
                       ],
                     ),

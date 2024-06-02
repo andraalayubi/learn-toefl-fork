@@ -8,7 +8,7 @@
     </queries>
 
     <application
-        android:label="learn_toefl"
+        android:label="ToeTion"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
