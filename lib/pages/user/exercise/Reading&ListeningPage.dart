@@ -9,7 +9,8 @@ import 'package:learn_toefl/widget/question_widgets.dart';
 class ReadingTest extends StatefulWidget {
   final int questionGroupId;
 
-  const ReadingTest({Key? key, required this.questionGroupId}) : super(key: key);
+  const ReadingTest({Key? key, required this.questionGroupId})
+      : super(key: key);
 
   @override
   _ReadingTestState createState() => _ReadingTestState();
@@ -35,7 +36,7 @@ class _ReadingTestState extends State<ReadingTest> {
   String? selectedOption8;
   String? selectedOption9;
   String? selectedOption10;
-  late List<bool> questionAnswered;
+  List<bool?> questionAnswered = [];
 
   @override
   void initState() {
@@ -47,7 +48,10 @@ class _ReadingTestState extends State<ReadingTest> {
 
   void updateProgress() {
     setState(() {
-      _currentQuestionIndex = questionAnswered.where((answered) => answered).length;
+      _currentQuestionIndex =
+          questionAnswered.where((answered) => answered != null).length;
+      print(questionAnswered);
+      print(_currentQuestionIndex);
     });
   }
 
@@ -75,7 +79,8 @@ class _ReadingTestState extends State<ReadingTest> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Row(
               children: [
                 Expanded(
@@ -109,6 +114,11 @@ class _ReadingTestState extends State<ReadingTest> {
                   final detail = snapshot.data!;
                   _totalQuestions = detail.questions.length;
 
+                  if (questionAnswered.isEmpty) {
+                    questionAnswered =
+                        List<bool?>.filled(_totalQuestions, null);
+                  }
+                  
                   final correct = detail.questions
                       .where((question) =>
                           question.userAnswer != null &&
@@ -131,7 +141,10 @@ class _ReadingTestState extends State<ReadingTest> {
                             ),
                           ),
                         if (detail.questionCategory == 'Listening')
-                          AudioWidget(questionGroupId: _questionGroupId, audioPlayer: audioPlayer, text: detail.readingText ),
+                          AudioWidget(
+                              questionGroupId: _questionGroupId,
+                              audioPlayer: audioPlayer,
+                              text: detail.readingText),
                         ...detail.questions.asMap().entries.map(
                               (entry) => Padding(
                                 padding: const EdgeInsets.only(bottom: 16.0),
@@ -214,7 +227,8 @@ class CustomAppBar extends CustomClipper<Path> {
   }
 }
 
-class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBarWidget extends StatelessWidget
+    implements PreferredSizeWidget {
   final String questionCategory;
 
   CustomAppBarWidget({required this.questionCategory});

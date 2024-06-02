@@ -9,7 +9,7 @@ Future<void> insertNilai(int questionId, int userId, int nilai) async {
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'question_id': questionId,
+        'question_group_id': questionId,
         'user_id': userId,
         'nilai': nilai,
       }),
@@ -36,14 +36,15 @@ Future<void> insertNilai(int questionId, int userId, int nilai) async {
         newUri,
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          'question_id': questionId,
+          'question_group_id': questionId,
           'user_id': userId,
           'nilai': nilai,
         }),
       );
 
       if (redirectedResponse.statusCode == 200) {
-        final data = jsonDecode(response.body);
+        print(redirectedResponse.body);
+        final data = jsonDecode(redirectedResponse.body);
         print(data['message']); // Mencetak pesan sukses
       } else {
         throw Exception('Failed to input nilai after redirect ${response.statusCode}');

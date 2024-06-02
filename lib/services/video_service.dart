@@ -61,8 +61,9 @@ Future<void> addNewVideo(String title, String url, int categoryId) async {
 }
 
 Future<void> updateVideo(int id, String name, String url, int categoryId) async {
+  final uri = Uri.parse('$ip/video/update/$id');
   final response = await http.put(
-    Uri.parse('http://localhost:3000/video/update/$id'),
+    uri,
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -82,7 +83,7 @@ Future<void> updateVideo(int id, String name, String url, int categoryId) async 
     if (redirectUri.hasScheme) {
       newUri = redirectUri;
     } else {
-      newUri = Uri.parse('http://localhost:3000').resolveUri(redirectUri);
+      newUri = uri.resolveUri(redirectUri);
     }
 
     print('Redirect location: $newUri');
@@ -112,8 +113,9 @@ Future<void> updateVideo(int id, String name, String url, int categoryId) async 
 }
 
 Future<void> deleteVideo(int id) async {
+  final uri = Uri.parse('$ip/video/delete/$id');
   final response = await http.delete(
-    Uri.parse('http://localhost:3000/video/delete/$id'),
+    uri,
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -128,7 +130,7 @@ Future<void> deleteVideo(int id) async {
     if (redirectUri.hasScheme) {
       newUri = redirectUri;
     } else {
-      newUri = Uri.parse('http://localhost:3000').resolveUri(redirectUri);
+      newUri = uri.resolveUri(redirectUri);
     }
 
     print('Redirect location: $newUri');
