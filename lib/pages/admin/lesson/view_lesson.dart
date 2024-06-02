@@ -20,25 +20,24 @@ class _ListViewVideoState extends State<ListViewVideo> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: 150,
-        elevation: 0.0,
-        flexibleSpace: ClipPath(
-          clipper: AppBarCustomClipper(),
-          child: Container(
-            height: 200,
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(color: mColor),
-          ),
-        ),
+        // toolbarHeight: 150,
+        // elevation: 0.0,
+        // flexibleSpace: ClipPath(
+        //   clipper: AppBarCustomClipper(),
+        //   child: Container(
+        //     height: 200,
+        //     width: MediaQuery.of(context).size.width,
+        //     decoration: const BoxDecoration(color: mColor),
+        //   ),
+        // ),
         surfaceTintColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 80),
-          child: Text(
-            widget.category,
-            style: tFOnt(fontWeight: FontWeight.bold, color: Colors.white),
-          ),
+        backgroundColor: mColor,
+        centerTitle: true,
+        title: Text(
+          widget.category,
+          style: tFOnt(fontWeight: FontWeight.bold, color: Colors.white),
         ),
+
         leading: Padding(
           padding: const EdgeInsets.only(left: 22.0),
           child: IconButton(
@@ -106,7 +105,7 @@ class _ListViewVideoState extends State<ListViewVideo> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.asset(
-                          'assets/images/video.png',
+                          'assets/images/pidios.png',
                           width: 100,
                           height: 60,
                           fit: BoxFit.cover,
@@ -128,7 +127,8 @@ class _ListViewVideoState extends State<ListViewVideo> {
                         color: Colors.blue,
                       ),
                       onPressed: () {
-                        _showUpdateDialog(context, video.id, widget.category, video.name, video.url);
+                        _showUpdateDialog(context, video.id, widget.category,
+                            video.name, video.url);
                       },
                     ),
                     IconButton(
