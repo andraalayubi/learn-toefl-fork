@@ -32,8 +32,6 @@ class _SummaryState extends State<Summary> {
   void initState() {
     super.initState();
     _insertToDb();
-    print(widget);
-    print(widget.correct);
   }
 
   void _insertToDb() async {
