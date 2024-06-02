@@ -15,6 +15,26 @@ Future<List<VideoCategory>> fetchVideos(int id) async {
   }
 }
 
+Future<List<VideoCategory>> fetchVideosByCategory(String category, int subCategory) async {
+  final response = await http.get(Uri.parse('$ip/video/all/$subCategory'));
+  // final response = await http.get(Uri.parse('http://localhost:3000/video/all/1'));
+
+  if (response.statusCode == 200) {
+    Iterable list = json.decode(response.body);
+    List<VideoCategory> allVideos =
+        list.map((model) => VideoCategory.fromJson(model)).toList();
+
+    // Filter video categories based on the given category
+    List<VideoCategory> filteredVideos = allVideos
+        .where((videoCategory) => videoCategory.name == category)
+        .toList();
+
+    return filteredVideos;
+  } else {
+    throw Exception('Failed to load videos');
+  }
+}
+
 Future<Video> getDataVideo(int id) async {
   final response = await http.get(Uri.parse('$ip/video/$id'));
 

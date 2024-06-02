@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:learn_toefl/ip.dart';
 
 Future<void> addNewVideo(String title, String url, int categoryId) async {
-  final uri = Uri.parse('$ip/video/add');
+  final uri = Uri.parse('$ip/api/admin//video/add');
   final response = await http.post(
     uri,
     headers: <String, String>{
@@ -61,7 +61,8 @@ Future<void> addNewVideo(String title, String url, int categoryId) async {
 }
 
 Future<void> updateVideo(int id, String name, String url, int categoryId) async {
-  final uri = Uri.parse('$ip/video/update/$id');
+  print('Update video');
+  final uri = Uri.parse('$ip/api/admin/video/update/$id');
   final response = await http.put(
     uri,
     headers: <String, String>{
@@ -113,7 +114,7 @@ Future<void> updateVideo(int id, String name, String url, int categoryId) async 
 }
 
 Future<void> deleteVideo(int id) async {
-  final uri = Uri.parse('$ip/video/delete/$id');
+  final uri = Uri.parse('$ip/api/admin/video/delete/$id');
   final response = await http.delete(
     uri,
     headers: <String, String>{
