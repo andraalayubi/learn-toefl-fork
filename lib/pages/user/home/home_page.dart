@@ -456,9 +456,15 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                     );
                                   } else if (!snapshot.hasData ||
                                       snapshot.data!.isEmpty) {
-                                    return const Center(
-                                      child: Text(
-                                          'You haven\'t started studying yet'),
+                                    return Center(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 50.0),
+                                        child: Text(
+                                          'You haven\'t started studying yet',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
                                     );
                                   } else {
                                     List<dynamic> videoList = snapshot.data!
