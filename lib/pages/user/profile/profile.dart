@@ -284,6 +284,11 @@ class _ProfilPageState extends State<ProfilPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          surfaceTintColor: Colors.white,
+          backgroundColor: Colors.white,
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -307,7 +312,7 @@ class _ProfilPageState extends State<ProfilPage> {
                   border: Border.all(width: 1.0, color: Colors.black)),
               child: TextButton(
                 child: Text(
-                  'Batal',
+                  'Cancel',
                   style: tFOnt(color: Colors.black),
                 ),
                 onPressed: () {
