@@ -92,7 +92,8 @@ class _LessonPageState extends State<LessonPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ListViewVideo(category: 'Listening', subCategory: 1)));
+                              builder: (context) => const ListViewVideo(
+                                  category: 'Listening', subCategory: 1)));
                     },
                     child: Container(
                       width: 170,
@@ -159,7 +160,8 @@ class _LessonPageState extends State<LessonPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ListViewVideo(category: 'Speaking', subCategory: 1)));
+                              builder: (context) => const ListViewVideo(
+                                  category: 'Speaking', subCategory: 1)));
                     },
                     child: Container(
                       width: 170,
@@ -235,7 +237,8 @@ class _LessonPageState extends State<LessonPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ListViewVideo(category: 'Reading', subCategory: 1)));
+                              builder: (context) => const ListViewVideo(
+                                  category: 'Reading', subCategory: 1)));
                     },
                     child: Container(
                       width: 170,
@@ -303,7 +306,8 @@ class _LessonPageState extends State<LessonPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ListViewVideo(category: 'Writing', subCategory: 1)));
+                              builder: (context) => const ListViewVideo(
+                                  category: 'Writing', subCategory: 1)));
                     },
                     child: Container(
                       width: 170,
@@ -542,13 +546,73 @@ class _LessonPageState extends State<LessonPage> {
                       const SizedBox(width: 10),
                       TextButton(
                         onPressed: () {
-                          print(_titleController.text);
-                          print(_urlController.text);
-                          addNewVideo(_titleController.text,
-                              _urlController.text, categoryId!);
-                              _titleController.clear();
-                              _urlController.clear();
-                          Navigator.pop(context);
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      12),
+                                ),
+                                backgroundColor: Colors.white,
+                                surfaceTintColor: Colors.white,
+                                content: Text(
+                                  'Are you sure you want to add this video?',
+                                  style: tFOnt(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                actions: <Widget>[
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Colors.white,
+                                        border: Border.all(
+                                            width: 1.0, color: Colors.black)),
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pop();
+                                      },
+                                      child: Text(
+                                        'Cancel',
+                                        style: tFOnt(color: Colors.black),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: mColor,
+                                        border: Border.all(
+                                            width: 1.0, color: Colors.black)),
+                                    child: TextButton(
+                                      onPressed: () {
+                                        print(_titleController.text);
+                                        print(_urlController.text);
+                                        addNewVideo(_titleController.text,
+                                            _urlController.text, categoryId!);
+                                        _titleController.clear();
+                                        _urlController.clear();
+                                        Navigator.of(context)
+                                            .pop(); 
+                                        Navigator.of(context).pop();
+                                       
+                                        showCustomSnackbar(
+                                            context,
+                                            'Video Added Successfully',
+                                            Colors.green);
+                                      },
+                                      child: Text(
+                                        'Confirm',
+                                        style: tFOnt(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.black,
@@ -566,6 +630,20 @@ class _LessonPageState extends State<LessonPage> {
           ),
         );
       },
+    );
+  }
+
+  void showCustomSnackbar(
+      BuildContext context, String message, Color backgroundColor) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: TextStyle(fontSize: 16, color: Colors.white),
+        ),
+        backgroundColor: backgroundColor,
+        duration: Duration(seconds: 3),
+      ),
     );
   }
 }
