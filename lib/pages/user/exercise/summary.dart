@@ -10,14 +10,17 @@ class Summary extends StatefulWidget {
   final int score;
   final int correct;
   final int incorrect;
-  final QuestionDetail? detail; // tambahkan parameter ini
+  final QuestionDetail? detail;
+  final String? textTitle;
+  final String? text;
 
   const Summary({
     required this.score,
     required this.correct,
     required this.incorrect,
     required this.questionId,
-    this.detail, // dan ini
+    this.detail,
+    this.text, this.textTitle,
   });
 
   @override
@@ -192,6 +195,14 @@ class _SummaryState extends State<Summary> {
               ],
             ),
             const SizedBox(height: 20),
+            if (widget.text != null)
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: CustomBox(
+                  title: widget.textTitle!,
+                  content: widget.text!,
+                ),
+              ),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -220,7 +231,8 @@ class _SummaryState extends State<Summary> {
                     ),
                   );
                 } else {
-                  return const SizedBox.shrink(); // Mengembalikan widget kosong jika question adalah null
+                  return const SizedBox
+                      .shrink(); // Mengembalikan widget kosong jika question adalah null
                 }
               },
             ),
