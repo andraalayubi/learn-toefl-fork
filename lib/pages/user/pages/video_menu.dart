@@ -145,7 +145,7 @@ class _VideoListPageState extends State<VideoListPage> {
                   decoration: const BoxDecoration(
                     color: Color(0xFF0D0443),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // Expanded(
@@ -209,12 +209,20 @@ class _VideoListPageState extends State<VideoListPage> {
                   gradient: LinearGradient(
                     colors: [
                       mColor,
-                      mColor.withOpacity(0.7),
+                      mColor.withOpacity(0.8),
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     stops: const [0.4, 1],
                   ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(2, 4),
+                      blurRadius: 5,
+                      spreadRadius: 0,
+                    )
+                  ],
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(

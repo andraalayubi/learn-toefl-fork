@@ -79,13 +79,21 @@ class _Exercise extends State<Exercise> {
           gradient: LinearGradient(
             colors: [
               mColor,
-              mColor.withOpacity(0.7),
+              mColor.withOpacity(0.8),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             stops: const [0.4, 1],
           ),
           borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(2, 4),
+              blurRadius: 5,
+              spreadRadius: 0,
+            )
+          ],
         ),
         padding: const EdgeInsets.all(15),
         child: Row(

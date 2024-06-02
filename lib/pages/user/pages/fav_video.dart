@@ -157,6 +157,14 @@ class _FavVideoState extends State<FavVideo> {
                       stops: const [0.4, 1],
                     ),
                     borderRadius: BorderRadius.circular(12),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(2, 4),
+                        blurRadius: 5,
+                        spreadRadius: 0,
+                      )
+                    ],
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
