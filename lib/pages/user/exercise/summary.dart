@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/models/question.dart';
 import 'package:learn_toefl/services/input_nilai.dart';
+import 'package:learn_toefl/utilities.dart';
 import 'package:learn_toefl/widget/question_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -46,9 +47,9 @@ class _SummaryState extends State<Summary> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             'Summary',
-            style: TextStyle(
+            style: tFOnt(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -83,19 +84,19 @@ class _SummaryState extends State<Summary> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const SizedBox(height: 50),
-                          const Text(
+                          Text(
                             'Congratulations!\nYou have completed all questions.',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: tFOnt(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
                           ),
                           const SizedBox(height: 20),
-                          const Text(
+                          Text(
                             'Your score is:',
-                            style: TextStyle(
+                            style: tFOnt(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -122,7 +123,7 @@ class _SummaryState extends State<Summary> {
                                   ),
                                   child: Text(
                                     '${widget.score}',
-                                    style: const TextStyle(
+                                    style: tFOnt(
                                       fontSize: 73,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
@@ -133,7 +134,8 @@ class _SummaryState extends State<Summary> {
                                 Column(
                                   children: [
                                     Container(
-                                      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 16, horizontal: 20),
                                       decoration: BoxDecoration(
                                         color: Colors.green[100],
                                         borderRadius: BorderRadius.circular(16),
@@ -148,7 +150,7 @@ class _SummaryState extends State<Summary> {
                                       ),
                                       child: Text(
                                         '${widget.correct} Correct',
-                                        style: TextStyle(
+                                        style: tFOnt(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.green[700],
@@ -172,7 +174,7 @@ class _SummaryState extends State<Summary> {
                                       ),
                                       child: Text(
                                         '${widget.incorrect} Incorrect',
-                                        style: TextStyle(
+                                        style: tFOnt(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.red[700],
@@ -199,7 +201,7 @@ class _SummaryState extends State<Summary> {
             const SizedBox(height: 20),
             ListView.builder(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemCount: widget.detail?.questions.length ?? 0,
               itemBuilder: (context, index) {
                 final question = widget.detail?.questions[index];

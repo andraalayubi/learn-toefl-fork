@@ -241,7 +241,7 @@ class _Exercise extends State<Exercise> {
                           children: [
                             TextSpan(
                               text: '${levels.length} Levels',
-                              style: const TextStyle(
+                              style: tFOnt(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -260,14 +260,14 @@ class _Exercise extends State<Exercise> {
                   children: [
                     Text(
                       level.name, // "Level 1"
-                      style: const TextStyle(
+                      style: tFOnt(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       '${level.jumlahQuestion} Questions', // "10 Questions"
-                      style: const TextStyle(
+                      style: tFOnt(
                         fontSize: 12,
                         color: Colors.grey,
                       ),
@@ -301,7 +301,9 @@ class _Exercise extends State<Exercise> {
       ),
     );
   }
-  void _showStartExerciseDialog(BuildContext context, int questionGroupId, Widget Function(int questionGroupId) testPage) {
+
+  void _showStartExerciseDialog(BuildContext context, int questionGroupId,
+      Widget Function(int questionGroupId) testPage) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -332,7 +334,7 @@ class _Exercise extends State<Exercise> {
                 child: Text(
                   'No',
                   style: tFOnt(color: Colors.black),
-                   ),
+                ),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

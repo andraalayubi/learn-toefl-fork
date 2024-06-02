@@ -141,10 +141,7 @@ class _ReadingTestState extends State<ReadingTest> {
                             ),
                           ),
                         if (detail.questionCategory == 'Listening')
-                          AudioWidget(
-                              questionGroupId: _questionGroupId,
-                              audioPlayer: audioPlayer,
-                              text: detail.readingText),
+                          AudioWidget(questionGroupId: _questionGroupId, audioPlayer: audioPlayer, text: detail.readingText ),
                         ...detail.questions.asMap().entries.map(
                               (entry) => Padding(
                                 padding: const EdgeInsets.only(bottom: 16.0),
