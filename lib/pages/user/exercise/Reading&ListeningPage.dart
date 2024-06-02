@@ -8,7 +8,8 @@ import 'package:learn_toefl/widget/question_widgets.dart';
 class ReadingTest extends StatefulWidget {
   final int questionGroupId;
 
-  const ReadingTest({Key? key, required this.questionGroupId}) : super(key: key);
+  const ReadingTest({Key? key, required this.questionGroupId})
+      : super(key: key);
 
   @override
   _ReadingTestState createState() => _ReadingTestState();
@@ -73,7 +74,8 @@ class _ReadingTestState extends State<ReadingTest> {
 
   void updateProgress() {
     setState(() {
-      _currentQuestionIndex = questionAnswered.where((answered) => answered).length;
+      _currentQuestionIndex =
+          questionAnswered.where((answered) => answered).length;
     });
   }
 
@@ -97,12 +99,12 @@ class _ReadingTestState extends State<ReadingTest> {
         child: ClipPath(
           clipper: CustomAppBar(),
           child: AppBar(
-            title: const Column(
+            title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Test',
-                  style: TextStyle(
+                  style: tFOnt(
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
@@ -121,7 +123,8 @@ class _ReadingTestState extends State<ReadingTest> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Row(
               children: [
                 Expanded(
@@ -138,7 +141,7 @@ class _ReadingTestState extends State<ReadingTest> {
                 const SizedBox(width: 16),
                 Text(
                   '$_currentQuestionIndex/$_totalQuestions',
-                  style: const TextStyle(color: Colors.black, fontSize: 14),
+                  style: tFOnt(color: Colors.black, fontSize: 14),
                 ),
               ],
             ),
@@ -190,7 +193,8 @@ class _ReadingTestState extends State<ReadingTest> {
                                 value: position.inSeconds.toDouble(),
                                 max: duration.inSeconds.toDouble(),
                                 onChanged: (value) {
-                                  audioPlayer.seek(Duration(seconds: value.toInt()));
+                                  audioPlayer
+                                      .seek(Duration(seconds: value.toInt()));
                                 },
                               ),
                               Padding(
@@ -199,7 +203,9 @@ class _ReadingTestState extends State<ReadingTest> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     IconButton(
-                                      icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
+                                      icon: Icon(isPlaying
+                                          ? Icons.pause
+                                          : Icons.play_arrow),
                                       onPressed: () {
                                         if (isPlaying) {
                                           audioPlayer.pause();
@@ -255,9 +261,9 @@ class _ReadingTestState extends State<ReadingTest> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF0D0443),
                                 ),
-                                child: const Text(
+                                child: Text(
                                   'Submit',
-                                  style: TextStyle(color: Colors.white),
+                                  style: tFOnt(color: Colors.white),
                                 ),
                               ),
                             ],
