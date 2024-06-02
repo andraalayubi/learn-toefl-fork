@@ -187,7 +187,7 @@ class _HistoryVideoState extends State<HistoryVideo> {
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(width: 1.0, color: Colors.black),
                           image: const DecorationImage(
-                            image: AssetImage('assets/images/video.png'),
+                            image: AssetImage('assets/images/pidios.png'),
                             fit: BoxFit.cover,
                           ),
                         ),

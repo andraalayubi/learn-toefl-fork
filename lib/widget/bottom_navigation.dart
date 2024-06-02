@@ -33,21 +33,45 @@ class _BottomNavigationState extends State<BottomNavigation> {
             _selectedIndex = index;
           });
         },
-        items: const [
-          Icon(
-            Icons.home,
-            color: Colors.white,
-            size: 30,
+        items: [
+          Tooltip(
+            message: 'Homepage',
+            textStyle: tFOnt(color: Colors.white),
+            decoration: BoxDecoration(
+              color: const Color.fromRGBO(38, 38, 66, 1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: const Icon(
+              Icons.home,
+              color: Colors.white,
+              size: 30,
+            ),
           ),
-          Icon(
-            Icons.task_alt_outlined,
-            color: Colors.white,
-            size: 30,
+          Tooltip(
+            message: 'Exercise Page',
+            textStyle: tFOnt(color: Colors.white),
+            decoration: BoxDecoration(
+              color: const Color.fromRGBO(38, 38, 66, 1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: const Icon(
+              Icons.task_alt_outlined,
+              color: Colors.white,
+              size: 30,
+            ),
           ),
-          Icon(
-            Icons.person,
-            color: Colors.white,
-            size: 30,
+          Tooltip(
+            message: 'Profile Page',
+            textStyle: tFOnt(color: Colors.white),
+            decoration: BoxDecoration(
+              color: const Color.fromRGBO(38, 38, 66, 1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: const Icon(
+              Icons.person,
+              color: Colors.white,
+              size: 30,
+            ),
           ),
         ],
       ),
