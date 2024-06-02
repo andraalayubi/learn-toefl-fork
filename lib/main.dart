@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_toefl/pages/admin/home/home.dart';
-import 'package:learn_toefl/pages/auth/login.dart';
-import 'package:learn_toefl/widget/bottom_navigation.dart';
+import 'package:learn_toefl/splashscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -21,31 +19,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FutureBuilder<bool>(
-        future: isLoggedIn(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else {
-            if (snapshot.data == true) {
-              return FutureBuilder<bool>(
-                future: isAdmin(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else {
-                    return snapshot.data! ? AdminHomeScreen() : BottomNavigation();
-                  }
-                },
-              );
-            } else {
-              return LoginScreen();
-            }
-          }
-        },
-      ),
+      home: SplashScreen()
     );
   }
 }
