@@ -4,6 +4,7 @@ import 'package:learn_toefl/services/input_nilai.dart';
 import 'package:learn_toefl/utilities.dart';
 import 'package:learn_toefl/widget/question_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class Summary extends StatefulWidget {
   final int questionId;
@@ -20,7 +21,8 @@ class Summary extends StatefulWidget {
     required this.incorrect,
     required this.questionId,
     this.detail,
-    this.text, this.textTitle,
+    this.text,
+    this.textTitle,
   });
 
   @override
@@ -44,6 +46,15 @@ class _SummaryState extends State<Summary> {
     } catch (e) {
       print('Error while getting user info: $e');
     }
+  }
+
+  FlutterTts flutterTts = FlutterTts();
+  speak(String text) async {
+    await flutterTts.setLanguage("en-US");
+    await flutterTts.setPitch(1);
+    await flutterTts.setVolume(0.5);
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.speak(text);
   }
 
   @override
@@ -227,6 +238,7 @@ class _SummaryState extends State<Summary> {
                           // Tidak melakukan apa-apa karena ini adalah halaman ringkasan
                         },
                         isSummary: true,
+                        
                       ),
                     ),
                   );
