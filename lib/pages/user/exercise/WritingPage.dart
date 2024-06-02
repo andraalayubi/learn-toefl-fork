@@ -122,8 +122,6 @@ class _WritingTestState extends State<WritingTest> {
                                     builder: (context) => Summary(
                                       questionId: widget.questionGroupId,
                                       score: score,
-                                      correct: 0,
-                                      incorrect: 0,
                                       textTitle: 'Sample Answer',
                                       text: detail.sampleAnswer,
                                     ),

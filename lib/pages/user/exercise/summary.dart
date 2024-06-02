@@ -8,16 +8,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Summary extends StatefulWidget {
   final int questionId;
   final int score;
-  final int correct;
-  final int incorrect;
+  final int? correct;
+  final int? incorrect;
   final QuestionDetail? detail;
   final String? textTitle;
   final String? text;
 
   const Summary({
     required this.score,
-    required this.correct,
-    required this.incorrect,
+    this.correct,
+    this.incorrect,
     required this.questionId,
     this.detail,
     this.text, this.textTitle,
@@ -32,6 +32,8 @@ class _SummaryState extends State<Summary> {
   void initState() {
     super.initState();
     _insertToDb();
+    print(widget);
+    print(widget.correct);
   }
 
   void _insertToDb() async {
@@ -134,6 +136,7 @@ class _SummaryState extends State<Summary> {
                             ),
                           ),
                           const SizedBox(width: 20),
+                          if(widget.correct != null)
                           Column(
                             children: [
                               Container(

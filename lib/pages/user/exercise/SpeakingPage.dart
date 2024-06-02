@@ -209,8 +209,6 @@ class _SpeakingTestState extends State<SpeakingTest> {
                                       builder: (context) => Summary(
                                         questionId: widget.questionGroupId,
                                         score: accuracy.toInt(),
-                                        correct: 0,
-                                        incorrect: 0,
                                         textTitle: 'Correct Answer',
                                         text: providedText,
                                       ),
