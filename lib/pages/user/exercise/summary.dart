@@ -264,7 +264,9 @@ class _SummaryState extends State<Summary> {
                 }
               },
             ),
+            if (widget.correct == null)
             const SizedBox(height: 20),
+            if (widget.correct == null)
             InkWell(
               child: IconButton(
                 onPressed: () => speak(widget.text!),
