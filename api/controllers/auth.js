@@ -13,7 +13,10 @@ exports.register = async (req, res) => {
             'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *',
             [username, email, hashedPassword]
         );
-        res.status(201).json(result.rows[0]);
+
+        const user = result.rows[0];
+        const token = jwt.sign({ userId: user.id}, secretKey, { expiresIn: '1h' });
+        res.status(201).json({token, user});
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -51,7 +54,7 @@ exports.login = async (req, res) => {
         }
 
         const token = jwt.sign({ userId: user.id}, secretKey, { expiresIn: '1h' });
-        res.json({ token, isAdmin: user.is_admin, user });
+        res.json({ token, user });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
