@@ -46,4 +46,16 @@ class VideoHistory {
     // Convert the list of JSON strings back to a list of maps
     return videoHistory.map((videoJson) => jsonDecode(videoJson)).toList();
   }
+
+  static Future<void> removeHistory(int id) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> videoHistory = prefs.getStringList(_historyKey) ?? [];
+
+    videoHistory.removeWhere((videoJson) {
+      final Map<String, dynamic> existingVideoMap = jsonDecode(videoJson);
+      return existingVideoMap['id'] == id;
+    });
+
+    await prefs.setStringList(_historyKey, videoHistory);
+  }
 }
