@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/utilities.dart';
@@ -24,12 +25,67 @@ class _TransletePageState extends State<TranslatePage> {
   String from = 'en';
   String to = 'id';
   String data = '';
+  bool isSpeakingFrom = false;
+  bool isSpeakingTo = false;
   String selectedValue1 = 'English';
   String selectedValue2 = 'Indonesian';
   TextEditingController controller = TextEditingController(text: '');
+  FlutterTts flutterTts = FlutterTts();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isLoading = false;
+
+  speakFrom(String text) async {
+    if (!isSpeakingFrom) {
+      if (from == 'en') {
+        await flutterTts.setLanguage("en-US");
+      } else {
+        await flutterTts.setLanguage("id-ID");
+      }
+      await flutterTts.setPitch(1);
+      await flutterTts.setVolume(0.5);
+      await flutterTts.setSpeechRate(0.5);
+      await flutterTts.speak(text);
+      setState(() {
+        isSpeakingFrom = true;
+      });
+    } else {
+      // Jika suara dari bahasa asal sedang diputar, hentikan pemutaran suara
+      await flutterTts.stop();
+      // Set nilai isSpeakingFrom menjadi false karena suara dari bahasa asal sudah berhenti diputar
+      setState(() {
+        isSpeakingFrom = false;
+      });
+    }
+  }
+
+  speakTo(String text) async {
+    // Memeriksa apakah sedang ada suara dari bahasa tujuan yang diputar
+    if (!isSpeakingTo) {
+      // Jika tidak ada suara yang diputar, mulai memutar suara
+      if (to == 'en') {
+        await flutterTts.setLanguage("en-US"); // Bahasa Inggris
+      } else {
+        await flutterTts.setLanguage("id-ID"); // Bahasa Indonesia (default)
+      }
+      await flutterTts.setPitch(1);
+      await flutterTts.setVolume(0.5);
+      await flutterTts.setSpeechRate(0.5);
+      await flutterTts.speak(text);
+      // Set nilai isSpeakingTo menjadi true karena suara dari bahasa tujuan sedang diputar
+      setState(() {
+        isSpeakingTo = true;
+      });
+    } else {
+      // Jika suara dari bahasa tujuan sedang diputar, hentikan pemutaran suara
+      await flutterTts.stop();
+      // Set nilai isSpeakingTo menjadi false karena suara dari bahasa tujuan sudah berhenti diputar
+      setState(() {
+        isSpeakingTo = false;
+      });
+    }
+  }
+
   Future<void> translate() async {
     try {
       if (formKey.currentState != null &&
@@ -433,8 +489,18 @@ class _TransletePageState extends State<TranslatePage> {
                                       icon: const Icon(Icons.content_copy),
                                     ),
                                     IconButton(
-                                        onPressed: _paste,
-                                        icon: const Icon(Icons.content_paste))
+                                      onPressed: _paste,
+                                      icon: const Icon(Icons.content_paste),
+                                    ),
+                                    IconButton(
+                                      onPressed: () =>
+                                          speakFrom(controller.text),
+                                      icon: Icon(
+                                        isSpeakingFrom
+                                            ? Icons.stop
+                                            : Icons.volume_up,
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),
@@ -498,15 +564,27 @@ class _TransletePageState extends State<TranslatePage> {
                                 ),
                               ),
                               InkWell(
-                                onTap: () {
-                                  _copy(data); // Salin dari translate to
-                                },
-                                child: const IconButton(
-                                    icon: Icon(
-                                      Icons.content_copy,
-                                      color: Colors.black,
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.content_copy,
+                                        color: Colors.black,
+                                      ),
+                                      onPressed: () {
+                                        _copy(data);
+                                      },
                                     ),
-                                    onPressed: null),
+                                    IconButton(
+                                      icon: Icon(
+                                        isSpeakingTo
+                                            ? Icons.stop
+                                            : Icons.volume_up,
+                                      ),
+                                      onPressed: () => speakTo(data),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
