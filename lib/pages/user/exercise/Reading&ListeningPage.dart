@@ -118,7 +118,7 @@ class _ReadingTestState extends State<ReadingTest> {
                     questionAnswered =
                         List<bool?>.filled(_totalQuestions, null);
                   }
-                  
+
                   final correct = detail.questions
                       .where((question) =>
                           question.userAnswer != null &&
@@ -141,7 +141,10 @@ class _ReadingTestState extends State<ReadingTest> {
                             ),
                           ),
                         if (detail.questionCategory == 'Listening')
-                          AudioWidget(questionGroupId: _questionGroupId, audioPlayer: audioPlayer, text: detail.readingText ),
+                          AudioWidget(
+                              questionGroupId: _questionGroupId,
+                              audioPlayer: audioPlayer,
+                              text: detail.readingText),
                         ...detail.questions.asMap().entries.map(
                               (entry) => Padding(
                                 padding: const EdgeInsets.only(bottom: 16.0),
@@ -182,8 +185,10 @@ class _ReadingTestState extends State<ReadingTest> {
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF0D0443),
-                                ),
+                                    backgroundColor: const Color(0xFF0D0443),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    )),
                                 child: const Text(
                                   'Submit',
                                   style: TextStyle(color: Colors.white),

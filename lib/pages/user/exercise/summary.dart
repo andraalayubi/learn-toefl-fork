@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:learn_toefl/models/question.dart';
+import 'package:learn_toefl/pages/user/exercise/exercise.dart';
 import 'package:learn_toefl/services/input_nilai.dart';
 import 'package:learn_toefl/utilities.dart';
+import 'package:learn_toefl/widget/bottom_navigation.dart';
 import 'package:learn_toefl/widget/question_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -30,6 +33,7 @@ class Summary extends StatefulWidget {
 }
 
 class _SummaryState extends State<Summary> {
+  bool isSpeaking = false;
   @override
   void initState() {
     super.initState();
@@ -52,17 +56,30 @@ class _SummaryState extends State<Summary> {
 
   FlutterTts flutterTts = FlutterTts();
   speak(String text) async {
-    await flutterTts.setLanguage("en-US");
-    await flutterTts.setPitch(1);
-    await flutterTts.setVolume(0.5);
-    await flutterTts.setSpeechRate(0.5);
-    await flutterTts.speak(text);
+    if (!isSpeaking) {
+      await flutterTts.setLanguage("en-US");
+      await flutterTts.speak(text);
+      await flutterTts.setPitch(1);
+      await flutterTts.setVolume(0.5);
+      await flutterTts.setSpeechRate(0.5);
+      setState(() {
+        isSpeaking = true;
+      });
+    } else {
+      await flutterTts.stop();
+      setState(() {
+        isSpeaking = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false, // Menghilangkan ikon back
+        centerTitle: true,
+        surfaceTintColor: Colors.transparent,
         title: Text(
           'Summary',
           style: tFOnt(
@@ -71,10 +88,10 @@ class _SummaryState extends State<Summary> {
           ),
         ),
         backgroundColor: const Color(0xFF0D0443),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+        //   onPressed: () => Navigator.pop(context),
+        // ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -147,60 +164,60 @@ class _SummaryState extends State<Summary> {
                             ),
                           ),
                           const SizedBox(width: 20),
-                          if(widget.correct != null)
-                          Column(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 16, horizontal: 20),
-                                decoration: BoxDecoration(
-                                  color: Colors.green[100],
-                                  borderRadius: BorderRadius.circular(16),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: const Offset(0, 3),
+                          if (widget.correct != null)
+                            Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16, horizontal: 20),
+                                  decoration: BoxDecoration(
+                                    color: Colors.green[100],
+                                    borderRadius: BorderRadius.circular(16),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: const Offset(0, 3),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Text(
+                                    '${widget.correct} Correct',
+                                    style: tFOnt(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green[700],
                                     ),
-                                  ],
-                                ),
-                                child: Text(
-                                  '${widget.correct} Correct',
-                                  style: tFOnt(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.green[700],
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                              Container(
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: Colors.red[100],
-                                  borderRadius: BorderRadius.circular(16),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: const Offset(0, 3),
+                                const SizedBox(height: 10),
+                                Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color: Colors.red[100],
+                                    borderRadius: BorderRadius.circular(16),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: const Offset(0, 3),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Text(
+                                    '${widget.incorrect} Incorrect',
+                                    style: tFOnt(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red[700],
                                     ),
-                                  ],
-                                ),
-                                child: Text(
-                                  '${widget.incorrect} Incorrect',
-                                  style: tFOnt(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red[700],
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 20),
-                            ],
-                          ),
+                                const SizedBox(height: 20),
+                              ],
+                            ),
                         ],
                       ),
                     ],
@@ -241,16 +258,48 @@ class _SummaryState extends State<Summary> {
                           // Tidak melakukan apa-apa karena ini adalah halaman ringkasan
                         },
                         isSummary: true,
-                        
                       ),
                     ),
                   );
                 } else {
-                  return const SizedBox
-                      .shrink(); // Mengembalikan widget kosong jika question adalah null
+                  return const SizedBox.shrink();
                 }
               },
             ),
+            const SizedBox(height: 20),
+            InkWell(
+              child: IconButton(
+                onPressed: () => speak(widget.text!),
+                icon: Icon(isSpeaking ? Icons.stop : Icons.volume_up),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              decoration: BoxDecoration(
+                color: mColor,
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const BottomNavigation()));
+                },
+                child: Text(
+                  'Back to Home',
+                  style: tFOnt(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 50,
+            )
           ],
         ),
       ),

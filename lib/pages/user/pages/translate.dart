@@ -42,17 +42,15 @@ class _TransletePageState extends State<TranslatePage> {
       } else {
         await flutterTts.setLanguage("id-ID");
       }
+      await flutterTts.speak(text);
       await flutterTts.setPitch(1);
       await flutterTts.setVolume(0.5);
       await flutterTts.setSpeechRate(0.5);
-      await flutterTts.speak(text);
       setState(() {
         isSpeakingFrom = true;
       });
     } else {
-      // Jika suara dari bahasa asal sedang diputar, hentikan pemutaran suara
       await flutterTts.stop();
-      // Set nilai isSpeakingFrom menjadi false karena suara dari bahasa asal sudah berhenti diputar
       setState(() {
         isSpeakingFrom = false;
       });
@@ -60,26 +58,21 @@ class _TransletePageState extends State<TranslatePage> {
   }
 
   speakTo(String text) async {
-    // Memeriksa apakah sedang ada suara dari bahasa tujuan yang diputar
     if (!isSpeakingTo) {
-      // Jika tidak ada suara yang diputar, mulai memutar suara
       if (to == 'en') {
-        await flutterTts.setLanguage("en-US"); // Bahasa Inggris
+        await flutterTts.setLanguage("en-US");
       } else {
-        await flutterTts.setLanguage("id-ID"); // Bahasa Indonesia (default)
+        await flutterTts.setLanguage("id-ID");
       }
       await flutterTts.setPitch(1);
       await flutterTts.setVolume(0.5);
       await flutterTts.setSpeechRate(0.5);
       await flutterTts.speak(text);
-      // Set nilai isSpeakingTo menjadi true karena suara dari bahasa tujuan sedang diputar
       setState(() {
         isSpeakingTo = true;
       });
     } else {
-      // Jika suara dari bahasa tujuan sedang diputar, hentikan pemutaran suara
       await flutterTts.stop();
-      // Set nilai isSpeakingTo menjadi false karena suara dari bahasa tujuan sudah berhenti diputar
       setState(() {
         isSpeakingTo = false;
       });
@@ -138,8 +131,7 @@ class _TransletePageState extends State<TranslatePage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Text copied to clipboard'),
-          duration:
-              Duration(seconds: 2), // Sesuaikan durasinya sesuai kebutuhan
+          duration: Duration(seconds: 2),
         ),
       );
     }
@@ -483,8 +475,7 @@ class _TransletePageState extends State<TranslatePage> {
                                   children: [
                                     IconButton(
                                       onPressed: () {
-                                        _copy(controller
-                                            .text); // Salin dari translate from
+                                        _copy(controller.text);
                                       },
                                       icon: const Icon(Icons.content_copy),
                                     ),

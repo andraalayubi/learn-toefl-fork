@@ -232,7 +232,7 @@ class _SpeakingTestState extends State<SpeakingTest> {
                   ),
                 );
               } else {
-                return Center(child: Text('No data available'));
+                return const Center(child: Text('No data available'));
               }
             }));
   }

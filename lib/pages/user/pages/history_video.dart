@@ -166,7 +166,7 @@ class _HistoryVideoState extends State<HistoryVideo> {
                   child: Text(
                     'No History Available',
                     style: tFOnt(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),

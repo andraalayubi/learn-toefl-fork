@@ -35,15 +35,17 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _navigate() async {
     await Future.delayed(Duration(seconds: 2)); // Simulate a delay
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
+    bool? hasSeenOnboarding = prefs.getBool('hasSeenOnboarding');
 
-    if (hasSeenOnboarding) {
+    if (hasSeenOnboarding == true) {
+      hasSeenOnboarding = prefs.getBool('hasSeenOnboarding');
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => FutureBuilder<bool>(
             future: isLoggedIn(),
             builder: (context, snapshot) {
+              print(hasSeenOnboarding);
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else {
@@ -69,6 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
         ), // Replace with your actual home page
       );
     } else {
+      await prefs.setBool('hasSeenOnboarding', true);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => OnBoarding()),
