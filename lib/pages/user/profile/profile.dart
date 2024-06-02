@@ -299,7 +299,7 @@ class _ProfilPageState extends State<ProfilPage> {
               ),
               const SizedBox(height: 16),
               Text(
-                'Are You Sure Want to logout?',
+                'Are you sure want to logout?',
                 style: tFOnt(fontSize: 17, fontWeight: FontWeight.bold),
               ),
             ],

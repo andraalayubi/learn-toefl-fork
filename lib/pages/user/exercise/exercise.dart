@@ -356,7 +356,7 @@ class _Exercise extends State<Exercise> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: Colors.green,
+                color: mColor,
                 border: Border.all(width: 1.0, color: Colors.black),
               ),
               child: TextButton(
