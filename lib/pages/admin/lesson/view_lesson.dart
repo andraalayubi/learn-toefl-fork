@@ -16,13 +16,10 @@ class ListViewVideo extends StatefulWidget {
 }
 
 class _ListViewVideoState extends State<ListViewVideo> {
-  late Future<List<VideoCategory>> _videoCategories;
 
   @override
   void initState() {
     super.initState();
-    _videoCategories =
-        fetchVideosByCategory(widget.category, widget.subCategory);
   }
 
   @override
