@@ -7,21 +7,28 @@ const secretKey = 'your_secret_key';
 
 exports.register = async (req, res) => {
     const { username, email, password } = req.body;
+    try register = async (req, res) => {
+    const { username, email, password } = req.body;
+
+    // Input validation
+    if (username.length < 3 || email.length < 3 || password.length < 3) {
+        return res.status(400).json({ error: 'Username, email, and password must be at least 3 characters long' });
+    }
+
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const result = await pool.query(
             'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *',
             [username, email, hashedPassword]
         );
-
         const user = result.rows[0];
-        const token = jwt.sign({ userId: user.id}, secretKey, { expiresIn: '1h' });
-        res.status(201).json({token, user});
+        const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: '1h' });
+        res.status(201).json({ token, user });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 };
-
+    
 exports.registerAdmin = async (req, res) => {
     const { username, email, password } = req.body;
     try {
