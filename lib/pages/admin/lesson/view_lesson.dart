@@ -160,43 +160,53 @@ void _showConfirmationDialog(BuildContext context, Video video) {
           style: tFOnt(fontSize: 17, fontWeight: FontWeight.bold),
         ),
         actions: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.white,
-                border: Border.all(width: 1.0, color: Colors.black)),
-            child: TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                'Cancel',
-                style: tFOnt(color: Colors.black),
-              ),
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: const Color.fromARGB(255, 171, 52, 44),
-                border: Border.all(width: 1.0, color: Colors.black)),
-            child: TextButton(
-              onPressed: () async {
-                await deleteVideo(video.id);
+          StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white,
+                        border: Border.all(width: 1.0, color: Colors.black)),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        'Cancel',
+                        style: tFOnt(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: const Color.fromARGB(255, 171, 52, 44),
+                      border: Border.all(width: 1.0, color: Colors.black)),
+                  child: TextButton(
+                    onPressed: () async {
+                      await deleteVideo(video.id);
 
-                showCustomSnackbar(
-                  context,
-                  '${video.name} Deleted From Favorites!',
-                  Colors.green,
-                );
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                'Delete',
-                style: tFOnt(color: Colors.white),
-              ),
-            ),
-          ),
+                      showCustomSnackbar(
+                        context,
+                        '${video.name} Deleted!',
+                        Colors.green,
+                      );
+                      Navigator.of(context).pop();
+                      setState(() {});
+                    },
+                    child: Text(
+                      'Delete',
+                      style: tFOnt(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }),
         ],
       );
     },
@@ -369,8 +379,7 @@ void _showUpdateDialog(BuildContext context, int id, String category,
                           builder: (BuildContext context) {
                             return AlertDialog(
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    12), 
+                                borderRadius: BorderRadius.circular(12),
                               ),
                               backgroundColor: Colors.white,
                               surfaceTintColor: Colors.white,
@@ -380,51 +389,61 @@ void _showUpdateDialog(BuildContext context, int id, String category,
                                     fontSize: 17, fontWeight: FontWeight.bold),
                               ),
                               actions: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: Colors.white,
-                                      border: Border.all(
-                                          width: 1.0, color: Colors.black)),
-                                  child: TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pop(); 
-                                    },
-                                    child: Text(
-                                      'Cancel',
-                                      style: tFOnt(color: Colors.black),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: mColor,
-                                      border: Border.all(
-                                          width: 1.0, color: Colors.black)),
-                                  child: TextButton(
-                                    onPressed: () async {
-                                      await updateVideo(
-                                        id,
-                                        titleController.text,
-                                        urlController.text,
-                                        categoryId,
-                                      );
-                                      Navigator.of(context)
-                                          .pop(); 
-                                      Navigator.of(context).pop();
-                                      showCustomSnackbar(
-                                          context,
-                                          'Video Updated Successfully',
-                                          Colors.green);
-                                    },
-                                    child: Text(
-                                      'Confirm',
-                                      style: tFOnt(color: Colors.white),
-                                    ),
-                                  ),
-                                ),
+                                StatefulBuilder(builder: (BuildContext context,
+                                    StateSetter setState) {
+                                  return Row(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                width: 1.0,
+                                                color: Colors.black)),
+                                        child: TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(
+                                            'Cancel',
+                                            style: tFOnt(color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            color: mColor,
+                                            border: Border.all(
+                                                width: 1.0,
+                                                color: Colors.black)),
+                                        child: TextButton(
+                                          onPressed: () async {
+                                            await updateVideo(
+                                              id,
+                                              titleController.text,
+                                              urlController.text,
+                                              categoryId,
+                                            );
+                                            Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
+                                            showCustomSnackbar(
+                                                context,
+                                                'Video Updated Successfully',
+                                                Colors.green);
+                                            setState(() {});
+                                          },
+                                          child: Text(
+                                            'Confirm',
+                                            style: tFOnt(color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }),
                               ],
                             );
                           },
