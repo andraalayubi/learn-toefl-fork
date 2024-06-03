@@ -202,7 +202,7 @@ class _VideoListPageState extends State<VideoListPage> {
             Transform.translate(
               offset: const Offset(0, -110),
               child: Container(
-                width: 360,
+                margin: const EdgeInsets.symmetric(horizontal: 24),
                 padding: const EdgeInsets.only(
                     top: 20, left: 20, right: 20, bottom: 2),
                 decoration: BoxDecoration(
@@ -258,6 +258,7 @@ class _VideoListPageState extends State<VideoListPage> {
               ),
             ),
             Transform.translate(
+            
               offset: const Offset(0, -80),
               child: FutureBuilder<List<VideoCategory>>(
                 future: _futureCategories,
