@@ -216,8 +216,10 @@ class _SpeakingTestState extends State<SpeakingTest> {
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF0D0443),
-                                ),
+                                    backgroundColor: const Color(0xFF0D0443),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    )),
                                 child: Text(
                                   'Submit',
                                   style: tFOnt(color: Colors.white),

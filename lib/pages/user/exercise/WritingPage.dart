@@ -91,7 +91,6 @@ class _WritingTestState extends State<WritingTest> {
                               width: double.infinity,
                               child: CustomBox(
                                 title: 'Instruction',
-                                
                                 content: detail.readingText,
                               ),
                             ),
@@ -129,8 +128,10 @@ class _WritingTestState extends State<WritingTest> {
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF0D0443),
-                              ),
+                                  backgroundColor: const Color(0xFF0D0443),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  )),
                               child: const Text(
                                 'Submit',
                                 style: TextStyle(color: Colors.white),
@@ -210,14 +211,14 @@ class _ResponseBoxState extends State<ResponseBox> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Your Response:',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             TextField(
               controller: controller,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Type Your Answer',
               ),
