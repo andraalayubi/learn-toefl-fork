@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:learn_toefl/pages/admin/home/home.dart';
 import 'package:learn_toefl/pages/auth/register.dart';
 import 'package:learn_toefl/services/auth_service.dart';
+import 'package:learn_toefl/utilities.dart';
 import 'package:learn_toefl/widget/bottom_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:learn_toefl/utilities.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -184,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: _isLoading ? null : _login,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 156, vertical: 15),
+                        horizontal: 20, vertical: 15),
                     backgroundColor: const Color.fromARGB(255, 16, 9, 61),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(26),
