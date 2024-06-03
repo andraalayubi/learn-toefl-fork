@@ -16,10 +16,12 @@ class ListViewVideo extends StatefulWidget {
 }
 
 class _ListViewVideoState extends State<ListViewVideo> {
+  late Future<List<VideoCategory>> videos;
 
   @override
   void initState() {
     super.initState();
+    videos = fetchVideosByCategory(widget.category, widget.subCategory);
   }
 
   @override
@@ -44,37 +46,45 @@ class _ListViewVideoState extends State<ListViewVideo> {
           ),
         ),
       ),
-      body: FutureBuilder<List<VideoCategory>>(
-        future: fetchVideosByCategory(widget.category, widget.subCategory),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return SingleChildScrollView(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${widget.category}'s Videos",
-                      style: const TextStyle(
-                          fontSize: 13, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    ...snapshot.data!
-                        .map((videoCategory) => videoItem(videoCategory.videos))
-                        .toList(),
-                  ],
-                ),
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
-          return const Center(child: CircularProgressIndicator());
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {
+            videos = fetchVideosByCategory(widget.category, widget.subCategory);
+          });
         },
+        child: FutureBuilder<List<VideoCategory>>(
+          future: videos,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 20, horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${widget.category}'s Videos",
+                        style: const TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      ...snapshot.data!
+                          .map((videoCategory) =>
+                              videoItem(videoCategory.videos))
+                          .toList(),
+                    ],
+                  ),
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
     );
   }
@@ -193,7 +203,6 @@ void _showConfirmationDialog(BuildContext context, Video video) {
                         Colors.green,
                       );
                       Navigator.of(context).pop();
-                      setState(() {});
                     },
                     child: Text(
                       'Delete',

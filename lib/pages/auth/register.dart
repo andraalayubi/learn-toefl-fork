@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learn_toefl/pages/auth/login.dart';
 import 'package:learn_toefl/services/auth_service.dart';
-import 'package:learn_toefl/widget/bottom_navigation.dart';
 import 'package:learn_toefl/utilities.dart';
+import 'package:learn_toefl/widget/bottom_navigation.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -151,21 +151,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 20),
               TextField(
                 controller: _passwordController,
-                obscureText:
-                    _obscureText, 
+                obscureText: _obscureText,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock),
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
-                        _obscureText =
-                            !_obscureText; 
+                        _obscureText = !_obscureText;
                       });
                     },
-                    icon: Icon(_obscureText
-                        ? Icons.visibility
-                        : Icons
-                            .visibility_off), 
+                    icon: Icon(
+                        _obscureText ? Icons.visibility : Icons.visibility_off),
                   ),
                   hintText: 'Password',
                   hintStyle: tFOnt(
@@ -188,7 +184,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   onPressed: _register,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 147, vertical: 15),
+                        horizontal: 20, vertical: 15),
                     backgroundColor: const Color.fromARGB(255, 16, 9, 61),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(26),
