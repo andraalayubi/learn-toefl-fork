@@ -119,6 +119,8 @@ class _TransletePageState extends State<TranslatePage> {
 
   @override
   void dispose() {
+    flutterTts.stop();
+
     super.dispose();
     controller.dispose();
   }
@@ -158,7 +160,8 @@ class _TransletePageState extends State<TranslatePage> {
           padding: const EdgeInsets.only(left: 22.0),
           child: IconButton(
               icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-              onPressed: () {
+              onPressed: () async {
+                await flutterTts.stop();
                 Navigator.of(context).pop();
               }),
         ),
@@ -177,11 +180,6 @@ class _TransletePageState extends State<TranslatePage> {
           width: containerWidth,
           child: Column(
             children: [
-              // Container(
-              //   decoration: const BoxDecoration(),
-              //   height: height * 0.03,
-              //   width: width,
-              // ),
               Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -327,12 +325,6 @@ class _TransletePageState extends State<TranslatePage> {
                               ),
                             ),
                           ),
-                          // GestureDetector(
-                          //   child: Icon(Icons.swap_horiz),
-                          //   onTap: () {
-                          //     print('Pembalik');
-                          //   },
-                          // ),
                           Expanded(
                             child: Container(
                               margin: const EdgeInsets.all(8),
@@ -618,7 +610,6 @@ class _TransletePageState extends State<TranslatePage> {
                         style: tFOnt(color: Colors.white),
                       ),
               ),
-
               const SizedBox(height: 20),
             ],
           ),

@@ -33,11 +33,18 @@ class Summary extends StatefulWidget {
 }
 
 class _SummaryState extends State<Summary> {
+  FlutterTts flutterTts = FlutterTts();
   bool isSpeaking = false;
   @override
   void initState() {
     super.initState();
     _insertToDb();
+  }
+
+  @override
+  void dispose() {
+    flutterTts.stop(); 
+    super.dispose();
   }
 
   void _insertToDb() async {
@@ -52,7 +59,6 @@ class _SummaryState extends State<Summary> {
     }
   }
 
-  FlutterTts flutterTts = FlutterTts();
   speak(String text) async {
     if (!isSpeaking) {
       await flutterTts.setLanguage("en-US");
@@ -264,15 +270,14 @@ class _SummaryState extends State<Summary> {
                 }
               },
             ),
+            if (widget.correct == null) const SizedBox(height: 20),
             if (widget.correct == null)
-            const SizedBox(height: 20),
-            if (widget.correct == null)
-            InkWell(
-              child: IconButton(
-                onPressed: () => speak(widget.text!),
-                icon: Icon(isSpeaking ? Icons.stop : Icons.volume_up),
+              InkWell(
+                child: IconButton(
+                  onPressed: () => speak(widget.text!),
+                  icon: Icon(isSpeaking ? Icons.stop : Icons.volume_up),
+                ),
               ),
-            ),
             const SizedBox(height: 20),
             Container(
               padding:
@@ -282,7 +287,8 @@ class _SummaryState extends State<Summary> {
                 borderRadius: BorderRadius.circular(8.0),
               ),
               child: InkWell(
-                onTap: () {
+                onTap: () async {
+                  await flutterTts.stop();
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
