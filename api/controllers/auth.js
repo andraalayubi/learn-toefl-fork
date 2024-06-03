@@ -7,8 +7,6 @@ const secretKey = 'your_secret_key';
 
 exports.register = async (req, res) => {
     const { username, email, password } = req.body;
-    try register = async (req, res) => {
-    const { username, email, password } = req.body;
 
     // Input validation
     if (username.length < 3 || email.length < 3 || password.length < 3) {
