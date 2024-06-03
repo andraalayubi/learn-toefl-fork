@@ -60,7 +60,7 @@ class _OnBoardingState extends State<OnBoarding> {
                   buttonText,
                   style: tFOnt(
                     fontSize: 17,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: (buttonText == 'Get Started') ? FontWeight.bold : FontWeight.w400 ,
                     color: Colors.white,
                   ),
                 ),
