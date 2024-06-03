@@ -6,6 +6,9 @@ class Screen3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var orientation = MediaQuery.of(context).orientation;
+    var isLandscape = orientation == Orientation.landscape;
+
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -17,51 +20,63 @@ class Screen3 extends StatelessWidget {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              "./assets/images/grammar-ilustration.png",
-              width: MediaQuery.of(context).size.width * 4.5 / 5,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: isLandscape ? 16.0 : 40.0,
+              horizontal: 16.0,
             ),
-            ShaderMask(
-              shaderCallback: (bounds) => LinearGradient(
-                colors: [const Color.fromRGBO(151, 151, 50, 80), Colors.brown.shade900],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ).createShader(
-                  Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-              child: Text(
-                'Grammar',
-                style: tFOnt(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 100,
                 ),
-              ),
+                Image.asset(
+                  "./assets/images/grammar-ilustration.png",
+                  width: isLandscape
+                      ? MediaQuery.of(context).size.width * 0.5
+                      : MediaQuery.of(context).size.width * 0.9,
+                ),
+                SizedBox(height: isLandscape ? 10 : 20),
+                ShaderMask(
+                  shaderCallback: (bounds) => LinearGradient(
+                    colors: [const Color.fromRGBO(151, 151, 50, 80), Colors.brown.shade900],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ).createShader(
+                    Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+                  ),
+                  child: Text(
+                    'Grammar',
+                    style: tFOnt(
+                      fontSize: isLandscape ? 24 : 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                SizedBox(height: isLandscape ? 5 : 10),
+                Text(
+                  'Polish Your Prowess',
+                  style: tFOnt(
+                    fontSize: isLandscape ? 18 : 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(height: isLandscape ? 10 : 20),
+                Text(
+                  'Understanding grammar simple and\nclear, so you can focus on perfecting\nyour language skills.',
+                  style: tFOnt(
+                    fontSize: isLandscape ? 16 : 18,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: isLandscape ? 20 : 200),
+              ],
             ),
-            Text(
-              'Polish Your Prowess',
-              style: tFOnt(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Understanding grammar simple and\nclear, so you can focus on perfecting\nyour language skills.',
-              style: tFOnt(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 200,
-            ),
-          ],
+          ),
         ),
       ),
     );

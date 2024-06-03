@@ -39,7 +39,11 @@ class _OnBoardingState extends State<OnBoarding> {
           child: SmoothPageIndicator(
             controller: pageController,
             count: 4,
-            effect: ExpandingDotsEffect(activeDotColor: mColor),
+            effect: const ExpandingDotsEffect(
+              activeDotColor: mColor,
+              dotWidth: 10,
+              dotHeight: 10,
+            ),
           ),
         ),
         Align(
@@ -60,7 +64,9 @@ class _OnBoardingState extends State<OnBoarding> {
                   buttonText,
                   style: tFOnt(
                     fontSize: 17,
-                    fontWeight: (buttonText == 'Get Started') ? FontWeight.bold : FontWeight.w400 ,
+                    fontWeight: (buttonText == 'Get Started')
+                        ? FontWeight.bold
+                        : FontWeight.w400,
                     color: Colors.white,
                   ),
                 ),
